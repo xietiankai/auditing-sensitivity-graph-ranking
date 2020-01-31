@@ -1,4 +1,22 @@
 from functionalities.calculate_auditing_res import ranking_data_formation
+import json
+from uuid import UUID
+import numpy
+
+
+class MetaDataEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, numpy.integer):
+            return int(obj)
+        elif isinstance(obj, numpy.floating):
+            return float(obj)
+        elif isinstance(obj, numpy.ndarray):
+            return obj.tolist()
+        if isinstance(obj, UUID):
+            # if the obj is uuid, we simply return the value of uuid
+            return obj.hex
+        else:
+            return obj.__dict__
 
 
 class MetaData:
@@ -12,3 +30,7 @@ class MetaData:
         """
         self.nodes, self.edges = ranking_data_formation(graph=graph_object,
                                                         algorithm=algorithm_name)
+
+
+
+

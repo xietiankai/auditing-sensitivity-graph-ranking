@@ -1,1 +1,3 @@
 export const UPDATE_DATA_NAME = "UPDATE_DATA_NAME";
+
+export const DATA_LOADED = "DATA_LOADED";

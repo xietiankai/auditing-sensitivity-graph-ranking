@@ -1,4 +1,4 @@
-import {UPDATE_DATA_NAME} from "../constants/actionTypes";
+import {DATA_LOADED, UPDATE_DATA_NAME} from "../constants/actionTypes";
 
 const initialState = {
     data: {},
@@ -11,6 +11,13 @@ function rootReducer(state = initialState, action) {
         return Object.assign({}, state, {
             dataName: action.payload
         });
+    }
+
+    if (action.type === DATA_LOADED) {
+      console.log(action.payload);
+      // return Object.assign({}, state, {
+      //       dataName: action.payload
+      //   });
     }
     return state;
 }

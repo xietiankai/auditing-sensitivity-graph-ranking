@@ -22,6 +22,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
 import VulnerabilityView from "./VulnerabilityView";
 import ControlPanel from "./ControlPanel";
+import {getData} from "../actions";
 
 const styles = theme => ({
   root: {
@@ -44,8 +45,7 @@ const styles = theme => ({
   },
   rootGrid: {
     padding: 0
-  },
-
+  }
 });
 
 class Main extends React.Component {
@@ -53,7 +53,7 @@ class Main extends React.Component {
     super(props);
   }
   componentDidMount() {
-    // this.getData(this.state.dataName);
+    this.props.getData();
   }
 
   render() {
@@ -89,4 +89,4 @@ class Main extends React.Component {
   }
 }
 
-export default withStyles(styles)(Main);
+export default connect(null, { getData })(withStyles(styles)(Main));
