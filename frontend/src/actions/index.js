@@ -1,8 +1,16 @@
-import {DATA_LOADED, UPDATE_DATA_NAME} from "../constants/actionTypes";
+import {
+  DATA_LOADED,
+  UPDATE_ALGORITHM_NAME,
+  UPDATE_DATA_NAME
+} from "../constants/actionTypes";
 import axios from "axios";
 
 export function updateDataName(payload) {
   return { type: UPDATE_DATA_NAME, payload };
+}
+
+export function updateAlgorithmName(payload) {
+  return { type: UPDATE_ALGORITHM_NAME, payload };
 }
 
 export function getData() {

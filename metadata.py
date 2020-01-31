@@ -3,6 +3,8 @@ import json
 from uuid import UUID
 import numpy
 
+from functionalities.perturbation_enumeration import perturbation_preview
+
 
 class MetaDataEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -30,7 +32,10 @@ class MetaData:
         """
         self.nodes, self.edges = ranking_data_formation(graph=graph_object,
                                                         algorithm=algorithm_name)
-
+        self.perturbations = perturbation_preview(graph=graph_object.copy(),
+                                                  original_node_info=self.nodes,
+                                                  label_dict_set=label_dict_set,
+                                                  algorithm=algorithm_name)
 
 
 

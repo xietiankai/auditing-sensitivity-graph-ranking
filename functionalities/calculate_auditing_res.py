@@ -16,9 +16,6 @@ def generate_edges(graph):
         edges.append(
             {"source": edge[0], "target": edge[1], "source_id": edge[0],
              "target_id": edge[1]})
-        # edges.append(
-        #     {"target": edge[0], "source": edge[1], "target_id": edge[0],
-        #      "source_id": edge[1]})
     return edges
 
 

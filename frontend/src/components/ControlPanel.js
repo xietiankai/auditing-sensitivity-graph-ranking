@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import {getData, updateAlgorithmName, updateDataName} from "../actions";
 
 const styles = theme => ({
   formControl: {
@@ -34,6 +35,13 @@ const mapStateToProps = state => {
   return { dataName: state.dataName, algorithmName: state.algorithmName };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    updateDataName: event => dispatch(updateDataName(event.target.value)),
+    updateAlgorithmName: event => dispatch(updateAlgorithmName(event.target.value))
+  }
+};
+
 class ControlPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -47,7 +55,7 @@ class ControlPanel extends React.Component {
           <Select
             native
             value={this.props.dataName}
-            onChange={() => {}}
+            onChange={this.props.updateDataName}
             inputProps={{
               name: "dataName",
               id: "data-name",
@@ -61,7 +69,7 @@ class ControlPanel extends React.Component {
           <Select
             native
             value={this.props.algorithmName}
-            onChange={() => {}}
+            onChange={this.props.updateAlgorithmName}
             inputProps={{
               name: "rankingAlgorithm",
               id: "ranking-algorithm",
@@ -85,4 +93,4 @@ class ControlPanel extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(ControlPanel));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ControlPanel));

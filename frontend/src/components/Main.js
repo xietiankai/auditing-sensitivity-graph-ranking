@@ -22,7 +22,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
 import VulnerabilityView from "./VulnerabilityView";
 import ControlPanel from "./ControlPanel";
-import {getData} from "../actions";
+import { getData, updateDataName } from "../actions";
 
 const styles = theme => ({
   root: {
