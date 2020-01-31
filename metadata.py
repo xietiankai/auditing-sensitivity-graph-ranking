@@ -1,9 +1,12 @@
-from functionalities.calculate_auditing_res import ranking_data_formation
 import json
 from uuid import UUID
+
 import numpy
 
+from functionalities.calculate_auditing_res import ranking_data_formation
 from functionalities.perturbation_enumeration import perturbation_preview
+from functionalities.perturbation_enumeration_statistics import \
+    perturbation_enumeration_statistics
 
 
 class MetaDataEncoder(json.JSONEncoder):
@@ -32,10 +35,8 @@ class MetaData:
         """
         self.nodes, self.edges = ranking_data_formation(graph=graph_object,
                                                         algorithm=algorithm_name)
-        self.perturbations = perturbation_preview(graph=graph_object.copy(),
-                                                  original_node_info=self.nodes,
-                                                  label_dict_set=label_dict_set,
-                                                  algorithm=algorithm_name)
-
-
-
+        perturbations = perturbation_preview(graph=graph_object.copy(),
+                                             original_node_info=self.nodes,
+                                             label_dict_set=label_dict_set,
+                                             algorithm=algorithm_name)
+        self.perturbations = perturbation_enumeration_statistics(perturbations)
