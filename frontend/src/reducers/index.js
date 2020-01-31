@@ -5,9 +5,11 @@ import {
 } from "../constants/actionTypes";
 
 const initialState = {
-  data: {},
   dataName: "polblogs",
-  algorithmName: "pagerank"
+  algorithmName: "pagerank",
+  perturbations: [],
+  nodes: {},
+  edges: []
 };
 
 function rootReducer(state = initialState, action) {

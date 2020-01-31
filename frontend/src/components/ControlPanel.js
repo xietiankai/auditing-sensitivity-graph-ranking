@@ -11,6 +11,7 @@ import { withStyles } from "@material-ui/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import {getData, updateAlgorithmName, updateDataName} from "../actions";
+import VulnerabilityTable from "./VulnerabilityTable";
 
 const styles = theme => ({
   formControl: {
@@ -50,7 +51,7 @@ class ControlPanel extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Card>
+      <Card >
         <FormControl variant="outlined" className={classes.formControl}>
           <Select
             native
@@ -88,6 +89,7 @@ class ControlPanel extends React.Component {
         >
           Load Dataset
         </Button>
+        <VulnerabilityTable/>
       </Card>
     );
   }
