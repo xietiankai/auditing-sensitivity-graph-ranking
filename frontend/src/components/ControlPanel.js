@@ -12,6 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import {getData, updateAlgorithmName, updateDataName} from "../actions";
 import VulnerabilityTable from "./VulnerabilityTable";
+import ChipsArray from "./ChipsArray";
 
 const styles = theme => ({
   formControl: {
@@ -89,7 +90,10 @@ class ControlPanel extends React.Component {
         >
           Load Dataset
         </Button>
+        <Divider/>
         <VulnerabilityTable/>
+        <Divider/>
+        <ChipsArray/>
       </Card>
     );
   }

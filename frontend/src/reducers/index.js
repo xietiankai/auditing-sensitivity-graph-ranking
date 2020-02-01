@@ -1,5 +1,7 @@
 import {
+  ADD_PROTECTED_NODE,
   DATA_LOADED,
+  DELETE_PROTECTED_NODE,
   UPDATE_ALGORITHM_NAME,
   UPDATE_DATA_NAME
 } from "../constants/actionTypes";
@@ -9,7 +11,8 @@ const initialState = {
   algorithmName: "pagerank",
   perturbations: [],
   nodes: {},
-  edges: []
+  edges: [],
+  protectedNodes: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -30,6 +33,18 @@ function rootReducer(state = initialState, action) {
     console.info(action.payload);
     return Object.assign({}, state, action.payload);
   }
+
+  if (action.type === ADD_PROTECTED_NODE) {
+    let newProtectedNodes = [...state.protectedNodes];
+    newProtectedNodes.push(action.payload);
+
+    return {...state, protectedNodes: newProtectedNodes};
+  }
+
+  if (action.type === DELETE_PROTECTED_NODE) {
+    return state;
+  }
+
   return state;
 }
 
