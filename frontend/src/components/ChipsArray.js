@@ -24,15 +24,15 @@ class ChipsArray extends React.Component {
 
   render() {
     console.info(this.props.protectedNodes);
-    let chipsArray = this.props.protectedNodes.map(nodeID => {
+    let chipsArray = Array.from(this.props.protectedNodes).map(nodeID => {
       return (
         <Chip
           size="small"
           key={nodeID}
           label={nodeID}
-          // onDelete={() => {
-          //   this.props.deleteProtectedNode(nodeID);
-          // }}
+          onDelete={() => {
+            this.props.deleteProtectedNode(nodeID);
+          }}
         />
       );
     });
