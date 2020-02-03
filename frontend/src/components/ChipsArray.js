@@ -5,7 +5,12 @@ import { withStyles } from "@material-ui/styles";
 import { deleteProtectedNode } from "../actions";
 import { Box } from "@material-ui/core";
 
-const styles = theme => ({});
+const styles = theme => ({
+  chipsContainer: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2)
+  }
+});
 
 const mapStateToProps = state => {
   return { protectedNodes: state.protectedNodes };
@@ -23,20 +28,25 @@ class ChipsArray extends React.Component {
   }
 
   render() {
-    console.info(this.props.protectedNodes);
-    let chipsArray = Array.from(this.props.protectedNodes).map(nodeID => {
-      return (
-        <Chip
-          size="small"
-          key={nodeID}
-          label={nodeID}
-          onDelete={() => {
-            this.props.deleteProtectedNode(nodeID);
-          }}
-        />
-      );
-    });
-    return <Box>{chipsArray}</Box>;
+    let chipsArray = <Chip size="small" key={"none"} label={"None"} disabled />;
+    if (this.props.protectedNodes.size !== 0) {
+      chipsArray = Array.from(this.props.protectedNodes).map(nodeID => {
+        return (
+          <Chip
+            size="small"
+            key={nodeID}
+            label={nodeID}
+            onDelete={() => {
+              this.props.deleteProtectedNode(nodeID);
+            }}
+          />
+        );
+      });
+    }
+
+    return (
+      <Box className={this.props.classes.chipsContainer}>{chipsArray}</Box>
+    );
   }
 }
 
