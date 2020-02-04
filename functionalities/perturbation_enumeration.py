@@ -82,7 +82,6 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
         structured_Data = [
             {
                 remove_id,
-                will_break_graph(abandent),
                 remove_res: [...],
                 statistical: [{axis and value pair} ],
                 node_influence: added up value,

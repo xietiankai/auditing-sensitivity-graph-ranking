@@ -3,9 +3,13 @@ import {
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
   UPDATE_ALGORITHM_NAME,
-  UPDATE_DATA_NAME
+  UPDATE_CONSTRAINTS,
+  UPDATE_DATA_NAME,
+  UPDATE_PROTECTION_EXTENT,
+  UPDATE_PROTECTION_TYPE
 } from "../constants/actionTypes";
 import axios from "axios";
+import store from "../store";
 
 export function updateDataName(payload) {
   return { type: UPDATE_DATA_NAME, payload };
@@ -21,6 +25,47 @@ export function deleteProtectedNode(payload) {
 
 export function addProtectedNode(payload) {
   return { type: ADD_PROTECTED_NODE, payload };
+}
+
+export function updateProtectionType(payload) {
+  return { type: UPDATE_PROTECTION_TYPE, payload };
+}
+
+export function updateProtectionExtent(payload) {
+  return { type: UPDATE_PROTECTION_EXTENT, payload };
+}
+
+export function updateConstraints() {
+  const protectionType = store.getState().protectionType;
+  const protectionExtent = store.getState().protectionExtent;
+  const perturbations = store.getState().perturbations;
+  const protectedNodes = store.getState().protectedNodes;
+  const vulnerabilityList = store.getState().vulnerabilityList;
+  let bannedNodes = [];
+  const threshold = perturbations.length * protectionExtent;
+  console.log(threshold);
+  Array.from(protectedNodes).map(nodeID => {
+    let temp = [];
+    if (protectionType === "increased") {
+      temp = vulnerabilityList[nodeID].filter(
+        item => item["rank_change"] > threshold
+      );
+    } else if (protectionType === "decreased") {
+      temp = vulnerabilityList[nodeID].filter(
+        item => item["rank_change"] < -threshold
+      );
+    }
+    bannedNodes = bannedNodes.concat(temp);
+  });
+  console.log("banned nodes");
+  console.log(bannedNodes);
+  console.log("previous length: " + perturbations.length);
+  const bannedNodesSet = new Set(bannedNodes.map(node => node["node_id"]));
+  const filteredPerturbations = perturbations.filter(
+    item => !bannedNodesSet.has(item["remove_id"])
+  );
+  console.log("after length:" + filteredPerturbations.length);
+  return { type: UPDATE_CONSTRAINTS, payload: filteredPerturbations };
 }
 
 export function getData() {

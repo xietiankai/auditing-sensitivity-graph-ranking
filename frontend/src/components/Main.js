@@ -8,21 +8,11 @@ import TimelineIcon from "@material-ui/icons/Timeline";
 import { withStyles } from "@material-ui/styles";
 import { Box, Button, Card, CardContent, CssBaseline } from "@material-ui/core";
 import { connect } from "react-redux";
-import Tab from "@material-ui/core/Tab";
 import Grid from "@material-ui/core/Grid";
-import Tabs from "@material-ui/core/Tabs";
-import SwipeableViews from "react-swipeable-views";
-import Overview from "./Overview";
-import DetailView from "./DetailView";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Divider from "@material-ui/core/Divider";
-import VulnerabilityView from "./VulnerabilityView";
+
 import ControlPanel from "./ControlPanel";
 import { getData, updateDataName } from "../actions";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const styles = theme => ({
   root: {

@@ -4,6 +4,7 @@ from uuid import UUID
 import numpy
 
 from functionalities.calculate_auditing_res import ranking_data_formation
+from functionalities.inverse_mapping import inverse_mapping
 from functionalities.perturbation_enumeration import perturbation_preview
 from functionalities.perturbation_enumeration_statistics import \
     perturbation_enumeration_statistics
@@ -40,3 +41,4 @@ class MetaData:
                                              label_dict_set=label_dict_set,
                                              algorithm=algorithm_name)
         self.perturbations = perturbation_enumeration_statistics(perturbations)
+        self.vulnerabilityList = inverse_mapping(perturbations)
