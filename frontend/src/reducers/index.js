@@ -2,6 +2,8 @@ import {
   ADD_PROTECTED_NODE,
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
+  SNACKBAR_CLOSE,
+  SNACKBAR_OPEN, UPDATE_ACTIVATED_TAB_INDEX,
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
   UPDATE_DATA_NAME,
@@ -19,7 +21,10 @@ const initialState = {
   protectedNodes: new Set(),
   protectionType: "increased",
   protectionExtent: 0.01,
-  vulnerabilityList: {}
+  vulnerabilityList: {},
+  snackbarOpen: false,
+  snackbarMessage: "",
+  activatedTab:0
 };
 
 function rootReducer(state = initialState, action) {
@@ -68,8 +73,18 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === UPDATE_CONSTRAINTS) {
+    return Object.assign({}, state, action.payload);
+  }
+
+  if (action.type === SNACKBAR_CLOSE) {
     return Object.assign({}, state, {
-      filteredPerturbations: action.payload
+      snackbarOpen: false
+    });
+  }
+
+  if (action.type === UPDATE_ACTIVATED_TAB_INDEX) {
+    return Object.assign({}, state, {
+      activatedTab: action.payload
     });
   }
 

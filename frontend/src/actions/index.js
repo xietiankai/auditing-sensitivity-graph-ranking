@@ -2,6 +2,9 @@ import {
   ADD_PROTECTED_NODE,
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
+  SNACKBAR_CLOSE,
+  SNACKBAR_OPEN,
+  UPDATE_ACTIVATED_TAB_INDEX,
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
   UPDATE_DATA_NAME,
@@ -35,6 +38,14 @@ export function updateProtectionExtent(payload) {
   return { type: UPDATE_PROTECTION_EXTENT, payload };
 }
 
+export function snackBarClose() {
+  return { type: SNACKBAR_CLOSE };
+}
+
+export function updateActivatedTabIndex(payload) {
+  return { type: UPDATE_ACTIVATED_TAB_INDEX, payload };
+}
+
 export function updateConstraints() {
   const protectionType = store.getState().protectionType;
   const protectionExtent = store.getState().protectionExtent;
@@ -65,7 +76,14 @@ export function updateConstraints() {
     item => !bannedNodesSet.has(item["remove_id"])
   );
   console.log("after length:" + filteredPerturbations.length);
-  return { type: UPDATE_CONSTRAINTS, payload: filteredPerturbations };
+  return {
+    type: UPDATE_CONSTRAINTS,
+    payload: {
+      filteredPerturbations: filteredPerturbations,
+      snackbarOpen: true,
+      snackbarMessage: "Pulled " + filteredPerturbations.length + " records."
+    }
+  };
 }
 
 export function getData() {

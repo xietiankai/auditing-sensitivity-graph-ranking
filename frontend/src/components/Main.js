@@ -13,6 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import ControlPanel from "./ControlPanel";
 import { getData, updateDataName } from "../actions";
 import Snackbar from "@material-ui/core/Snackbar";
+import Detail from "./Detail";
 
 const styles = theme => ({
   root: {
@@ -23,7 +24,6 @@ const styles = theme => ({
     marginRight: theme.spacing(2)
   },
   content: {
-    flexGrow: 1,
     marginTop: theme.spacing(7),
     backgroundColor: "#EDF0F2"
   },
@@ -71,6 +71,9 @@ class Main extends React.Component {
           <Grid container spacing={2}>
             <Grid item md={4}>
               <ControlPanel />
+            </Grid>
+            <Grid item md={8}>
+              <Detail/>
             </Grid>
           </Grid>
         </main>

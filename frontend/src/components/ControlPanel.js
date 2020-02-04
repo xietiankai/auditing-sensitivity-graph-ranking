@@ -9,9 +9,10 @@ import Select from "@material-ui/core/Select";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import MenuItem from "@material-ui/core/MenuItem";
-import NativeSelect from "@material-ui/core/NativeSelect";
+import CloseIcon from "@material-ui/icons/Close";
 import {
   getData,
+  snackBarClose,
   updateAlgorithmName,
   updateConstraints,
   updateDataName,
@@ -21,6 +22,8 @@ import {
 import VulnerabilityTable from "./VulnerabilityTable";
 import ChipsArray from "./ChipsArray";
 import Paper from "@material-ui/core/Paper";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme => ({
   formControl: {
@@ -52,7 +55,9 @@ const mapStateToProps = state => {
     dataName: state.dataName,
     algorithmName: state.algorithmName,
     protectionType: state.protectionType,
-    protectionExtent: state.protectionExtent
+    protectionExtent: state.protectionExtent,
+    snackbarOpen: state.snackbarOpen,
+    snackbarMessage: state.snackbarMessage
   };
 };
 
@@ -67,6 +72,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(updateProtectionExtent(event.target.value)),
     updateConstraints: () => {
       dispatch(updateConstraints());
+    },
+    snackBarClose: () => {
+      dispatch(snackBarClose());
     }
   };
 };
@@ -174,6 +182,28 @@ class ControlPanel extends React.Component {
           >
             Update constraints
           </Button>
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right"
+            }}
+            open={this.props.snackbarOpen}
+            message={this.props.snackbarMessage}
+            autoHideDuration={6000}
+            onClose={this.props.snackBarClose}
+            action={
+              <React.Fragment>
+                <IconButton
+                  size="small"
+                  aria-label="close"
+                  color="inherit"
+                  onClick={this.props.snackBarClose}
+                >
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </React.Fragment>
+            }
+          />
         </Box>
       </Paper>
     );
