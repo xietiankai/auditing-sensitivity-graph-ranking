@@ -24,6 +24,8 @@ const styles = theme => ({
     marginRight: theme.spacing(2)
   },
   content: {
+    width: "100%",
+    flexGrow: 1,
     marginTop: theme.spacing(7),
     backgroundColor: "#EDF0F2"
   },
@@ -35,6 +37,14 @@ const styles = theme => ({
   },
   rootGrid: {
     padding: 0
+  },
+  controlPanel: {
+    margin: theme.spacing(1)
+  },
+  detail: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    marginRight: theme.spacing(1)
   }
 });
 
@@ -68,12 +78,16 @@ class Main extends React.Component {
           </Toolbar>
         </AppBar>
         <main className={classes.content}>
-          <Grid container spacing={2}>
-            <Grid item md={4}>
-              <ControlPanel />
+          <Grid container>
+            <Grid item xs={4}>
+              <Box className={classes.controlPanel}>
+                <ControlPanel />
+              </Box>
             </Grid>
-            <Grid item md={8}>
-              <Detail/>
+            <Grid item xs={8}>
+              <Box className={classes.detail}>
+                <Detail />
+              </Box>
             </Grid>
           </Grid>
         </main>

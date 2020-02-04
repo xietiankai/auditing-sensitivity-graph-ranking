@@ -7,6 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { updateActivatedTabIndex } from "../actions";
+import ReactVisRadar from "./ReactVisRadar";
 
 const styles = theme => ({
   root: {
@@ -61,13 +62,17 @@ class Detail extends React.Component {
     );
     if (this.props.detailList.length !== 0) {
       tabComponents = this.props.detailList.map((item, i) => (
-        <Tab label={item} {...a11yProps(i)} />
+        <Tab label={item["remove_id"]} {...a11yProps(i)} />
       ));
-      tabPanelComponents = this.props.detailList.map((item, i) => (
-        <TabPanel value={this.props.activatedTab} index={i}>
-          Detail about {item} !
-        </TabPanel>
-      ));
+      tabPanelComponents = this.props.detailList.map((item, i) => {
+        console.log(item);
+        return (
+          <TabPanel value={this.props.activatedTab} index={i}>
+            Detail about {item["remove_id"]} !
+            <ReactVisRadar removedNode={item} />
+          </TabPanel>
+        );
+      });
     }
     return (
       <div className={this.props.classes.root}>

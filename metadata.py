@@ -8,6 +8,8 @@ from functionalities.inverse_mapping import inverse_mapping
 from functionalities.perturbation_enumeration import perturbation_preview
 from functionalities.perturbation_enumeration_statistics import \
     perturbation_enumeration_statistics
+from functionalities.summarize_perturbation_effect import \
+    summarize_perturbation_effect
 
 
 class MetaDataEncoder(json.JSONEncoder):
@@ -42,3 +44,4 @@ class MetaData:
                                              algorithm=algorithm_name)
         self.perturbations = perturbation_enumeration_statistics(perturbations)
         self.vulnerabilityList = inverse_mapping(perturbations)
+        self.perturbationSummary = summarize_perturbation_effect(perturbations)

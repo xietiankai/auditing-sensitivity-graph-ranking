@@ -18,34 +18,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, { Component } from "react";
+import React, {Component} from "react";
 
 import RadarChart from "react-vis/dist/radar-chart";
 import CircularGridLines from "react-vis/dist/plot/circular-grid-lines";
 import "react-vis/dist/style.css";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
 
-const styles = themes => ({});
+const DATA = [
+  {
+    explosions: 7,
+    wow: 10,
+    dog: 8,
+    sickMoves: 9,
+    nice: 7
+  }
+];
 
-const mapStateToProps = state => {
-  return {
-    perturbationSummary: state.perturbationSummary
+const DOMAIN = [
+  { name: "nice", domain: [0, 100], tickFormat: t => t.toFixed(2) },
+  { name: "explosions", domain: [6.9, 7.1] },
+  { name: "wow", domain: [0, 11] },
+  { name: "dog", domain: [0, 16] },
+  { name: "sickMoves", domain: [0, 20] }
+];
+
+export default class AnimatedRadar extends Component {
+  state = {
+    data: DATA
   };
-};
 
-class ReactVisRadar extends Component {
   render() {
-    const { removedNode, perturbationSummary } = this.props;
-    console.log(this.props);
-    let domain = perturbationSummary.map((item, i) => ({
-      name: removedNode["statistical"][i].axis,
+    const { dataset, attackSummary } = this.props;
+    // console.log(dataset);
+    // console.log(attackSummary);
+    let domain = attackSummary.map((item, i) => ({
+      name: dataset.statistical[i].axis,
       domain: [0, item["value"]]
     }));
+    // console.log(domain);
     let data = {};
-    removedNode["statistical"].map(item => {
+    dataset.statistical.map(item => {
       data[item["axis"]] = item["value"];
     });
+
+    // console.log(data);
+
     return (
       <div className="centered-and-flexed">
         <RadarChart
@@ -89,5 +106,3 @@ class ReactVisRadar extends Component {
     );
   }
 }
-
-export default connect(mapStateToProps)(withStyles(styles)(ReactVisRadar));
