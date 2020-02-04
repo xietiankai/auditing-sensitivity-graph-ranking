@@ -1,5 +1,5 @@
 import {
-  ADD_PROTECTED_NODE,
+  ADD_PROTECTED_NODE, APPEND_DETAIL_LIST,
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
   SNACKBAR_CLOSE,
@@ -24,7 +24,8 @@ const initialState = {
   vulnerabilityList: {},
   snackbarOpen: false,
   snackbarMessage: "",
-  activatedTab:0
+  activatedTab:0,
+  detailList: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -85,6 +86,14 @@ function rootReducer(state = initialState, action) {
   if (action.type === UPDATE_ACTIVATED_TAB_INDEX) {
     return Object.assign({}, state, {
       activatedTab: action.payload
+    });
+  }
+
+  if (action.type === APPEND_DETAIL_LIST) {
+    let newDetailList = [...state.detailList];
+    newDetailList.push(action.payload);
+    return Object.assign({}, state, {
+      detailList: newDetailList
     });
   }
 

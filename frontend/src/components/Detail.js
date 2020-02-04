@@ -17,7 +17,7 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-  return { activatedTab: state.activatedTab };
+  return { activatedTab: state.activatedTab, detailList: state.detailList };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -53,6 +53,22 @@ function TabPanel(props) {
 
 class Detail extends React.Component {
   render() {
+    let tabComponents = <Tab label="Empty" {...a11yProps(0)} />;
+    let tabPanelComponents = (
+      <TabPanel value={this.props.activatedTab} index={0}>
+        Empty
+      </TabPanel>
+    );
+    if (this.props.detailList.length !== 0) {
+      tabComponents = this.props.detailList.map((item, i) => (
+        <Tab label={item} {...a11yProps(i)} />
+      ));
+      tabPanelComponents = this.props.detailList.map((item, i) => (
+        <TabPanel value={this.props.activatedTab} index={i}>
+          Detail about {item} !
+        </TabPanel>
+      ));
+    }
     return (
       <div className={this.props.classes.root}>
         <AppBar position="static" color="default">
@@ -65,36 +81,10 @@ class Detail extends React.Component {
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
           >
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
-            <Tab label="Item Four" {...a11yProps(3)} />
-            <Tab label="Item Five" {...a11yProps(4)} />
-            <Tab label="Item Six" {...a11yProps(5)} />
-            <Tab label="Item Seven" {...a11yProps(6)} />
+            {tabComponents}
           </Tabs>
         </AppBar>
-        <TabPanel value={this.props.activatedTab} index={0}>
-          Item One
-        </TabPanel>
-        <TabPanel value={this.props.activatedTab} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={this.props.activatedTab} index={2}>
-          Item Three
-        </TabPanel>
-        <TabPanel value={this.props.activatedTab} index={3}>
-          Item Four
-        </TabPanel>
-        <TabPanel value={this.props.activatedTab} index={4}>
-          Item Five
-        </TabPanel>
-        <TabPanel value={this.props.activatedTab} index={5}>
-          Item Six
-        </TabPanel>
-        <TabPanel value={this.props.activatedTab} index={6}>
-          Item Seven
-        </TabPanel>
+        {tabPanelComponents}
       </div>
     );
   }

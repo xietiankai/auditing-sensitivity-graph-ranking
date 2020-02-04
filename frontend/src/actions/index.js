@@ -1,5 +1,6 @@
 import {
   ADD_PROTECTED_NODE,
+  APPEND_DETAIL_LIST,
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
   SNACKBAR_CLOSE,
@@ -44,6 +45,10 @@ export function snackBarClose() {
 
 export function updateActivatedTabIndex(payload) {
   return { type: UPDATE_ACTIVATED_TAB_INDEX, payload };
+}
+
+export function appendDetailList(payload) {
+  return { type: APPEND_DETAIL_LIST, payload };
 }
 
 export function updateConstraints() {
