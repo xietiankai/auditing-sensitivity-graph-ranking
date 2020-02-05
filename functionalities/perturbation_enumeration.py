@@ -101,13 +101,42 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
                                                 perturbation_result,
                                                 node)
         influence = 0
+        positive_influence = 0
+        negative_influence = 0
+        label_influence = {}
 
         for item in perturbation_result:
             influence += abs(item["rank_change"])
+            for label_name, label in label_dict_set.items():
+                influence_key_positive = label_name + "_" + \
+                                         str(label[item["node_id"]][
+                                                 "value"]) + "_positive"
+                influence_key_negative = label_name + "_" + \
+                                         str(label[item["node_id"]][
+                                                 "value"]) + "_negative"
+                if item["rank_change"] < 0:
+                    if influence_key_negative in label_influence:
+                        temp_influence = label_influence[influence_key_negative]
+                        temp_influence += abs(item["rank_change"])
+                    else:
+                        temp_influence = abs(item["rank_change"])
+                    label_influence[influence_key_negative] = temp_influence
+                    negative_influence += abs(item["rank_change"])
+                if item["rank_change"] > 0:
+                    if influence_key_positive in label_influence:
+                        temp_influence = label_influence[influence_key_positive]
+                        temp_influence += abs(item["rank_change"])
+                    else:
+                        temp_influence = abs(item["rank_change"])
+                    label_influence[influence_key_positive] = temp_influence
+                    positive_influence += abs(item["rank_change"])
         data_item = {"remove_id": node,
                      "remove_res": perturbation_result,
                      "statistical": statistical_data,
                      "node_influence": influence,
+                     "positive_influence": positive_influence,
+                     "negative_influence": negative_influence,
+                     "label_influence": label_influence,
                      "rank": original_node_info[node]["rank"]}
         for label_name, label in label_dict_set.items():
             data_item[label_name] = label[node]
