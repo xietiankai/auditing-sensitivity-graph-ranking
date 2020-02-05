@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { updateActivatedTabIndex } from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
+import BoxPlotComponent from "./BoxPlotComponent";
 
 const styles = theme => ({
   root: {
@@ -70,6 +71,7 @@ class Detail extends React.Component {
           <TabPanel value={this.props.activatedTab} index={i}>
             Detail about {item["remove_id"]} !
             <ReactVisRadar removedNode={item} />
+            <BoxPlotComponent perturbation={item["remove_res"]} />
           </TabPanel>
         );
       });

@@ -45,3 +45,4 @@ class MetaData:
         self.perturbations = perturbation_enumeration_statistics(perturbations)
         self.vulnerabilityList = inverse_mapping(perturbations)
         self.perturbationSummary = summarize_perturbation_effect(perturbations)
+        self.labels = label_dict_set

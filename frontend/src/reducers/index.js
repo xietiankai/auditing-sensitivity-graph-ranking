@@ -28,7 +28,8 @@ const initialState = {
   snackbarMessage: "",
   activatedTab: 0,
   detailList: [],
-  perturbationSummary: []
+  perturbationSummary: [],
+  labels: {}
 };
 
 function rootReducer(state = initialState, action) {
