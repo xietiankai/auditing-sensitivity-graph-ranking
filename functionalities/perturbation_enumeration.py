@@ -108,12 +108,10 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
         for item in perturbation_result:
             influence += abs(item["rank_change"])
             for label_name, label in label_dict_set.items():
-                influence_key_positive = label_name + "_" + \
-                                         str(label[item["node_id"]][
-                                                 "value"]) + "_positive"
-                influence_key_negative = label_name + "_" + \
-                                         str(label[item["node_id"]][
-                                                 "value"]) + "_negative"
+                influence_key_positive = str(label[item["node_id"]][
+                                                 "label"]) + "_pos"
+                influence_key_negative = str(label[item["node_id"]][
+                                                 "label"]) + "_neg"
                 if item["rank_change"] < 0:
                     if influence_key_negative in label_influence:
                         temp_influence = label_influence[influence_key_negative]

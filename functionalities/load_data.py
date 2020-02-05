@@ -23,9 +23,9 @@ def load_polblogs(filter_threshold=30):
     label_dict = {}
     for i, v in enumerate(graph.nodes()):
         if int(graph_igraph.vs["value"][i]) == 0:
-            label_dict[v] = {"label": "(left or liberal)", "value": 0}
+            label_dict[v] = {"label": "Liberal", "value": 0}
         else:
-            label_dict[v] = {"label": "(right or conservative)", "value": 1}
+            label_dict[v] = {"label": "Conserv", "value": 1}
     new_graph = nx.DiGraph()
     for u, v, data in graph.edges(data=True):
         if graph.degree(u) >= filter_threshold and graph.degree(
