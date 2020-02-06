@@ -57,13 +57,18 @@ export function updateK(payload) {
   return { type: UPDATE_K, payload };
 }
 
-export function addTopKQuery() {
+export function addTopKQuery(removedID) {
   const state = store.getState();
-  const activatedTab = state.activatedTab;
-  let newTopKQueryList = [...state.detailList[activatedTab]["topKQueryList"]];
+  let newTopKQueryList = [...state.detailList[removedID]["topKQueryList"]];
   newTopKQueryList.push(state.currentK);
-
-  return { type: ADD_TOP_K_QUERY, newTopKQueryList };
+  let detail = {};
+  detail[removedID] = Object.assign({}, state.detailList[removedID], {
+    topKQueryList: newTopKQueryList
+  });
+  console.log(detail);
+  let newDetailList = Object.assign({}, state.detailList, detail);
+  console.log(newDetailList);
+  return { type: ADD_TOP_K_QUERY, payload: newDetailList };
 }
 
 export function updateConstraints() {

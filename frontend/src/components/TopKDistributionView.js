@@ -11,7 +11,7 @@ import {
   updateProtectionExtent,
   updateProtectionType
 } from "../actions";
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
@@ -30,12 +30,15 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updateK: event => dispatch(updateK(event.target.value)),
-    addTopKQuery: () => dispatch(addTopKQuery())
+    addTopKQuery: removedID => dispatch(addTopKQuery(removedID))
   };
 };
 
-function topKPieComponent(props) {
-  return 
+export function TopKPieComponent(props) {
+  const { k, perturbation } = props;
+  console.log(perturbation);
+  console.log(k);
+  return <Typography>The pie component {k}</Typography>;
 }
 
 class TopKDistributionView extends React.Component {
@@ -45,7 +48,16 @@ class TopKDistributionView extends React.Component {
       this.props.removedID in this.props.detailList &&
       this.props.detailList[this.props.removedID]["topKQueryList"].length > 0
     ) {
-      this.props.detailList[this.props.removedID]["topQueryList"].map(k=>);
+      kDistributionComponent = this.props.detailList[this.props.removedID][
+        "topKQueryList"
+      ].map(k => (
+        <TopKPieComponent
+          k={k}
+          perturbation={
+            this.props.detailList[this.props.removedID]["removedResults"]
+          }
+        />
+      ));
     }
     return (
       <Box>
@@ -74,12 +86,14 @@ class TopKDistributionView extends React.Component {
             className={this.props.classes.button}
             variant="contained"
             color="primary"
-            onClick={this.props.addTopKQuery}
+            onClick={() => {
+              this.props.addTopKQuery(this.props.removedID);
+            }}
           >
             Query
           </Button>
         </Box>
-        <Box></Box>
+        <Box>{kDistributionComponent}</Box>
       </Box>
     );
   }
