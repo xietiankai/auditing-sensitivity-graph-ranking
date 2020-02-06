@@ -62,16 +62,15 @@ class Detail extends React.Component {
       </TabPanel>
     );
     if (this.props.detailList.length !== 0) {
-      tabComponents = this.props.detailList.map((item, i) => (
-        <Tab label={item["remove_id"]} {...a11yProps(i)} />
+      tabComponents = Object.keys(this.props.detailList).map((item, i) => (
+        <Tab label={item["removeNode"]["remove_id"]} {...a11yProps(i)} />
       ));
-      tabPanelComponents = this.props.detailList.map((item, i) => {
-        console.log(item);
+      tabPanelComponents = Object.keys(this.props.detailList).map((item, i) => {
         return (
           <TabPanel value={this.props.activatedTab} index={i}>
-            Detail about {item["remove_id"]} !
-            <ReactVisRadar removedNode={item} />
-            <BoxPlotComponent perturbation={item["remove_res"]} />
+            Detail about {item["removeNode"]["remove_id"]} !
+            <ReactVisRadar removedNode={item["removeNode"]} />
+            <BoxPlotComponent perturbation={item["removeNode"]["remove_res"]} />
           </TabPanel>
         );
       });

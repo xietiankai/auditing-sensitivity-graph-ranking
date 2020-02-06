@@ -1,5 +1,6 @@
 import {
   ADD_PROTECTED_NODE,
+  ADD_TOP_K_QUERY,
   APPEND_DETAIL_LIST,
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
@@ -9,6 +10,7 @@ import {
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
   UPDATE_DATA_NAME,
+  UPDATE_K,
   UPDATE_PROTECTION_EXTENT,
   UPDATE_PROTECTION_TYPE
 } from "../constants/actionTypes";
@@ -27,9 +29,10 @@ const initialState = {
   snackbarOpen: false,
   snackbarMessage: "",
   activatedTab: 0,
-  detailList: [],
+  detailList: {},
   perturbationSummary: [],
-  labels: {}
+  labels: {},
+  updateK: 0
 };
 
 function rootReducer(state = initialState, action) {
@@ -94,12 +97,27 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === APPEND_DETAIL_LIST) {
-    let newDetailList = [...state.detailList];
-    newDetailList.push(action.payload);
+    console.log("append detail list!");
+    let newSource ={};
+    newSource[action.payload["remove_id"]] = action.payload[""]
+    let newDetailList = Object.assign({}, state.detailList, {action.payload});
     console.log(newDetailList);
     return Object.assign({}, state, {
       detailList: newDetailList
     });
+  }
+
+  if (action.type === UPDATE_K) {
+    return Object.assign({}, state, {
+      currentK: action.payload
+    });
+  }
+
+  if (action.type === ADD_TOP_K_QUERY) {
+    let newSource = {};
+    newSource[state.activatedTab] = action.payload;
+    let newDetailList = Object.assign({}, state.detailList, newSource);
+    return Object.assign({}, state, newDetailList);
   }
 
   return state;

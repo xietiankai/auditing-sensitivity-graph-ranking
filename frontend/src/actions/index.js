@@ -1,5 +1,6 @@
 import {
   ADD_PROTECTED_NODE,
+  ADD_TOP_K_QUERY,
   APPEND_DETAIL_LIST,
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
@@ -9,6 +10,7 @@ import {
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
   UPDATE_DATA_NAME,
+  UPDATE_K,
   UPDATE_PROTECTION_EXTENT,
   UPDATE_PROTECTION_TYPE
 } from "../constants/actionTypes";
@@ -49,6 +51,21 @@ export function updateActivatedTabIndex(payload) {
 
 export function appendDetailList(payload) {
   return { type: APPEND_DETAIL_LIST, payload };
+}
+
+export function updateK(payload) {
+  return { type: UPDATE_K, payload };
+}
+
+export function addTopKQuery() {
+  const state = store.getState();
+  const activatedTab = state.activatedTab;
+  let newTopKQueryList = [...state.detailList[activatedTab]];
+  newTopKQueryList.push(state.currentK);
+  let detail = {
+    topKQueryList: newTopKQueryList
+  };
+  return { type: ADD_TOP_K_QUERY, detail };
 }
 
 export function updateConstraints() {
