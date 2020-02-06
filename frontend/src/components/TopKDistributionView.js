@@ -21,7 +21,9 @@ const styles = theme => ({});
 
 const mapStateToProps = state => {
   return {
-    currentK: state.currentK
+    currentK: state.currentK,
+    activatedTab: state.activatedTab,
+    detailList: state.detailList
   };
 };
 
@@ -32,8 +34,19 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+function topKPieComponent(props) {
+  return 
+}
+
 class TopKDistributionView extends React.Component {
   render() {
+    let kDistributionComponent = <div />;
+    if (
+      this.props.removedID in this.props.detailList &&
+      this.props.detailList[this.props.removedID]["topKQueryList"].length > 0
+    ) {
+      this.props.detailList[this.props.removedID]["topQueryList"].map(k=>);
+    }
     return (
       <Box>
         <Box>
@@ -66,6 +79,7 @@ class TopKDistributionView extends React.Component {
             Query
           </Button>
         </Box>
+        <Box></Box>
       </Box>
     );
   }

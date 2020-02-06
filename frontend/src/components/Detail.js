@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import { updateActivatedTabIndex } from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
 import BoxPlotComponent from "./BoxPlotComponent";
+import TopKDistributionView from "./TopKDistributionView";
 
 const styles = theme => ({
   root: {
@@ -65,12 +66,13 @@ class Detail extends React.Component {
       tabComponents = Object.keys(this.props.detailList).map((item, i) => (
         <Tab label={item} {...a11yProps(i)} />
       ));
-      tabPanelComponents = Object.keys(this.props.detailList).map((item, i) => {
+      tabPanelComponents = Object.keys(this.props.detailList).map((removedID, i) => {
         return (
           <TabPanel value={this.props.activatedTab} index={i}>
-            Detail about {item} !
-            <ReactVisRadar removedNode={this.props.detailList[item]["removedResults"]} />
-            <BoxPlotComponent perturbation={this.props.detailList[item]["removedResults"]["remove_res"]} />
+            Detail about {removedID} !
+            <ReactVisRadar removedNode={this.props.detailList[removedID]["removedResults"]} />
+            <BoxPlotComponent perturbation={this.props.detailList[removedID]["removedResults"]["remove_res"]} />
+            <TopKDistributionView removedID={removedID}/>
           </TabPanel>
         );
       });
