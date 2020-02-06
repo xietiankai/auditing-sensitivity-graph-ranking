@@ -60,12 +60,10 @@ export function updateK(payload) {
 export function addTopKQuery() {
   const state = store.getState();
   const activatedTab = state.activatedTab;
-  let newTopKQueryList = [...state.detailList[activatedTab]];
+  let newTopKQueryList = [...state.detailList[activatedTab]["topKQueryList"]];
   newTopKQueryList.push(state.currentK);
-  let detail = {
-    topKQueryList: newTopKQueryList
-  };
-  return { type: ADD_TOP_K_QUERY, detail };
+
+  return { type: ADD_TOP_K_QUERY, newTopKQueryList };
 }
 
 export function updateConstraints() {

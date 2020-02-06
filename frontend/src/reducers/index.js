@@ -98,9 +98,12 @@ function rootReducer(state = initialState, action) {
 
   if (action.type === APPEND_DETAIL_LIST) {
     console.log("append detail list!");
-    let newSource ={};
-    newSource[action.payload["remove_id"]] = action.payload[""]
-    let newDetailList = Object.assign({}, state.detailList, {action.payload});
+    let detail ={};
+    detail[action.payload["remove_id"]] = {
+      removedResults: action.payload,
+      topKQueryList: []
+    };
+    let newDetailList = Object.assign({}, state.detailList, detail);
     console.log(newDetailList);
     return Object.assign({}, state, {
       detailList: newDetailList
@@ -114,10 +117,12 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === ADD_TOP_K_QUERY) {
-    let newSource = {};
-    newSource[state.activatedTab] = action.payload;
-    let newDetailList = Object.assign({}, state.detailList, newSource);
-    return Object.assign({}, state, newDetailList);
+    let detail = {};
+    detail[state.activatedTab] = action.payload;
+    let newDetailList = Object.assign({}, state.detailList, detail);
+    return Object.assign({}, state, {
+      detailList: newDetailList
+    });
   }
 
   return state;
