@@ -125,7 +125,7 @@ class ControlPanel extends React.Component {
               className={classes.button}
               variant="contained"
               color="primary"
-              onClick={() => {}}
+              onClick={this.props.getData}
             >
               Load Data
             </Button>

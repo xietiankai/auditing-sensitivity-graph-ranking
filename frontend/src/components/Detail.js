@@ -74,17 +74,27 @@ class Detail extends React.Component {
           return (
             <TabPanel value={this.props.activatedTab} index={i}>
               Detail about {removedID} !
-              <ReactVisRadar
-                removedNode={this.props.detailList[removedID]["removedResults"]}
-              />
-              <BoxPlotComponent
-                perturbation={
-                  this.props.detailList[removedID]["removedResults"][
-                    "remove_res"
-                  ]
-                }
-              />
-              <TopKDistributionView removedID={removedID} />
+              <Box display="flex">
+                <Box>
+                  <ReactVisRadar
+                    removedNode={
+                      this.props.detailList[removedID]["removedResults"]
+                    }
+                  />
+                </Box>
+                <Box>
+                  <BoxPlotComponent
+                    perturbation={
+                      this.props.detailList[removedID]["removedResults"][
+                        "remove_res"
+                      ]
+                    }
+                  />
+                </Box>
+                <Box>
+                  <TopKDistributionView removedID={removedID} />
+                </Box>
+              </Box>
             </TabPanel>
           );
         }

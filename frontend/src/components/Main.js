@@ -81,7 +81,7 @@ class Main extends React.Component {
           <Grid container>
             <Grid item xs={4}>
               <Box className={classes.controlPanel}>
-                <ControlPanel />
+                <ControlPanel getData={this.props.getData}/>
               </Box>
             </Grid>
             <Grid item xs={8}>
