@@ -9,10 +9,12 @@ def generate_cache_data(data_name, algorithm_name):
     meta_data = MetaData(graph_object=graph_object,
                          label_dict_set=label_dict_set,
                          algorithm_name=algorithm_name)
-    with open("../cached_data/polblogs_hits_filthre_30.json", "w") as jf:
+    with open(
+            "../cached_data/" + data_name + "_" + algorithm_name + "_filthre_30.json",
+            "w") as jf:
         json.dump(meta_data, jf, cls=MetaDataEncoder)
     print("data cached")
 
 
 if __name__ == "__main__":
-    generate_cache_data(data_name="polblogs", algorithm_name="hits")
+    generate_cache_data(data_name="polblogs", algorithm_name="pagerank")

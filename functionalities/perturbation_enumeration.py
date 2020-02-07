@@ -120,7 +120,7 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
                         temp_influence = abs(item["rank_change"])
                     label_influence[influence_key_negative] = temp_influence
                     negative_influence += abs(item["rank_change"])
-                if item["rank_change"] > 0:
+                elif item["rank_change"] > 0:
                     if influence_key_positive in label_influence:
                         temp_influence = label_influence[influence_key_positive]
                         temp_influence += abs(item["rank_change"])
@@ -128,6 +128,11 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
                         temp_influence = abs(item["rank_change"])
                     label_influence[influence_key_positive] = temp_influence
                     positive_influence += abs(item["rank_change"])
+                else:
+                    if influence_key_positive not in label_influence:
+                        label_influence[influence_key_positive] = 0
+                        label_influence[influence_key_negative] = 0
+
         data_item = {"remove_id": node,
                      "remove_res": perturbation_result,
                      "statistical": statistical_data,
