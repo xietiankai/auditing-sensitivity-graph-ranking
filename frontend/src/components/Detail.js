@@ -15,19 +15,26 @@ import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import "../components/css/Detail.css";
+import DetailTable from "./DetailTable";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    width: "100%",
+    width: "100%"
     // backgroundColor: theme.palette.background.paper
   },
   cardHeader: {
-    marginLeft: theme.spacing(2),
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    paddingLeft: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
-  tabContent: {
+  tabContent: {},
+  leftView: {
+    marginRight: theme.spacing(1),
+    marginTop: theme.spacing(1)
+  },
+  rightView: {
+    marginTop: theme.spacing(1)
   }
 });
 
@@ -84,10 +91,14 @@ class Detail extends React.Component {
           console.log(this.props.detailList);
           console.log(removedID);
           return (
-            <TabPanel value={this.props.activatedTab} className={this.props.classes.tabContent} index={i}>
+            <TabPanel
+              value={this.props.activatedTab}
+              className={this.props.classes.tabContent}
+              index={i}
+            >
               <Grid container>
                 <Grid item md={4}>
-                  <Paper>
+                  <Paper className={this.props.classes.leftView}>
                     <Box className={this.props.classes.cardHeader}>
                       <Typography variant="body1">Influence View</Typography>
                     </Box>
@@ -100,36 +111,43 @@ class Detail extends React.Component {
                   </Paper>
                 </Grid>
                 <Grid item md={8}>
-                  <Paper>
+                  <Paper className={this.props.classes.rightView}>
                     <Box className={this.props.classes.cardHeader}>
                       <Typography variant="body1">Table View</Typography>
                     </Box>
                     <Divider />
+                    <DetailTable
+                      perturbation={
+                        this.props.detailList[removedID]["removedResults"][
+                          "remove_res"
+                        ]
+                      }
+                    />
                   </Paper>
                 </Grid>
                 <Grid item md={8}>
-                  <Paper>
+                  <Paper className={this.props.classes.leftView}>
                     <Box className={this.props.classes.cardHeader}>
                       <Typography variant="body1">
                         Influence Graph View
                       </Typography>
                     </Box>
-                     <Divider />
+                    <Divider />
                     <InfluenceGraphView
                       perturbation={
                         this.props.detailList[removedID]["removedResults"]
                       }
                       canvasHeight={550}
-                      canvasWidth={700}
+                      canvasWidth={820}
                     />
                   </Paper>
                 </Grid>
                 <Grid item md={4}>
-                  <Paper>
+                  <Paper className={this.props.classes.rightView}>
                     <Box className={this.props.classes.cardHeader}>
                       <Typography variant="body1">Distribution View</Typography>
                     </Box>
-                     <Divider />
+                    <Divider />
                     <BoxPlotComponent
                       perturbation={
                         this.props.detailList[removedID]["removedResults"][

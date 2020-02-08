@@ -14,7 +14,11 @@ import {
   updateProtectionType
 } from "../actions";
 
-const styles = theme => ({});
+const styles = theme => ({
+  boxPlotContainer: {
+    padding: theme.spacing(2)
+  }
+});
 
 const mapStateToProps = state => {
   return {
@@ -139,8 +143,8 @@ class BoxPlotComponent extends React.Component {
             animation
             yDomain={[Object.keys(this.props.nodes).length, 0]}
             xDomain={[-1, 2]}
-            height={300}
-            width={150}
+            height={225}
+            width={190}
           >
             <YAxis />
             <LineSeries color="#12939A" data={boxPlotDataUltimate[key]} />
@@ -154,7 +158,7 @@ class BoxPlotComponent extends React.Component {
         </Box>
       );
     });
-    return <Box>{boxPlotComponents}</Box>;
+    return <Box className={this.props.classes.boxPlotContainer}>{boxPlotComponents}</Box>;
   }
 }
 

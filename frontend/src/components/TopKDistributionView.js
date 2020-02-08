@@ -1,26 +1,22 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
-import {
-  addTopKQuery,
-  snackBarClose,
-  updateAlgorithmName,
-  updateConstraints,
-  updateDataName,
-  updateK,
-  updateProtectionExtent,
-  updateProtectionType
-} from "../actions";
-import { Box, Button, Typography } from "@material-ui/core";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/styles";
+import {addTopKQuery, updateK} from "../actions";
+import {Box, Button, Typography} from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { clusteringColors } from "../styles";
+import {clusteringColors} from "../styles";
 import RadialChart from "react-vis/es/radial-chart";
 import Grid from "@material-ui/core/Grid";
 
-const styles = theme => ({});
+const styles = theme => ({
+  distributionContainer: {
+    padding: theme.spacing(2),
+    height: 280,
+    overflow: "auto"
+  }
+});
 
 const mapStateToProps = state => {
   return {
@@ -56,7 +52,7 @@ function processingPieData(data, k, labels) {
       }
     });
   console.log(perturbationStat);
-  const res = Object.keys(perturbationStat).map(key => {
+  return Object.keys(perturbationStat).map(key => {
     return {
       angle: perturbationStat[key],
       label: key,
@@ -64,7 +60,6 @@ function processingPieData(data, k, labels) {
       color: clusteringColors[key]
     };
   });
-  return res;
 }
 
 export function TopKPieComponent(props) {
@@ -77,36 +72,40 @@ export function TopKPieComponent(props) {
 
   return (
     <React.Fragment>
-      <Box display={"flex"}>
-        <Box>
-          <RadialChart
-            data={before}
-            width={radialChartSize}
-            height={radialChartSize}
-            innerRadius={radialChartInnerRadius}
-            radius={radialChartRadius}
-            padAngle={0.04}
-            colorType="literal"
-            // margin={radialChartMargin}
-            showLabels={true}
-          />
-          <Typography>Original Top-{k}</Typography>
-        </Box>
-        <Box>
-          <RadialChart
-            data={after}
-            width={radialChartSize}
-            height={radialChartSize}
-            innerRadius={radialChartInnerRadius}
-            radius={radialChartRadius}
-            padAngle={0.04}
-            colorType="literal"
-            // margin={radialChartMargin}
-            showLabels={true}
-          />
-          <Typography>Perturbed Top-{k}</Typography>
-        </Box>
-      </Box>
+      <Grid container>
+        <Grid item md={6}>
+          <Box>
+            <RadialChart
+              data={before}
+              width={radialChartSize}
+              height={radialChartSize}
+              innerRadius={radialChartInnerRadius}
+              radius={radialChartRadius}
+              padAngle={0.04}
+              colorType="literal"
+              // margin={radialChartMargin}
+              showLabels={true}
+            />
+            <Typography>Original Top-{k}</Typography>
+          </Box>
+        </Grid>
+        <Grid item md={6}>
+          <Box>
+            <RadialChart
+              data={after}
+              width={radialChartSize}
+              height={radialChartSize}
+              innerRadius={radialChartInnerRadius}
+              radius={radialChartRadius}
+              padAngle={0.04}
+              colorType="literal"
+              // margin={radialChartMargin}
+              showLabels={true}
+            />
+            <Typography>Perturbed Top-{k}</Typography>
+          </Box>
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 }
@@ -132,7 +131,7 @@ class TopKDistributionView extends React.Component {
       ));
     }
     return (
-      <React.Fragment>
+      <Box className={this.props.classes.distributionContainer}>
         <Box display={"flex"}>
           <Box>
             <FormControl ariant="outlined">
@@ -171,7 +170,7 @@ class TopKDistributionView extends React.Component {
           </Box>
         </Box>
         <Box>{kDistributionComponent}</Box>
-      </React.Fragment>
+      </Box>
     );
   }
 }
