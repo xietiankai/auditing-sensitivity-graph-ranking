@@ -10,6 +10,7 @@ import { updateActivatedTabIndex } from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
 import BoxPlotComponent from "./BoxPlotComponent";
 import TopKDistributionView from "./TopKDistributionView";
+import InfluenceGraphView from "./InfluenceGraphView";
 
 const styles = theme => ({
   root: {
@@ -93,6 +94,13 @@ class Detail extends React.Component {
                 </Box>
                 <Box>
                   <TopKDistributionView removedID={removedID} />
+                </Box>
+                <Box>
+                  <InfluenceGraphView perturbation={this.props.detailList[removedID]["removedResults"][
+                        "remove_res"
+                      ]}
+                  canvasHeight={300}
+                  canvasWidth={300}/>
                 </Box>
               </Box>
             </TabPanel>

@@ -1,6 +1,7 @@
 import math
 
 from functionalities.calculate_auditing_res import ranking_data_formation
+from functionalities.calculate_influence_graph import calculate_influence_graph
 
 
 def sort_by_rank_change(val):
@@ -58,6 +59,7 @@ def pre_perturbation(graph, node_to_remove, original_node_info, algorithm):
             { every node info, including rank_change }
         ]
     """
+    graph_copy = graph.copy()
     graph.remove_node(node_to_remove)
     new_res_nodes, _ = ranking_data_formation(graph=graph, algorithm=algorithm)
     perturbation_results = []
@@ -66,6 +68,7 @@ def pre_perturbation(graph, node_to_remove, original_node_info, algorithm):
                               node[
                                   "rank"]
         perturbation_results.append(node)
+
     return perturbation_results
 
 
@@ -97,6 +100,9 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
                                                node_to_remove=node,
                                                original_node_info=original_node_info,
                                                algorithm=algorithm)
+        influence_graph_nodes, influence_graph_edges = calculate_influence_graph(
+            graph=graph.copy(), remove_res=perturbation_result,
+            remove_id=node)
         statistical_data = get_statistical_data(graph.copy(),
                                                 perturbation_result,
                                                 node)
@@ -140,7 +146,10 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
                      "positive_influence": positive_influence,
                      "negative_influence": negative_influence,
                      "label_influence": label_influence,
-                     "rank": original_node_info[node]["rank"]}
+                     "rank": original_node_info[node]["rank"],
+                     "influence_graph_nodes": influence_graph_nodes,
+                     "influence_graph_edges": influence_graph_edges
+                     }
         for label_name, label in label_dict_set.items():
             data_item[label_name] = label[node]
         structured_data.append(data_item)
