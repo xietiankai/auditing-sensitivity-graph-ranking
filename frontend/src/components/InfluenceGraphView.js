@@ -9,6 +9,36 @@ export default class InfluenceGraphView extends React.Component {
     this.initializeCanvas();
   }
 
+  /***
+   * Graph simulation when dragging the node
+   * @param simulation {Object} d3 simulation
+   * @returns {Function} d3 function
+   */
+  drag = simulation => {
+    function dragStarted(d) {
+      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
+
+    function dragEnded(d) {
+      if (!d3.event.active) simulation.alphaTarget(0);
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    return d3
+      .drag()
+      .on("start", dragStarted)
+      .on("drag", dragged)
+      .on("end", dragEnded);
+  };
+
   renderSvg(baseGroup, props) {
     const { perturbation, canvasWidth, canvasHeight } = props;
     if (
@@ -18,9 +48,12 @@ export default class InfluenceGraphView extends React.Component {
     )
       return;
     const circleRadius = 13;
+    console.log(perturbation);
     let nodesData = perturbation["influence_graph_nodes"];
     let edgesData = perturbation["influence_graph_edges"];
 
+    console.log(nodesData);
+    console.log(edgesData);
     const simulation = d3
       .forceSimulation(nodesData)
       .force(

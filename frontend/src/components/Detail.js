@@ -96,11 +96,13 @@ class Detail extends React.Component {
                   <TopKDistributionView removedID={removedID} />
                 </Box>
                 <Box>
-                  <InfluenceGraphView perturbation={this.props.detailList[removedID]["removedResults"][
-                        "remove_res"
-                      ]}
-                  canvasHeight={300}
-                  canvasWidth={300}/>
+                  <InfluenceGraphView
+                    perturbation={
+                      this.props.detailList[removedID]["removedResults"]
+                    }
+                    canvasHeight={300}
+                    canvasWidth={300}
+                  />
                 </Box>
               </Box>
             </TabPanel>
