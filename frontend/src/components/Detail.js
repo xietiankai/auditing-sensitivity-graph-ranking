@@ -11,12 +11,23 @@ import ReactVisRadar from "./ReactVisRadar";
 import BoxPlotComponent from "./BoxPlotComponent";
 import TopKDistributionView from "./TopKDistributionView";
 import InfluenceGraphView from "./InfluenceGraphView";
+import Grid from "@material-ui/core/Grid";
+import Divider from "@material-ui/core/Divider";
+import Paper from "@material-ui/core/Paper";
+import "../components/css/Detail.css";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     width: "100%",
-    backgroundColor: theme.palette.background.paper
+    // backgroundColor: theme.palette.background.paper
+  },
+  cardHeader: {
+    marginLeft: theme.spacing(2),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
+  },
+  tabContent: {
   }
 });
 
@@ -73,45 +84,71 @@ class Detail extends React.Component {
           console.log(this.props.detailList);
           console.log(removedID);
           return (
-            <TabPanel value={this.props.activatedTab} index={i}>
-              Detail about {removedID} !
-              <Box display="flex">
-                <Box>
-                  <ReactVisRadar
-                    removedNode={
-                      this.props.detailList[removedID]["removedResults"]
-                    }
-                  />
-                </Box>
-                <Box>
-                  <BoxPlotComponent
-                    perturbation={
-                      this.props.detailList[removedID]["removedResults"][
-                        "remove_res"
-                      ]
-                    }
-                  />
-                </Box>
-                <Box>
-                  <TopKDistributionView removedID={removedID} />
-                </Box>
-                <Box>
-                  <InfluenceGraphView
-                    perturbation={
-                      this.props.detailList[removedID]["removedResults"]
-                    }
-                    canvasHeight={300}
-                    canvasWidth={300}
-                  />
-                </Box>
-              </Box>
+            <TabPanel value={this.props.activatedTab} className={this.props.classes.tabContent} index={i}>
+              <Grid container>
+                <Grid item md={4}>
+                  <Paper>
+                    <Box className={this.props.classes.cardHeader}>
+                      <Typography variant="body1">Influence View</Typography>
+                    </Box>
+                    <Divider />
+                    <ReactVisRadar
+                      removedNode={
+                        this.props.detailList[removedID]["removedResults"]
+                      }
+                    />
+                  </Paper>
+                </Grid>
+                <Grid item md={8}>
+                  <Paper>
+                    <Box className={this.props.classes.cardHeader}>
+                      <Typography variant="body1">Table View</Typography>
+                    </Box>
+                    <Divider />
+                  </Paper>
+                </Grid>
+                <Grid item md={8}>
+                  <Paper>
+                    <Box className={this.props.classes.cardHeader}>
+                      <Typography variant="body1">
+                        Influence Graph View
+                      </Typography>
+                    </Box>
+                     <Divider />
+                    <InfluenceGraphView
+                      perturbation={
+                        this.props.detailList[removedID]["removedResults"]
+                      }
+                      canvasHeight={550}
+                      canvasWidth={700}
+                    />
+                  </Paper>
+                </Grid>
+                <Grid item md={4}>
+                  <Paper>
+                    <Box className={this.props.classes.cardHeader}>
+                      <Typography variant="body1">Distribution View</Typography>
+                    </Box>
+                     <Divider />
+                    <BoxPlotComponent
+                      perturbation={
+                        this.props.detailList[removedID]["removedResults"][
+                          "remove_res"
+                        ]
+                      }
+                    />
+
+                    <TopKDistributionView removedID={removedID} />
+                  </Paper>
+                </Grid>
+              </Grid>
             </TabPanel>
           );
         }
       );
     }
     return (
-      <div className={this.props.classes.root}>
+      <div id="detail" className={this.props.classes.root}>
         <AppBar position="static" color="default">
           <Tabs
             value={this.props.activatedTab}
