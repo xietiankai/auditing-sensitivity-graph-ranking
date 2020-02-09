@@ -40,7 +40,13 @@ export default class InfluenceGraphView extends React.Component {
   };
 
   renderSvg(baseGroup, props) {
-    const { perturbation, canvasWidth, canvasHeight, labels } = props;
+    const {
+      perturbation,
+      canvasWidth,
+      canvasHeight,
+      labels,
+      removedID
+    } = props;
     if (
       !perturbation ||
       perturbation["influence_graph_nodes"] === [] ||
@@ -109,7 +115,10 @@ export default class InfluenceGraphView extends React.Component {
     const circles = node
       .append("circle")
       .attr("id", d => "node-" + d.node_id)
-      .attr("fill", d => clusteringColors[labels["politicalStandpoint"][d.node_id]["value"]])
+      .attr(
+        "fill",
+        d => clusteringColors[labels["politicalStandpoint"][d.node_id]["value"]]
+      )
 
       .attr("stroke-width", 2)
       .attr("r", circleRadius)
@@ -134,7 +143,7 @@ export default class InfluenceGraphView extends React.Component {
       svg.attr("transform", d3.event.transform);
     }
 
-    const svgRoot = d3.select("#impact-graph-chart");
+    const svgRoot = d3.select("#impact-graph-chart-" + removedID);
 
     svgRoot.call(
       d3
@@ -157,7 +166,8 @@ export default class InfluenceGraphView extends React.Component {
    * @returns None
    */
   initializeCanvas() {
-    const baseGroup = d3.select("#impact-graph-chart-base");
+    const { removedID } = this.props;
+    const baseGroup = d3.select("#impact-graph-chart-base-" + removedID);
     // console.log(baseGroup);
     this.renderSvg(baseGroup, this.props);
   }
@@ -177,16 +187,12 @@ export default class InfluenceGraphView extends React.Component {
   }
 
   render() {
-    const { canvasHeight, canvasWidth } = this.props;
+    const { canvasHeight, canvasWidth, removedID } = this.props;
+    const svgID = "impact-graph-chart-" + removedID;
+    const svgIDBase = "impact-graph-chart-base-" + removedID;
     return (
-      <svg
-        id="impact-graph-chart"
-        style={{ height: canvasHeight, width: canvasWidth }}
-      >
-        <g
-          id="impact-graph-chart-base"
-          style={{ height: "100%", width: "100%" }}
-        />
+      <svg id={svgID} style={{ height: canvasHeight, width: canvasWidth }}>
+        <g id={svgIDBase} style={{ height: "100%", width: "100%" }} />
       </svg>
     );
   }

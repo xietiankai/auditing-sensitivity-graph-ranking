@@ -144,6 +144,7 @@ class Detail extends React.Component {
                       canvasHeight={556}
                       canvasWidth={820}
                       labels={this.props.labels}
+                      removedID={removedID}
                     />
                   </Paper>
                 </Grid>
