@@ -40,7 +40,7 @@ export default class InfluenceGraphView extends React.Component {
   };
 
   renderSvg(baseGroup, props) {
-    const { perturbation, canvasWidth, canvasHeight } = props;
+    const { perturbation, canvasWidth, canvasHeight, labels } = props;
     if (
       !perturbation ||
       perturbation["influence_graph_nodes"] === [] ||
@@ -109,7 +109,7 @@ export default class InfluenceGraphView extends React.Component {
     const circles = node
       .append("circle")
       .attr("id", d => "node-" + d.node_id)
-      .attr("fill", d => "stealblue")
+      .attr("fill", d => clusteringColors[labels["politicalStandpoint"][d.node_id]["value"]])
 
       .attr("stroke-width", 2)
       .attr("r", circleRadius)

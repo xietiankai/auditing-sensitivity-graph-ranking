@@ -39,7 +39,11 @@ const styles = theme => ({
 });
 
 const mapStateToProps = state => {
-  return { activatedTab: state.activatedTab, detailList: state.detailList };
+  return {
+    activatedTab: state.activatedTab,
+    detailList: state.detailList,
+    labels: state.labels
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -137,8 +141,9 @@ class Detail extends React.Component {
                       perturbation={
                         this.props.detailList[removedID]["removedResults"]
                       }
-                      canvasHeight={550}
+                      canvasHeight={556}
                       canvasWidth={820}
+                      labels={this.props.labels}
                     />
                   </Paper>
                 </Grid>

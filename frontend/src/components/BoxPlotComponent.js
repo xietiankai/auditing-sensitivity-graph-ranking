@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Box } from "@material-ui/core";
-import { FlexibleWidthXYPlot, LineSeries, YAxis } from "react-vis";
+import { Box, Typography } from "@material-ui/core";
+import { FlexibleWidthXYPlot, LineSeries, XAxis, YAxis } from "react-vis";
 import BoxPlot from "./BoxPlot";
 import { clusteringColors } from "../styles";
 import { connect } from "react-redux";
@@ -28,21 +28,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    updateDataName: event => dispatch(updateDataName(event.target.value)),
-    updateAlgorithmName: event =>
-      dispatch(updateAlgorithmName(event.target.value)),
-    updateProtectionType: event =>
-      dispatch(updateProtectionType(event.target.value)),
-    updateProtectionExtent: event =>
-      dispatch(updateProtectionExtent(event.target.value)),
-    updateConstraints: () => {
-      dispatch(updateConstraints());
-    },
-    snackBarClose: () => {
-      dispatch(snackBarClose());
-    }
-  };
+  return {};
 };
 
 class BoxPlotComponent extends React.Component {
@@ -52,9 +38,7 @@ class BoxPlotComponent extends React.Component {
     const tempLabelHashMap = this.props.labels[
       Object.keys(this.props.labels)[0]
     ];
-    console.log(tempLabelHashMap);
-    console.log("perturbation");
-    console.log(this.props.perturbation);
+
     this.props.perturbation.map(item => {
       let rankArraysAfter = [];
 
@@ -96,9 +80,6 @@ class BoxPlotComponent extends React.Component {
 
     let boxPlotDataUltimate = {};
 
-    console.log("boxPlotData");
-    console.log(boxPlotData);
-
     Object.keys(boxPlotData).map(key => {
       let tempArray = [];
       if (key in boxPlotDataUltimate) {
@@ -138,27 +119,34 @@ class BoxPlotComponent extends React.Component {
     });
     let boxPlotComponents = Object.keys(boxPlotDataUltimate).map(key => {
       return (
-        <Box style={{ display: "inline-flex", paddingTop: 16 }}>
-          <FlexibleWidthXYPlot
-            animation
-            yDomain={[Object.keys(this.props.nodes).length, 0]}
-            xDomain={[-1, 2]}
-            height={225}
-            width={190}
-          >
-            <YAxis />
-            <LineSeries color="#12939A" data={boxPlotDataUltimate[key]} />
-            <BoxPlot
-              colorType="literal"
-              opacityType="literal"
-              stroke="#79C7E3"
-              data={boxPlotDataUltimate[key]}
-            />
-          </FlexibleWidthXYPlot>
+        <Box display={"inline-flex"}>
+          <Box justifyContent="center">
+            <FlexibleWidthXYPlot
+              animation
+              yDomain={[Object.keys(this.props.nodes).length, 0]}
+              xDomain={[-1, 2]}
+              height={200}
+              width={170}
+            >
+              <YAxis />
+              <LineSeries color="#12939A" data={boxPlotDataUltimate[key]} />
+              <BoxPlot
+                colorType="literal"
+                opacityType="literal"
+                stroke="#79C7E3"
+                data={boxPlotDataUltimate[key]}
+              />
+            </FlexibleWidthXYPlot>
+            <Typography align={"center"}>Rank Distribution Change</Typography>
+          </Box>
         </Box>
       );
     });
-    return <Box className={this.props.classes.boxPlotContainer}>{boxPlotComponents}</Box>;
+    return (
+      <Box className={this.props.classes.boxPlotContainer}>
+        {boxPlotComponents}
+      </Box>
+    );
   }
 }
 

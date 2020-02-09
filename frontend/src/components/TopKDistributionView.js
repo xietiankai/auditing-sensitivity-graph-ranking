@@ -13,8 +13,11 @@ import Grid from "@material-ui/core/Grid";
 const styles = theme => ({
   distributionContainer: {
     padding: theme.spacing(2),
-    height: 280,
+    height: 290,
     overflow: "auto"
+  },
+  formControl: {
+    marginRight: theme.spacing(1)
   }
 });
 
@@ -64,9 +67,9 @@ function processingPieData(data, k, labels) {
 
 export function TopKPieComponent(props) {
   const { k, perturbation, labels, nodes } = props;
-  const radialChartSize = 100;
-  const radialChartRadius = 35;
-  const radialChartInnerRadius = 20;
+  const radialChartSize = 195;
+  const radialChartRadius = 45;
+  const radialChartInnerRadius = 30;
   const before = processingPieData(Object.values(nodes), k, labels);
   const after = processingPieData(perturbation["remove_res"], k, labels);
 
@@ -86,7 +89,7 @@ export function TopKPieComponent(props) {
               // margin={radialChartMargin}
               showLabels={true}
             />
-            <Typography>Original Top-{k}</Typography>
+            <Typography align={"center"}>Original Top-{k}</Typography>
           </Box>
         </Grid>
         <Grid item md={6}>
@@ -102,7 +105,7 @@ export function TopKPieComponent(props) {
               // margin={radialChartMargin}
               showLabels={true}
             />
-            <Typography>Perturbed Top-{k}</Typography>
+            <Typography align={"center"}>Perturbed Top-{k}</Typography>
           </Box>
         </Grid>
       </Grid>
@@ -132,9 +135,9 @@ class TopKDistributionView extends React.Component {
     }
     return (
       <Box className={this.props.classes.distributionContainer}>
-        <Box display={"flex"}>
+        <Box justifyContent="center" display={"flex"}>
           <Box>
-            <FormControl ariant="outlined">
+            <FormControl ariant="outlined" className={this.props.classes.formControl}>
               <OutlinedInput
                 margin={"dense"}
                 id="outlined-adornment-weight"
