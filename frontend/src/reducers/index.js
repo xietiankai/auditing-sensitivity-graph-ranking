@@ -6,11 +6,16 @@ import {
   DELETE_PROTECTED_NODE,
   SNACKBAR_CLOSE,
   SNACKBAR_OPEN,
+  TOGGLE_GRAPH_MENU_BUTTON,
+  ToGGle_SHOW_NEGATIVE,
+  TOGGLE_SHOW_POSITIVE,
   UPDATE_ACTIVATED_TAB_INDEX,
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
   UPDATE_DATA_NAME,
   UPDATE_K,
+  UPDATE_LEVEL_LOWER_BOUND,
+  UPDATE_LEVEL_UPPER_BOUND,
   UPDATE_PROTECTION_EXTENT,
   UPDATE_PROTECTION_TYPE
 } from "../constants/actionTypes";
@@ -101,7 +106,12 @@ function rootReducer(state = initialState, action) {
     let detail = {};
     detail[action.payload["remove_id"]] = {
       removedResults: action.payload,
-      topKQueryList: []
+      topKQueryList: [],
+      graphMenuOpen: null,
+      levelLowerBound: 0,
+      levelUpperBound: 5,
+      showPositive: true,
+      showNegative: true
     };
     let newDetailList = Object.assign({}, state.detailList, detail);
     console.log(newDetailList);
@@ -117,8 +127,23 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === ADD_TOP_K_QUERY) {
-    console.log("133333333333333333");
-    console.log(action.payload);
+    let newState = Object.assign({}, state, {
+      detailList: action.payload
+    });
+    console.log(newState);
+    return Object.assign({}, state, {
+      detailList: action.payload
+    });
+  }
+
+  if (
+    action.type === ADD_TOP_K_QUERY ||
+    action.type === TOGGLE_GRAPH_MENU_BUTTON ||
+    action.type === UPDATE_LEVEL_LOWER_BOUND ||
+    action.type === UPDATE_LEVEL_UPPER_BOUND ||
+    action.type === TOGGLE_SHOW_POSITIVE ||
+    action.type === ToGGle_SHOW_NEGATIVE
+  ) {
     let newState = Object.assign({}, state, {
       detailList: action.payload
     });

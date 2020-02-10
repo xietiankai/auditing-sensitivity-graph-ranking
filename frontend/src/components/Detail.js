@@ -6,7 +6,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { updateActivatedTabIndex } from "../actions";
+import { toggleGraphMenu, updateActivatedTabIndex } from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
 import BoxPlotComponent from "./BoxPlotComponent";
 import TopKDistributionView from "./TopKDistributionView";
@@ -16,6 +16,11 @@ import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import "../components/css/Detail.css";
 import DetailTable from "./DetailTable";
+import SettingsIcon from "@material-ui/icons/Settings";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme => ({
   root: {
@@ -49,7 +54,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     updateActivatedTabIndex: (event, value) =>
-      dispatch(updateActivatedTabIndex(value))
+      dispatch(updateActivatedTabIndex(value)),
+    toggleGraphMenuOpen: (event, removedID) =>
+      dispatch(toggleGraphMenu(removedID, event.currentTarget)),
+    toggleGraphMenuClose: (event, removedID) =>
+      dispatch(toggleGraphMenu(removedID, null))
   };
 };
 
@@ -131,10 +140,44 @@ class Detail extends React.Component {
                 </Grid>
                 <Grid item md={8}>
                   <Paper className={this.props.classes.leftView}>
-                    <Box className={this.props.classes.cardHeader}>
-                      <Typography variant="body1">
-                        Influence Graph View
-                      </Typography>
+                    <Box
+                      className={this.props.classes.cardHeader}
+                      display={"flex"}
+                    >
+                      <Box flexGrow={1}>
+                        <Typography variant="body1">
+                          Influence Graph View
+                        </Typography>
+                      </Box>
+
+                      <Box id={"setting-button"}>
+                        <IconButton
+                          aria-controls="simple-menu"
+                          aria-haspopup="true"
+                          onClick={event => {
+                            this.props.toggleGraphMenuOpen(event, removedID);
+                          }}
+                        >
+                          <SettingsIcon fontSize="small"  />
+                        </IconButton>
+                        <Menu
+                          id="simple-menu"
+                          anchorEl={
+                            this.props.detailList[removedID]["graphMenuOpen"]
+                          }
+                          keepMounted
+                          open={Boolean(
+                            this.props.detailList[removedID]["graphMenuOpen"]
+                          )}
+                          onClose={event => {
+                            this.props.toggleGraphMenuClose(event, removedID);
+                          }}
+                        >
+                          <MenuItem>Profile</MenuItem>
+                          <MenuItem>My account</MenuItem>
+                          <MenuItem>Logout</MenuItem>
+                        </Menu>
+                      </Box>
                     </Box>
                     <Divider />
                     <InfluenceGraphView

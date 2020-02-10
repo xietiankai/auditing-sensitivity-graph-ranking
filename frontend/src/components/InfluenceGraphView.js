@@ -147,10 +147,16 @@ export default class InfluenceGraphView extends React.Component {
           return "white";
         }
       })
-      .attr("stroke-width", 2)
+      .attr("stroke-width", d => {
+        if (d.level === 0) {
+          return 3;
+        } else {
+          return 2;
+        }
+      })
       .attr("r", d => {
         if (d.level === 0) {
-          return 15;
+          return 30;
         } else {
           return nodeScale(Math.abs(d.rank_change));
         }

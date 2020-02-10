@@ -5,7 +5,7 @@ import {
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
   SNACKBAR_CLOSE,
-  SNACKBAR_OPEN,
+  SNACKBAR_OPEN, TOGGLE_GRAPH_MENU_BUTTON,
   UPDATE_ACTIVATED_TAB_INDEX,
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
@@ -69,6 +69,18 @@ export function addTopKQuery(removedID) {
   let newDetailList = Object.assign({}, state.detailList, detail);
   console.log(newDetailList);
   return { type: ADD_TOP_K_QUERY, payload: newDetailList };
+}
+
+export function toggleGraphMenu(removedID, target) {
+  const state = store.getState();
+  let detail = {};
+  detail[removedID] = Object.assign({}, state.detailList[removedID], {
+    graphMenuOpen: target
+  });
+  console.log(detail);
+  let newDetailList = Object.assign({}, state.detailList, detail);
+  console.log(newDetailList);
+  return { type: TOGGLE_GRAPH_MENU_BUTTON, payload: newDetailList };
 }
 
 export function updateConstraints() {
