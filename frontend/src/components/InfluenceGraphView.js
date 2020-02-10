@@ -53,7 +53,7 @@ export default class InfluenceGraphView extends React.Component {
       perturbation["influence_graph_edges"] === []
     )
       return;
-    const circleRadius = 13;
+    const circleRadius = 7;
     console.log(perturbation);
     let nodesData = perturbation["influence_graph_nodes"];
     let edgesData = perturbation["influence_graph_edges"];
@@ -69,11 +69,13 @@ export default class InfluenceGraphView extends React.Component {
           .id(d => {
             return d.node_id;
           })
-          .distance(200)
+          .distance(d => {
+            return d.target.level * 80;
+          })
       )
-      .force("charge", d3.forceManyBody().strength(-10))
+      .force("charge", d3.forceManyBody().strength(-1))
       .force("center", d3.forceCenter(canvasWidth / 2, canvasHeight / 2))
-      .force("collision", d3.forceCollide(circleRadius + 25));
+      .force("collision", d3.forceCollide(circleRadius + 5));
 
     const svg = baseGroup;
 
@@ -81,14 +83,16 @@ export default class InfluenceGraphView extends React.Component {
       .append("defs")
       .append("marker")
       .attr("id", "arrowhead")
+      .attr("markerUnits", "userSpaceOnUse")
       .attr("viewBox", "-0 -5 10 10")
-      .attr("refX", 40)
+      .attr("refX", 20)
       .attr("refY", 0)
       .attr("orient", "auto")
       .attr("markerWidth", 8)
       .attr("markerHeight", 8)
       .attr("xoverflow", "visible")
       .append("svg:path")
+
       .attr("d", "M 0,-5 L 10 ,0 L 0,5")
       .attr("fill", "#999")
       .style("stroke", "none");
@@ -100,7 +104,9 @@ export default class InfluenceGraphView extends React.Component {
       .selectAll("line")
       .data(edgesData)
       .join("line")
-      .attr("stroke-width", 1)
+      .attr("stroke-width", d => {
+        return Math.abs(d.influence) * 3;
+      })
       .attr("stroke", graphEdgeColor)
       .attr("marker-end", "url(#arrowhead)");
 
