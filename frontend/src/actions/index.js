@@ -5,7 +5,10 @@ import {
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
   SNACKBAR_CLOSE,
-  SNACKBAR_OPEN, TOGGLE_GRAPH_MENU_BUTTON,
+  SNACKBAR_OPEN,
+  TOGGLE_GRAPH_MENU_BUTTON,
+  ToGGle_SHOW_NEGATIVE,
+  TOGGLE_SHOW_POSITIVE,
   UPDATE_ACTIVATED_TAB_INDEX,
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
@@ -16,6 +19,7 @@ import {
 } from "../constants/actionTypes";
 import axios from "axios";
 import store from "../store";
+import * as d3 from "d3";
 
 export function updateDataName(payload) {
   return { type: UPDATE_DATA_NAME, payload };
@@ -81,6 +85,50 @@ export function toggleGraphMenu(removedID, target) {
   let newDetailList = Object.assign({}, state.detailList, detail);
   console.log(newDetailList);
   return { type: TOGGLE_GRAPH_MENU_BUTTON, payload: newDetailList };
+}
+
+export function toggleGraphDisplayPNOption(removedID, direction) {
+  const state = store.getState();
+  let detail = {};
+  const svgIDBase = "#impact-graph-chart-base-" + removedID;
+  if (direction === "positive") {
+    if (state.detailList[removedID]["showPositive"]) {
+      d3.select(svgIDBase)
+        .selectAll(".positive")
+        .attr("display", "none");
+    } else {
+      d3.select(svgIDBase)
+        .selectAll(".positive")
+        .attr("display", "block");
+    }
+    detail[removedID] = Object.assign({}, state.detailList[removedID], {
+      showPositive: !state.detailList[removedID]["showPositive"]
+    });
+  } else {
+    console.log("now to to remove negative!")
+    if (state.detailList[removedID]["showNegative"]) {
+      d3.select(svgIDBase)
+        .selectAll(".negative")
+        .attr("display", "none");
+    } else {
+      d3.select(svgIDBase)
+        .selectAll(".negative")
+        .attr("display", "block");
+    }
+
+    detail[removedID] = Object.assign({}, state.detailList[removedID], {
+      showNegative: !state.detailList[removedID]["showNegative"]
+    });
+  }
+
+  console.log(detail);
+  let newDetailList = Object.assign({}, state.detailList, detail);
+  console.log(newDetailList);
+  if (direction === "positive") {
+    return { type: TOGGLE_SHOW_POSITIVE, payload: newDetailList };
+  } else {
+    return { type: ToGGle_SHOW_NEGATIVE, payload: newDetailList };
+  }
 }
 
 export function updateConstraints() {

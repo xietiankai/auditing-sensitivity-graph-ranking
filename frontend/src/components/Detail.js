@@ -6,7 +6,11 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { toggleGraphMenu, updateActivatedTabIndex } from "../actions";
+import {
+  toggleGraphDisplayPNOption,
+  toggleGraphMenu,
+  updateActivatedTabIndex
+} from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
 import BoxPlotComponent from "./BoxPlotComponent";
 import TopKDistributionView from "./TopKDistributionView";
@@ -21,6 +25,8 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 const styles = theme => ({
   root: {
@@ -58,7 +64,9 @@ const mapDispatchToProps = dispatch => {
     toggleGraphMenuOpen: (event, removedID) =>
       dispatch(toggleGraphMenu(removedID, event.currentTarget)),
     toggleGraphMenuClose: (event, removedID) =>
-      dispatch(toggleGraphMenu(removedID, null))
+      dispatch(toggleGraphMenu(removedID, null)),
+    toggleGraphDisplayPNOption: (removedID, direction) =>
+      dispatch(toggleGraphDisplayPNOption(removedID, direction))
   };
 };
 
@@ -158,7 +166,7 @@ class Detail extends React.Component {
                             this.props.toggleGraphMenuOpen(event, removedID);
                           }}
                         >
-                          <SettingsIcon fontSize="small"  />
+                          <SettingsIcon fontSize="small" />
                         </IconButton>
                         <Menu
                           id="simple-menu"
@@ -173,9 +181,50 @@ class Detail extends React.Component {
                             this.props.toggleGraphMenuClose(event, removedID);
                           }}
                         >
-                          <MenuItem>Profile</MenuItem>
-                          <MenuItem>My account</MenuItem>
-                          <MenuItem>Logout</MenuItem>
+                          <MenuItem>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={
+                                    this.props.detailList[removedID][
+                                      "showPositive"
+                                    ]
+                                  }
+                                  onChange={() => {
+                                    this.props.toggleGraphDisplayPNOption(
+                                      removedID,
+                                      "positive"
+                                    );
+                                  }}
+                                  value="show positive"
+                                  color="primary"
+                                />
+                              }
+                              label="show positive"
+                            />
+                          </MenuItem>
+                          <MenuItem>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={
+                                    this.props.detailList[removedID][
+                                      "showNegative"
+                                    ]
+                                  }
+                                  onChange={() => {
+                                    this.props.toggleGraphDisplayPNOption(
+                                      removedID,
+                                      "negative"
+                                    );
+                                  }}
+                                  value="show negative"
+                                  color="primary"
+                                />
+                              }
+                              label="show negative"
+                            />
+                          </MenuItem>
                         </Menu>
                       </Box>
                     </Box>
