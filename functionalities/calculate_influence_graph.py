@@ -16,15 +16,18 @@ def calculate_influence_graph(graph, remove_res, remove_id, level_threshold=5):
         for node in nodes_to_iterate:
             for neighbor in graph.neighbors(node):
                 if neighbor in filtered_change_res:
-                    nodes_res.append({"node_id": neighbor, "level": i})
+                    nodes_res.append({"node_id": neighbor, "level": i,
+                                      "rank_change":
+                                          filtered_change_res[neighbor][
+                                              "rank_change"]})
                     edges_res.append({"source": remove_id, "target": neighbor,
                                       "source_id": remove_id,
                                       "target_id": neighbor,
-                                      "influence": filtered_change_res[neighbor]["rank_change"]})
+                                      "influence":
+                                          filtered_change_res[neighbor][
+                                              "rank_change"]})
                     del filtered_change_res[neighbor]
                     nodes_to_iterate_copy.append(neighbor)
         nodes_to_iterate = nodes_to_iterate_copy
 
-    print(nodes_res)
-    print(edges_res)
     return nodes_res, edges_res

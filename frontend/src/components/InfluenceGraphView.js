@@ -54,7 +54,6 @@ export default class InfluenceGraphView extends React.Component {
     )
       return;
     const circleRadius = 7;
-    console.log(perturbation);
     let nodesData = perturbation["influence_graph_nodes"];
     let edgesData = perturbation["influence_graph_edges"];
 
@@ -97,6 +96,11 @@ export default class InfluenceGraphView extends React.Component {
       .attr("fill", "#999")
       .style("stroke", "none");
 
+    const edgeScale = d3
+      .scaleLinear()
+      .domain(d3.extent(edgesData, d => Math.abs(d.influence)))
+      .range([1, 20]);
+
     const link = svg
       .append("g")
       .attr("class", "edges")
@@ -105,9 +109,15 @@ export default class InfluenceGraphView extends React.Component {
       .data(edgesData)
       .join("line")
       .attr("stroke-width", d => {
-        return Math.abs(d.influence) * 3;
+        return edgeScale(Math.abs(d.influence));
       })
-      .attr("stroke", graphEdgeColor)
+      .attr("stroke", d => {
+        if (d.influence > 0) {
+          return "red";
+        } else {
+          return "green";
+        }
+      })
       .attr("marker-end", "url(#arrowhead)");
 
     const node = svg
@@ -118,6 +128,11 @@ export default class InfluenceGraphView extends React.Component {
       .enter()
       .append("g");
 
+    const nodeScale = d3
+      .scaleLinear()
+      .domain(d3.extent(nodesData, d => Math.abs(d.rank_change)))
+      .range([5, 20]);
+
     const circles = node
       .append("circle")
       .attr("id", d => "node-" + d.node_id)
@@ -125,9 +140,21 @@ export default class InfluenceGraphView extends React.Component {
         "fill",
         d => clusteringColors[labels["politicalStandpoint"][d.node_id]["value"]]
       )
-
+      .attr("stroke", d => {
+        if (d.level === 0) {
+          return "black";
+        } else {
+          return "white";
+        }
+      })
       .attr("stroke-width", 2)
-      .attr("r", circleRadius)
+      .attr("r", d => {
+        if (d.level === 0) {
+          return 15;
+        } else {
+          return nodeScale(Math.abs(d.rank_change));
+        }
+      })
       .call(this.drag(simulation))
       .on("click", d => {
         d.fx = null;
