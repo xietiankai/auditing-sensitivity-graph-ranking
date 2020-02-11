@@ -13,7 +13,8 @@ import {
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
   UPDATE_DATA_NAME,
-  UPDATE_K, UPDATE_LEVEL_BOUND,
+  UPDATE_K,
+  UPDATE_LEVEL_BOUND,
   UPDATE_PROTECTION_EXTENT,
   UPDATE_PROTECTION_TYPE
 } from "../constants/actionTypes";
@@ -87,43 +88,59 @@ export function toggleGraphMenu(removedID, target) {
   return { type: TOGGLE_GRAPH_MENU_BUTTON, payload: newDetailList };
 }
 
+function updateGraphViewCanvas(removedID, direction, values) {
+  const state = store.getState();
+  const svgIDBase = "#impact-graph-chart-base-" + removedID;
+  d3.select(svgIDBase)
+    .selectAll(".positive, .negative")
+    .attr("display", "block");
+  if (
+    (state.detailList[removedID]["showPositive"] && direction === "positive") ||
+    (!state.detailList[removedID]["showPositive"] && direction === "null")
+  ) {
+    d3.select(svgIDBase)
+      .selectAll(".positive")
+      .attr("display", "none");
+  }
+  if (
+    (state.detailList[removedID]["showNegative"] && direction === "negative") ||
+    (!state.detailList[removedID]["showNegative"] && direction === "null")
+  ) {
+    d3.select(svgIDBase)
+      .selectAll(".negative")
+      .attr("display", "none");
+  }
+
+  for (let i = 1; i < 6; i++) {
+    if (i < values[0] || i > values[1]) {
+      d3.select(svgIDBase)
+        .selectAll(".level-" + i)
+        .attr("display", "none");
+    }
+  }
+}
+
 export function toggleGraphDisplayPNOption(removedID, direction) {
   const state = store.getState();
   let detail = {};
-  const svgIDBase = "#impact-graph-chart-base-" + removedID;
+
+  updateGraphViewCanvas(removedID, direction, [
+    state.detailList[removedID]["levelLowerBound"],
+    state.detailList[removedID]["levelUpperBound"]
+  ]);
+
   if (direction === "positive") {
-    if (state.detailList[removedID]["showPositive"]) {
-      d3.select(svgIDBase)
-        .selectAll(".positive")
-        .attr("display", "none");
-    } else {
-      d3.select(svgIDBase)
-        .selectAll(".positive")
-        .attr("display", "block");
-    }
     detail[removedID] = Object.assign({}, state.detailList[removedID], {
       showPositive: !state.detailList[removedID]["showPositive"]
     });
   } else {
-    console.log("now to to remove negative!");
-    if (state.detailList[removedID]["showNegative"]) {
-      d3.select(svgIDBase)
-        .selectAll(".negative")
-        .attr("display", "none");
-    } else {
-      d3.select(svgIDBase)
-        .selectAll(".negative")
-        .attr("display", "block");
-    }
-
     detail[removedID] = Object.assign({}, state.detailList[removedID], {
       showNegative: !state.detailList[removedID]["showNegative"]
     });
   }
 
-  console.log(detail);
   let newDetailList = Object.assign({}, state.detailList, detail);
-  console.log(newDetailList);
+
   if (direction === "positive") {
     return { type: TOGGLE_SHOW_POSITIVE, payload: newDetailList };
   } else {
@@ -133,6 +150,7 @@ export function toggleGraphDisplayPNOption(removedID, direction) {
 
 export function updateLevelBound(removedID, value) {
   const state = store.getState();
+  updateGraphViewCanvas(removedID, "null", value);
   let detail = {};
   detail[removedID] = Object.assign({}, state.detailList[removedID], {
     levelLowerBound: value[0],

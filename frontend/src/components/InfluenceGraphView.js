@@ -109,11 +109,13 @@ export default class InfluenceGraphView extends React.Component {
       .data(edgesData)
       .join("line")
       .attr("class", d => {
+        let classString = "";
         if (d.influence > 0) {
-          return "negative";
+          classString += "negative level-" + d.target.level;
         } else {
-          return "positive";
+          classString += "positive level-" + d.target.level;
         }
+        return classString
       })
       .attr("stroke-width", d => {
         return edgeScale(Math.abs(d.influence));
@@ -143,16 +145,18 @@ export default class InfluenceGraphView extends React.Component {
     const circles = node
       .append("circle")
       .attr("class", d => {
+        let classString = "";
         if (d.level !== 0) {
           if (d.rank_change > 0) {
-            return "negative";
+            classString += "negative level-" + d.level;
           } else {
-            return "positive";
+            classString += "positive level-" + d.level;
           }
         }
         else {
-          return "target";
+          classString += "target level-0";
         }
+        return classString;
       })
       .attr("id", d => "node-" + d.node_id)
       .attr(
