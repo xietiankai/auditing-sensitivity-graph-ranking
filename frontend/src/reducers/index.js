@@ -13,7 +13,7 @@ import {
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
   UPDATE_DATA_NAME,
-  UPDATE_K,
+  UPDATE_K, UPDATE_LEVEL_BOUND,
   UPDATE_LEVEL_LOWER_BOUND,
   UPDATE_LEVEL_UPPER_BOUND,
   UPDATE_PROTECTION_EXTENT,
@@ -139,8 +139,7 @@ function rootReducer(state = initialState, action) {
   if (
     action.type === ADD_TOP_K_QUERY ||
     action.type === TOGGLE_GRAPH_MENU_BUTTON ||
-    action.type === UPDATE_LEVEL_LOWER_BOUND ||
-    action.type === UPDATE_LEVEL_UPPER_BOUND ||
+    action.type === UPDATE_LEVEL_BOUND ||
     action.type === TOGGLE_SHOW_POSITIVE ||
     action.type === ToGGle_SHOW_NEGATIVE
   ) {

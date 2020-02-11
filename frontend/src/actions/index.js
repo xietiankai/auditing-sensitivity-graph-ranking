@@ -13,7 +13,7 @@ import {
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
   UPDATE_DATA_NAME,
-  UPDATE_K,
+  UPDATE_K, UPDATE_LEVEL_BOUND,
   UPDATE_PROTECTION_EXTENT,
   UPDATE_PROTECTION_TYPE
 } from "../constants/actionTypes";
@@ -105,7 +105,7 @@ export function toggleGraphDisplayPNOption(removedID, direction) {
       showPositive: !state.detailList[removedID]["showPositive"]
     });
   } else {
-    console.log("now to to remove negative!")
+    console.log("now to to remove negative!");
     if (state.detailList[removedID]["showNegative"]) {
       d3.select(svgIDBase)
         .selectAll(".negative")
@@ -129,6 +129,17 @@ export function toggleGraphDisplayPNOption(removedID, direction) {
   } else {
     return { type: ToGGle_SHOW_NEGATIVE, payload: newDetailList };
   }
+}
+
+export function updateLevelBound(removedID, value) {
+  const state = store.getState();
+  let detail = {};
+  detail[removedID] = Object.assign({}, state.detailList[removedID], {
+    levelLowerBound: value[0],
+    levelUpperBound: value[1]
+  });
+  let newDetailList = Object.assign({}, state.detailList, detail);
+  return { type: UPDATE_LEVEL_BOUND, payload: newDetailList };
 }
 
 export function updateConstraints() {

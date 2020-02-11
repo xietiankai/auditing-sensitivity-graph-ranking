@@ -9,7 +9,8 @@ import Box from "@material-ui/core/Box";
 import {
   toggleGraphDisplayPNOption,
   toggleGraphMenu,
-  updateActivatedTabIndex
+  updateActivatedTabIndex,
+  updateLevelBound
 } from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
 import BoxPlotComponent from "./BoxPlotComponent";
@@ -27,6 +28,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Slider from "@material-ui/core/Slider";
+import MenuList from "@material-ui/core/MenuList";
 
 const styles = theme => ({
   root: {
@@ -66,7 +69,9 @@ const mapDispatchToProps = dispatch => {
     toggleGraphMenuClose: (event, removedID) =>
       dispatch(toggleGraphMenu(removedID, null)),
     toggleGraphDisplayPNOption: (removedID, direction) =>
-      dispatch(toggleGraphDisplayPNOption(removedID, direction))
+      dispatch(toggleGraphDisplayPNOption(removedID, direction)),
+    updateLevelBound: (value, removedID) =>
+      dispatch(updateLevelBound(removedID, value))
   };
 };
 
@@ -225,6 +230,30 @@ class Detail extends React.Component {
                               label="show negative"
                             />
                           </MenuItem>
+                          <MenuItem>
+                            <Slider
+                              min={0}
+                              max={5}
+                              step={1}
+                              value={[
+                                this.props.detailList[removedID][
+                                  "levelLowerBound"
+                                ],
+                                this.props.detailList[removedID][
+                                  "levelUpperBound"
+                                ]
+                              ]}
+                              onChange={(event, value) => {
+                                console.log(value);
+                                this.props.updateLevelBound(value, removedID);
+                              }}
+                              valueLabelDisplay="auto"
+                              aria-labelledby="range-slider"
+                              getAriaValueText={value => {
+                                return `level ${value}`;
+                              }}
+                            />
+                          </MenuItem>
                         </Menu>
                       </Box>
                     </Box>
@@ -253,7 +282,6 @@ class Detail extends React.Component {
                         ]
                       }
                     />
-
                     <TopKDistributionView removedID={removedID} />
                   </Paper>
                 </Grid>
