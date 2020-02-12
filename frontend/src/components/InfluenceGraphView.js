@@ -57,8 +57,8 @@ export default class InfluenceGraphView extends React.Component {
     let nodesData = perturbation["influence_graph_nodes"];
     let edgesData = perturbation["influence_graph_edges"];
 
-    console.log(nodesData);
-    console.log(edgesData);
+    // console.log(nodesData);
+    // console.log(edgesData);
     const simulation = d3
       .forceSimulation(nodesData)
       .force(

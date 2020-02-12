@@ -232,7 +232,7 @@ class Detail extends React.Component {
                           </MenuItem>
                           <MenuItem>
                             <Slider
-                              min={0}
+                              min={1}
                               max={5}
                               step={1}
                               value={[

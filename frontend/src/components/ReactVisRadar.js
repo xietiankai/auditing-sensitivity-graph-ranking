@@ -78,7 +78,7 @@ class ReactVisRadar extends Component {
           tickFormat={t => ""}
           width={300}
           height={300}
-          startingAngle={0}
+          // startingAngle={0}
         >
           <CircularGridLines
             tickValues={[...new Array(6)].map((v, i) => i / 6 - 1)}

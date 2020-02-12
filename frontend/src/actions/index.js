@@ -70,9 +70,9 @@ export function addTopKQuery(removedID) {
   detail[removedID] = Object.assign({}, state.detailList[removedID], {
     topKQueryList: newTopKQueryList
   });
-  console.log(detail);
+  // console.log(detail);
   let newDetailList = Object.assign({}, state.detailList, detail);
-  console.log(newDetailList);
+  // console.log(newDetailList);
   return { type: ADD_TOP_K_QUERY, payload: newDetailList };
 }
 
@@ -82,9 +82,9 @@ export function toggleGraphMenu(removedID, target) {
   detail[removedID] = Object.assign({}, state.detailList[removedID], {
     graphMenuOpen: target
   });
-  console.log(detail);
+  // console.log(detail);
   let newDetailList = Object.assign({}, state.detailList, detail);
-  console.log(newDetailList);
+  // console.log(newDetailList);
   return { type: TOGGLE_GRAPH_MENU_BUTTON, payload: newDetailList };
 }
 
@@ -168,7 +168,7 @@ export function updateConstraints() {
   const vulnerabilityList = store.getState().vulnerabilityList;
   let bannedNodes = [];
   const threshold = perturbations.length * protectionExtent;
-  console.log(threshold);
+  // console.log(threshold);
   Array.from(protectedNodes).map(nodeID => {
     let temp = [];
     if (protectionType === "increased") {
@@ -182,14 +182,14 @@ export function updateConstraints() {
     }
     bannedNodes = bannedNodes.concat(temp);
   });
-  console.log("banned nodes");
-  console.log(bannedNodes);
-  console.log("previous length: " + perturbations.length);
+  // console.log("banned nodes");
+  // console.log(bannedNodes);
+  // console.log("previous length: " + perturbations.length);
   const bannedNodesSet = new Set(bannedNodes.map(node => node["node_id"]));
   const filteredPerturbations = perturbations.filter(
     item => !bannedNodesSet.has(item["remove_id"])
   );
-  console.log("after length:" + filteredPerturbations.length);
+  // console.log("after length:" + filteredPerturbations.length);
   return {
     type: UPDATE_CONSTRAINTS,
     payload: {
