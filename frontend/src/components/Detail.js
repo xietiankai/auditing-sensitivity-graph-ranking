@@ -30,6 +30,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Slider from "@material-ui/core/Slider";
 import MenuList from "@material-ui/core/MenuList";
+import RankingChangeOverview from "./RankingChangeOverview";
 
 const styles = theme => ({
   root: {
@@ -123,25 +124,43 @@ class Detail extends React.Component {
               index={i}
             >
               <Grid container>
-                <Grid item md={4}>
+                <Grid item md={5}>
                   <Paper className={this.props.classes.leftView}>
                     <Box className={this.props.classes.cardHeader}>
-                      <Typography variant="body1">Influence View</Typography>
+                      <Typography variant="h6">Influence View</Typography>
                     </Box>
-                    <Divider />
-                    <ReactVisRadar
-                      removedNode={
-                        this.props.detailList[removedID]["removedResults"]
-                      }
-                    />
+                    {/*<Divider />*/}
+                    <Grid container>
+                      <Grid item md={6}>
+                        <ReactVisRadar
+                          removedNode={
+                            this.props.detailList[removedID]["removedResults"]
+                          }
+                        />
+                      </Grid>
+                      <Grid item md={6}>
+                        <Typography>{removedID}</Typography>
+                        <Typography variant={"body1"}>
+                          There are many variations of passages of Lorem Ipsum
+                          available, but the majority have suffered alteration
+                          in some form, by injected humour, or randomised words
+                          which don't look even slightly believable.
+                        </Typography>
+                      </Grid>
+                      <Grid item md={12}>
+                        <RankingChangeOverview removeRes={this.props.detailList[removedID]["removedResults"][
+                          "remove_res"
+                        ]}/>
+                      </Grid>
+                    </Grid>
                   </Paper>
                 </Grid>
-                <Grid item md={8}>
+                <Grid item md={7}>
                   <Paper className={this.props.classes.rightView}>
-                    <Box className={this.props.classes.cardHeader}>
-                      <Typography variant="body1">Table View</Typography>
-                    </Box>
-                    <Divider />
+                    {/*  <Box className={this.props.classes.cardHeader}>*/}
+                    {/*    <Typography variant="body1">Table View</Typography>*/}
+                    {/*  </Box>*/}
+                    {/*  <Divider />*/}
                     <DetailTable
                       perturbation={
                         this.props.detailList[removedID]["removedResults"][

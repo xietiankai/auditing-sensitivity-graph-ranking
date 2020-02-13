@@ -1,7 +1,7 @@
 import * as React from "react";
 import MaterialTable from "material-table";
 import { clusteringColors, leftPanelBackgroundColor } from "../styles";
-import { Box, Paper } from "@material-ui/core";
+import { Box, Paper, Typography } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import {
   snackBarClose,
@@ -13,8 +13,11 @@ import {
 } from "../actions";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
+import "../components/css/DetailTable.css";
 
-const styles = theme => ({});
+const styles = theme => ({
+  root: { overflow: "auto" }
+});
 
 const mapStateToProps = state => {
   return {
@@ -38,20 +41,20 @@ class DetailTable extends React.Component {
         title: "Node Name",
         field: "node_id",
         cellStyle: {
-          maxWidth: 110
+          maxWidth: 150
         },
         headerStyle: {
-          maxWidth: 110
+          maxWidth: 150
         }
       },
       {
-        title: "Original Rank",
+        title: "O.Ranking",
         field: "rank",
         cellStyle: {
-          maxWidth: 80
+          maxWidth: 70
         },
         headerStyle: {
-          maxWidth: 80
+          maxWidth: 70
         },
         render: rowData => this.props.nodes[rowData["node_id"]]["rank"],
         customSort: (a, b) =>
@@ -59,31 +62,33 @@ class DetailTable extends React.Component {
           this.props.nodes[b["node_id"]]["rank"]
       },
       {
-        title: "Perturbed Rank",
+        title: "P.Ranking",
         field: "rank",
         cellStyle: {
-          maxWidth: 80
+          maxWidth: 70
         },
         headerStyle: {
-          maxWidth: 80
+          maxWidth: 70
         }
       },
       {
-        title: "Rank Change",
+        title: "Diff",
         field: "rank_change",
         cellStyle: {
-          maxWidth: 80
+          maxWidth: 70
         },
         headerStyle: {
-          maxWidth: 80
+          maxWidth: 70
         },
         render: rowData => {
           if (rowData.rank_change > 0) {
-            return "+" + rowData.rank_change;
+            return (
+              <div style={{ color: "red" }}>{"+" + rowData.rank_change}</div>
+            );
           } else if (rowData.rank_change < 0) {
-            return rowData.rank_change;
+            return <div style={{ color: "green" }}> {rowData.rank_change}</div>;
           } else {
-            return "-";
+            return "0";
           }
         }
       },
@@ -101,9 +106,7 @@ class DetailTable extends React.Component {
             <Chip
               variant="outlined"
               size="small"
-              label={
-                this.props.labels[labelName][rowData["node_id"]]["label"]
-              }
+              label={this.props.labels[labelName][rowData["node_id"]]["label"]}
             />
           );
         },
@@ -163,22 +166,24 @@ class DetailTable extends React.Component {
     return (
       <Box id={"summary-view"}>
         <MaterialTable
+          className={this.props.classes.root}
           columns={watchTableColumns}
           style={{
             backgroundColor: leftPanelBackgroundColor,
-            height: 300,
-            overflowY: "auto"
           }}
           data={this.props.perturbation}
           options={{
             pageSize: 4,
+            minBodyHeight: 290,
+            maxBodyHeight: 290,
             padding: "dense",
-            showTitle: false,
+            // showTitle: false,
             paging: false,
-            searchFieldAlignment: "left",
+            // searchFieldAlignment: "left",
             searchFieldStyle: {
               minWidth: 500,
-              maxHeight: 30
+              maxHeight: 30,
+              marginRight:20
             },
             headerStyle: {
               paddingTop: 0,
@@ -195,7 +200,6 @@ class DetailTable extends React.Component {
           components={{
             Container: props => <Paper {...props} elevation={0} />
           }}
-
         />
       </Box>
     );
