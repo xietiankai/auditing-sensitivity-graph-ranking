@@ -1,6 +1,10 @@
 import * as React from "react";
 import MaterialTable from "material-table";
-import { clusteringColors, leftPanelBackgroundColor } from "../styles";
+import {
+  clusteringColors,
+  greenAndRed,
+  leftPanelBackgroundColor
+} from "../styles";
 import { Box, Paper, Typography } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import {
@@ -83,10 +87,10 @@ class DetailTable extends React.Component {
         render: rowData => {
           if (rowData.rank_change > 0) {
             return (
-              <div style={{ color: "red" }}>{"+" + rowData.rank_change}</div>
+              <div style={{ color: greenAndRed[1] }}>{"+" + rowData.rank_change}</div>
             );
           } else if (rowData.rank_change < 0) {
-            return <div style={{ color: "green" }}> {rowData.rank_change}</div>;
+            return <div style={{ color: greenAndRed[0] }}> {rowData.rank_change}</div>;
           } else {
             return "0";
           }

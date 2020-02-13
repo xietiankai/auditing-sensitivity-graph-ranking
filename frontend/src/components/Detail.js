@@ -31,6 +31,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Slider from "@material-ui/core/Slider";
 import MenuList from "@material-ui/core/MenuList";
 import RankingChangeOverview from "./RankingChangeOverview";
+import Chip from "@material-ui/core/Chip";
 
 const styles = theme => ({
   root: {
@@ -50,6 +51,10 @@ const styles = theme => ({
   },
   rightView: {
     marginTop: theme.spacing(1)
+  },
+  containerPadding: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   }
 });
 
@@ -113,10 +118,18 @@ class Detail extends React.Component {
       tabComponents = Object.keys(this.props.detailList).map((item, i) => (
         <Tab label={item} {...a11yProps(i)} />
       ));
+
       tabPanelComponents = Object.keys(this.props.detailList).map(
         (removedID, i) => {
-          console.log(this.props.detailList);
-          console.log(removedID);
+          const influenceViewLabels = this.props.detailList[removedID][
+            "removedResults"
+          ]["statistical"].map(item => {
+            return (
+              <Typography variant={"body2"}>
+                {item.axis}: {item.value}
+              </Typography>
+            );
+          });
           return (
             <TabPanel
               value={this.props.activatedTab}
@@ -129,30 +142,44 @@ class Detail extends React.Component {
                     <Box className={this.props.classes.cardHeader}>
                       <Typography variant="h6">Influence View</Typography>
                     </Box>
-                    {/*<Divider />*/}
-                    <Grid container>
-                      <Grid item md={6}>
-                        <ReactVisRadar
-                          removedNode={
-                            this.props.detailList[removedID]["removedResults"]
-                          }
-                        />
+                    <Box className={this.props.classes.containerPadding}>
+                      <Grid container>
+                        <Grid item md={7}>
+                          <ReactVisRadar
+                            removedNode={
+                              this.props.detailList[removedID]["removedResults"]
+                            }
+                          />
+                        </Grid>
+                        <Grid item md={5}>
+                          <Typography>
+                            [No.{" "}
+                            {
+                              this.props.detailList[removedID][
+                                "removedResults"
+                              ]["rank"]
+                            }
+                            ][
+                            {
+                              this.props.detailList[removedID][
+                                "removedResults"
+                              ]["politicalStandpoint"]["label"]
+                            }
+                            ] {removedID}
+                          </Typography>
+                          {influenceViewLabels}
+                        </Grid>
+                        <Grid item md={12}>
+                          <RankingChangeOverview
+                            removeRes={
+                              this.props.detailList[removedID][
+                                "removedResults"
+                              ]["remove_res"]
+                            }
+                          />
+                        </Grid>
                       </Grid>
-                      <Grid item md={6}>
-                        <Typography>{removedID}</Typography>
-                        <Typography variant={"body1"}>
-                          There are many variations of passages of Lorem Ipsum
-                          available, but the majority have suffered alteration
-                          in some form, by injected humour, or randomised words
-                          which don't look even slightly believable.
-                        </Typography>
-                      </Grid>
-                      <Grid item md={12}>
-                        <RankingChangeOverview removeRes={this.props.detailList[removedID]["removedResults"][
-                          "remove_res"
-                        ]}/>
-                      </Grid>
-                    </Grid>
+                    </Box>
                   </Paper>
                 </Grid>
                 <Grid item md={7}>
@@ -177,7 +204,7 @@ class Detail extends React.Component {
                       display={"flex"}
                     >
                       <Box flexGrow={1}>
-                        <Typography variant="body1">
+                        <Typography variant="h6">
                           Influence Graph View
                         </Typography>
                       </Box>
@@ -276,7 +303,6 @@ class Detail extends React.Component {
                         </Menu>
                       </Box>
                     </Box>
-                    <Divider />
                     <InfluenceGraphView
                       perturbation={
                         this.props.detailList[removedID]["removedResults"]
@@ -291,9 +317,8 @@ class Detail extends React.Component {
                 <Grid item md={4}>
                   <Paper className={this.props.classes.rightView}>
                     <Box className={this.props.classes.cardHeader}>
-                      <Typography variant="body1">Distribution View</Typography>
+                      <Typography variant="h6">Distribution View</Typography>
                     </Box>
-                    <Divider />
                     <BoxPlotComponent
                       perturbation={
                         this.props.detailList[removedID]["removedResults"][

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as d3 from "d3";
 import { findDOMNode } from "react-dom";
-import { clusteringColors, graphEdgeColor } from "../styles";
+import {clusteringColors, graphEdgeColor, greenAndRed} from "../styles";
 
 export default class InfluenceGraphView extends React.Component {
   componentDidMount() {
@@ -122,9 +122,9 @@ export default class InfluenceGraphView extends React.Component {
       })
       .attr("stroke", d => {
         if (d.influence > 0) {
-          return "red";
+          return greenAndRed[0];
         } else {
-          return "green";
+          return greenAndRed[1];
         }
       })
       .attr("marker-end", "url(#arrowhead)");

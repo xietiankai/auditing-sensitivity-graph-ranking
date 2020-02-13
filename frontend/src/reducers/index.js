@@ -106,7 +106,7 @@ function rootReducer(state = initialState, action) {
     let detail = {};
     detail[action.payload["remove_id"]] = {
       removedResults: action.payload,
-      topKQueryList: [],
+      topKQueryList: [10],
       graphMenuOpen: null,
       levelLowerBound: 0,
       levelUpperBound: 5,

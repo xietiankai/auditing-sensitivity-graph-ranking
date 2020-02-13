@@ -25,6 +25,7 @@ import {
   YAxis,
   VerticalBarSeries
 } from "react-vis";
+import {greenAndRed} from "../styles";
 
 export default class RankingChangeOverview extends React.Component {
   render() {
@@ -46,13 +47,13 @@ export default class RankingChangeOverview extends React.Component {
     );
     return (
       <div>
-        <XYPlot width={500} height={100} yDomain={[yDomain.min, yDomain.max]}>
+        <XYPlot width={480} height={100} yDomain={[yDomain.min, yDomain.max]}>
           <VerticalBarSeries
             className="difference-example"
             data={processedData}
             colorType="literal"
             getColor={d => {
-              return d.y < 0 ? "#EF5D28" : "#1A3177";
+              return d.y < 0 ? greenAndRed[1] : greenAndRed[0];
             }}
           />
           <XAxis />
