@@ -229,16 +229,26 @@ export default class InfluenceGraphView extends React.Component {
 
     const svgRoot = d3.select("#impact-graph-chart-" + removedID);
 
-    // svgRoot.call(
-    //   d3
-    //     .zoom()
-    //     .extent([
-    //       [0, 0],
-    //       [canvasWidth, canvasHeight]
-    //     ])
-    //     .scaleExtent([0, 8])
-    //     .on("zoom", zoomed)
-    // );
+    svgRoot.call(
+      d3
+        .zoom()
+        .extent([
+          [0, 0],
+          [canvasWidth, canvasHeight]
+        ])
+        .scaleExtent([0, 8])
+        .on("zoom", zoomed)
+        .filter(function() {
+          switch (d3.event.type) {
+            case "mousedown":
+              return d3.event.button === 1;
+            case "wheel":
+              return d3.event.button === 0;
+            default:
+              return false;
+          }
+        })
+    );
 
     /***
      * Lasso

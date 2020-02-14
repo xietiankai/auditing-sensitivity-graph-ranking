@@ -1,3 +1,34 @@
 .axis-grid line {
-  stroke: #EFEFEF;
+  stroke: #efefef;
+}
+
+.lasso path {
+  stroke: rgb(80, 80, 80);
+  stroke-width: 2px;
+}
+
+.lasso .drawn {
+  fill-opacity: 0.05;
+}
+
+.lasso .loop_close {
+  fill: none;
+  stroke-dasharray: 4, 4;
+}
+
+.lasso .origin {
+  fill: #3399ff;
+  fill-opacity: 0.5;
+}
+
+.not_possible {
+  fill: rgb(200, 200, 200);
+}
+
+.possible {
+  fill: #ec888c;
+}
+
+.selected {
+  fill: steelblue;
 }
