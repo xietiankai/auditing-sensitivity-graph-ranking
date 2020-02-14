@@ -60,6 +60,9 @@ export default class InfluenceGraphView extends React.Component {
     let nodesData = perturbation["influence_graph_nodes"];
     let edgesData = perturbation["influence_graph_edges"];
 
+    /***
+     * Graph simulation
+     */
     const simulation = d3
       .forceSimulation(nodesData)
       .force(
@@ -226,16 +229,71 @@ export default class InfluenceGraphView extends React.Component {
 
     const svgRoot = d3.select("#impact-graph-chart-" + removedID);
 
-    svgRoot.call(
-      d3
-        .zoom()
-        .extent([
-          [0, 0],
-          [canvasWidth, canvasHeight]
-        ])
-        .scaleExtent([0, 8])
-        .on("zoom", zoomed)
-    );
+    // svgRoot.call(
+    //   d3
+    //     .zoom()
+    //     .extent([
+    //       [0, 0],
+    //       [canvasWidth, canvasHeight]
+    //     ])
+    //     .scaleExtent([0, 8])
+    //     .on("zoom", zoomed)
+    // );
+
+    /***
+     * Lasso
+     */
+    // Lasso functions
+    let lasso_start = function() {
+      lasso
+        .items()
+        .attr("r", 3.5) // reset size
+        .classed("not_possible", true)
+        .classed("selected", false);
+    };
+
+    let lasso_draw = function() {
+      // Style the possible dots
+      lasso
+        .possibleItems()
+        .classed("not_possible", false)
+        .classed("possible", true);
+
+      // Style the not possible dot
+      lasso
+        .notPossibleItems()
+        .classed("not_possible", true)
+        .classed("possible", false);
+    };
+
+    let lasso_end = function() {
+      // Reset the color of all dots
+      lasso
+        .items()
+        .classed("not_possible", false)
+        .classed("possible", false);
+
+      // Style the selected dots
+      lasso
+        .selectedItems()
+        .classed("selected", true)
+        .attr("r", 7);
+
+      // Reset the style of the not selected dots
+      lasso.notSelectedItems().attr("r", 3.5);
+    };
+
+    let lasso = d3
+      .lasso()
+      .closePathSelect(true)
+      .closePathDistance(100)
+      .items(circles)
+      .targetArea(svgRoot)
+      .on("start", lasso_start)
+      .on("draw", lasso_draw)
+      .on("end", lasso_end);
+
+    svgRoot.call(lasso);
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
