@@ -53,7 +53,7 @@ export const rightPanelButtonColor = "#757575";
 
 export const leftPanelBackgroundColor = "#FFFFFF";
 
-export const clusteringColors = ["#4393c3", "#ffa502", "#ffb0b0", "#ffc864"];
+export const clusteringColors = ["#19AFD0", "#FFB900", "#ffb0b0", "#ffc864"];
 
 export const circleStrokeColor = "#7f7f7f";
 
