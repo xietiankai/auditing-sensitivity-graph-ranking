@@ -1,9 +1,27 @@
 import * as React from "react";
 import * as d3 from "d3";
 import { findDOMNode } from "react-dom";
-import { clusteringColors, graphEdgeColor, greenAndRed } from "../styles";
+import {
+  clusteringColors,
+  graphEdgeColor,
+  greenAndRed,
+  strokeColor,
+  targetStrokeColor
+} from "../styles";
 import "../components/css/InfluenceGraphView.css";
 import { toolTipGenerator } from "../utils";
+
+const circleMenu = [
+  {
+    title: "Add to protected nodes"
+  }
+];
+
+const lassoMenu = [
+  {
+    title: "Add to protected nodes"
+  }
+];
 
 export default class InfluenceGraphView extends React.Component {
   componentDidMount() {
@@ -39,6 +57,93 @@ export default class InfluenceGraphView extends React.Component {
       .on("start", dragStarted)
       .on("drag", dragged)
       .on("end", dragEnded);
+  };
+
+  contextMenu = (menu, openCallback) => {
+    // create the div element that will hold the context menu
+    d3.selectAll(".d3-context-menu")
+      .data([1])
+      .enter()
+      .append("div")
+      .attr("class", "d3-context-menu")
+      .style("position", "absolute")
+      .style("background-color", "#f2f2f2")
+      .style("border-radius", "4px")
+      .style("min-width", "150px")
+      .style("border", "1px solid #d4d4d4")
+      .style("font-family", "Arial, sans-serif")
+      .style("z-index", 1500);
+
+    // close menu
+    d3.select("body").on("click.d3-context-menu", function() {
+      d3.select(".d3-context-menu").style("display", "none");
+    });
+
+    const handleMenuClick = d => {
+      this.handleSelectNode(d.id.substring(5));
+      d3.select("#graph-chart-base")
+        .select(".nodes")
+        .selectAll("circle")
+        .style("stroke", strokeColor)
+        .style("stroke-width", "1px");
+      d3.select("#node-" + d.id.substring(5))
+        .style("stroke", targetStrokeColor)
+        .style("stroke-width", "3px");
+      d3.select(".d3-context-menu").style("display", "none");
+    };
+
+    // this gets executed when a contextmenu event occurs
+    return function(data, index) {
+      let elm = this;
+
+      d3.selectAll(".d3-context-menu").html("");
+      let list = d3
+        .selectAll(".d3-context-menu")
+        .append("ul")
+        .style("list-style-type", "none")
+        .style("margin", "4px 0px")
+        .style("padding", "0px")
+        .style("cursor", "default");
+
+      list
+        .selectAll("li")
+        .data(menu)
+        .enter()
+        .append("li")
+        .attr("id", (d, i) => {
+          return "list-item-hover" + i;
+        })
+        .style("padding", "4px 16px")
+        .html(function(d) {
+          return d.title;
+        })
+        .on("click", () => {
+          handleMenuClick(elm);
+        });
+
+      // the openCallback allows an action to fire before the menu is displayed
+      // an example usage would be closing a tooltip
+      if (openCallback) openCallback(data, index);
+
+      if (d3.event.type === "mousedown") {
+        // display context menu
+        d3.select(".d3-context-menu")
+          .style("left", d3.event.pageX - 2 + "px")
+          .style("top", d3.event.pageY - 2 + "px")
+          .style("display", "block");
+        d3.event.preventDefault();
+      } else {
+        console.log(d3.event.type);
+        console.log(d3.event);
+        console.log(d3.event.pageX);
+        console.log(d3.event.pageY);
+        // display context menu
+        d3.select(".d3-context-menu")
+          .style("left", d3.event.sourceEvent.clientX - 2 + "px")
+          .style("top", d3.event.sourceEvent.clientY - 2 + "px")
+          .style("display", "block");
+      }
+    };
   };
 
   renderSvg(baseGroup, props) {
@@ -210,7 +315,8 @@ export default class InfluenceGraphView extends React.Component {
       })
       .on("mouseout", function(d) {
         tooltip.style("display", "none");
-      });
+      })
+      .on("contextmenu", this.contextMenu(circleMenu));
 
     simulation.on("tick", () => {
       link
@@ -253,11 +359,14 @@ export default class InfluenceGraphView extends React.Component {
     /***
      * Lasso
      */
+    const handleLassoSelect = () => {
+      this.contextMenu(lassoMenu).call();
+    };
+
     // Lasso functions
     let lasso_start = function() {
       lasso
         .items()
-        .attr("r", 3.5) // reset size
         .classed("not_possible", true)
         .classed("selected", false);
     };
@@ -284,13 +393,10 @@ export default class InfluenceGraphView extends React.Component {
         .classed("possible", false);
 
       // Style the selected dots
-      lasso
-        .selectedItems()
-        .classed("selected", true)
-        .attr("r", 7);
-
-      // Reset the style of the not selected dots
-      lasso.notSelectedItems().attr("r", 3.5);
+      lasso.selectedItems().classed("selected", true);
+      lasso.selectedItems().call(() => {
+        handleLassoSelect();
+      });
     };
 
     let lasso = d3
@@ -304,6 +410,10 @@ export default class InfluenceGraphView extends React.Component {
       .on("end", lasso_end);
 
     svgRoot.call(lasso);
+
+    /***
+     * Context Menu
+     */
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
