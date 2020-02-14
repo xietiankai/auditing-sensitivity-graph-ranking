@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import { findDOMNode } from "react-dom";
 import { clusteringColors, graphEdgeColor, greenAndRed } from "../styles";
 import "../components/css/InfluenceGraphView.css";
+import { toolTipGenerator } from "../utils";
 
 export default class InfluenceGraphView extends React.Component {
   componentDidMount() {
@@ -55,6 +56,7 @@ export default class InfluenceGraphView extends React.Component {
     )
       return;
     const circleRadius = 7;
+    const tooltip = toolTipGenerator("#influence-graph-view");
     let nodesData = perturbation["influence_graph_nodes"];
     let edgesData = perturbation["influence_graph_edges"];
 
@@ -189,6 +191,22 @@ export default class InfluenceGraphView extends React.Component {
       .on("click", d => {
         d.fx = null;
         d.fy = null;
+      })
+      .on("mousemove", function(d) {
+        tooltip
+          .style("left", () => {
+            return d3.event.pageX + "px";
+          })
+          .style("top", () => {
+            return d3.event.pageY - 50 + "px";
+          })
+          .style("display", "inline-block")
+          .html(() => {
+            return "<div>" + d.node_id + "</div>";
+          });
+      })
+      .on("mouseout", function(d) {
+        tooltip.style("display", "none");
       });
 
     simulation.on("tick", () => {

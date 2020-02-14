@@ -307,7 +307,7 @@ class Detail extends React.Component {
                         </Menu>
                       </Box>
                     </Box>
-                    <Box className={this.props.classes.influenceGraphViewContainer}>
+                    <Box id={"influence-graph-view"} className={this.props.classes.influenceGraphViewContainer}>
                       <InfluenceGraphView
                         perturbation={
                           this.props.detailList[removedID]["removedResults"]
