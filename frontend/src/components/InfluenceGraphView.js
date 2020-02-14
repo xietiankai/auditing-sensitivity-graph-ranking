@@ -80,20 +80,14 @@ export default class InfluenceGraphView extends React.Component {
     });
 
     const handleMenuClick = d => {
-      this.handleSelectNode(d.id.substring(5));
-      d3.select("#graph-chart-base")
-        .select(".nodes")
-        .selectAll("circle")
-        .style("stroke", strokeColor)
-        .style("stroke-width", "1px");
-      d3.select("#node-" + d.id.substring(5))
-        .style("stroke", targetStrokeColor)
-        .style("stroke-width", "3px");
       d3.select(".d3-context-menu").style("display", "none");
     };
+    console.log(this);
 
     // this gets executed when a contextmenu event occurs
     return function(data, index) {
+      console.log(data);
+      console.log(index);
       let elm = this;
 
       d3.selectAll(".d3-context-menu").html("");
@@ -118,6 +112,8 @@ export default class InfluenceGraphView extends React.Component {
           return d.title;
         })
         .on("click", () => {
+          console.log("#######################");
+          console.log(elm);
           handleMenuClick(elm);
         });
 
@@ -126,18 +122,12 @@ export default class InfluenceGraphView extends React.Component {
       if (openCallback) openCallback(data, index);
 
       if (d3.event.type === "mousedown") {
-        // display context menu
         d3.select(".d3-context-menu")
           .style("left", d3.event.pageX - 2 + "px")
           .style("top", d3.event.pageY - 2 + "px")
           .style("display", "block");
         d3.event.preventDefault();
       } else {
-        console.log(d3.event.type);
-        console.log(d3.event);
-        console.log(d3.event.pageX);
-        console.log(d3.event.pageY);
-        // display context menu
         d3.select(".d3-context-menu")
           .style("left", d3.event.sourceEvent.clientX - 2 + "px")
           .style("top", d3.event.sourceEvent.clientY - 2 + "px")
@@ -359,8 +349,10 @@ export default class InfluenceGraphView extends React.Component {
     /***
      * Lasso
      */
-    const handleLassoSelect = () => {
-      this.contextMenu(lassoMenu).call();
+    const handleLassoSelect = (item) => {
+      console.log(item);
+      console.log(this);
+      this.contextMenu(lassoMenu).call(item);
     };
 
     // Lasso functions
@@ -394,9 +386,7 @@ export default class InfluenceGraphView extends React.Component {
 
       // Style the selected dots
       lasso.selectedItems().classed("selected", true);
-      lasso.selectedItems().call(() => {
-        handleLassoSelect();
-      });
+      lasso.selectedItems().call(handleLassoSelect);
     };
 
     let lasso = d3
