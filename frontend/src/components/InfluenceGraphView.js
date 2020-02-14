@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as d3 from "d3";
 import { findDOMNode } from "react-dom";
-import {clusteringColors, graphEdgeColor, greenAndRed} from "../styles";
+import { clusteringColors, graphEdgeColor, greenAndRed } from "../styles";
+import "../components/css/InfluenceGraphView.css";
 
 export default class InfluenceGraphView extends React.Component {
   componentDidMount() {
@@ -57,8 +58,6 @@ export default class InfluenceGraphView extends React.Component {
     let nodesData = perturbation["influence_graph_nodes"];
     let edgesData = perturbation["influence_graph_edges"];
 
-    // console.log(nodesData);
-    // console.log(edgesData);
     const simulation = d3
       .forceSimulation(nodesData)
       .force(
@@ -69,15 +68,18 @@ export default class InfluenceGraphView extends React.Component {
             return d.node_id;
           })
           .distance(d => {
-            return d.target.level * 80;
+            return d.target.level * 72;
           })
       )
       .force("charge", d3.forceManyBody().strength(-1))
-      .force("center", d3.forceCenter(canvasWidth / 2, canvasHeight / 2))
+      .force("center", d3.forceCenter(canvasWidth / 2.3, canvasHeight / 2))
       .force("collision", d3.forceCollide(circleRadius + 5));
 
     const svg = baseGroup;
 
+    /*****
+     * Drawing Graphs
+     */
     svg
       .append("defs")
       .append("marker")
@@ -115,7 +117,7 @@ export default class InfluenceGraphView extends React.Component {
         } else {
           classString += "positive level-" + d.target.level;
         }
-        return classString
+        return classString;
       })
       .attr("stroke-width", d => {
         return edgeScale(Math.abs(d.influence));
@@ -140,7 +142,7 @@ export default class InfluenceGraphView extends React.Component {
     const nodeScale = d3
       .scaleLinear()
       .domain(d3.extent(nodesData, d => Math.abs(d.rank_change)))
-      .range([5, 20]);
+      .range([6, 15]);
 
     const circles = node
       .append("circle")
@@ -152,8 +154,7 @@ export default class InfluenceGraphView extends React.Component {
           } else {
             classString += "positive level-" + d.level;
           }
-        }
-        else {
+        } else {
           classString += "target level-0";
         }
         return classString;
@@ -179,7 +180,7 @@ export default class InfluenceGraphView extends React.Component {
       })
       .attr("r", d => {
         if (d.level === 0) {
-          return 30;
+          return 25;
         } else {
           return nodeScale(Math.abs(d.rank_change));
         }
@@ -228,10 +229,45 @@ export default class InfluenceGraphView extends React.Component {
    * @returns None
    */
   initializeCanvas() {
-    const { removedID } = this.props;
+    const { removedID, canvasHeight, canvasWidth } = this.props;
+
     const baseGroup = d3.select("#impact-graph-chart-base-" + removedID);
-    // console.log(baseGroup);
     this.renderSvg(baseGroup, this.props);
+    /*****
+     * Drawing Grids
+     */
+    const svg = d3.select("#impact-graph-chart-" + removedID);
+    const x = d3
+      .scaleLinear()
+      .domain([-1, 1])
+      .range([-1, canvasWidth]);
+    const y = d3
+      .scaleLinear()
+      .domain([-1, 1])
+      .range([canvasHeight, 0]);
+
+    const xAxisGrid = d3
+      .axisBottom(x)
+      .tickSize(-canvasHeight)
+      .tickFormat("")
+      .ticks(100);
+    const yAxisGrid = d3
+      .axisLeft(y)
+      .tickSize(-canvasWidth)
+      .tickFormat("")
+      .ticks(100);
+    // Create grids.
+    svg
+      .append("g")
+      .attr("class", "x axis-grid")
+      .attr("transform", "translate(-3," + canvasHeight + ")")
+      .call(xAxisGrid);
+    svg
+      .append("g")
+      .attr("class", "y axis-grid")
+      .attr("transform", "translate(-5,0)")
+      .call(yAxisGrid);
+    baseGroup.raise();
   }
 
   /***

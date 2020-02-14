@@ -55,6 +55,10 @@ const styles = theme => ({
   containerPadding: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
+  },
+  influenceGraphViewContainer: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   }
 });
 
@@ -303,15 +307,17 @@ class Detail extends React.Component {
                         </Menu>
                       </Box>
                     </Box>
-                    <InfluenceGraphView
-                      perturbation={
-                        this.props.detailList[removedID]["removedResults"]
-                      }
-                      canvasHeight={556}
-                      canvasWidth={820}
-                      labels={this.props.labels}
-                      removedID={removedID}
-                    />
+                    <Box className={this.props.classes.influenceGraphViewContainer}>
+                      <InfluenceGraphView
+                        perturbation={
+                          this.props.detailList[removedID]["removedResults"]
+                        }
+                        canvasHeight={556}
+                        canvasWidth={820}
+                        labels={this.props.labels}
+                        removedID={removedID}
+                      />
+                    </Box>
                   </Paper>
                 </Grid>
                 <Grid item md={4}>
