@@ -9,6 +9,7 @@ import { withStyles } from "@material-ui/styles";
 import { Box, Button, Card, CardContent, CssBaseline } from "@material-ui/core";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
+import LoadingOverlay from 'react-loading-overlay';
 
 import ControlPanel from "./ControlPanel";
 import { getData, updateDataName } from "../actions";
@@ -26,7 +27,7 @@ const styles = theme => ({
   content: {
     width: "100%",
     flexGrow: 1,
-    marginTop: theme.spacing(7),
+    marginTop: theme.spacing(6),
     backgroundColor: "#EDF0F2"
   },
   tabBar: {
@@ -47,6 +48,14 @@ const styles = theme => ({
     marginRight: theme.spacing(1)
   }
 });
+
+const mapStateToProps = state => {
+  return {
+    isLoading: state.isLoading,
+    loadingText: state.loadingText
+  };
+};
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -78,22 +87,28 @@ class Main extends React.Component {
           </Toolbar>
         </AppBar>
         <main className={classes.content}>
-          <Grid container>
-            <Grid item xs={4}>
-              <Box className={classes.controlPanel}>
-                <ControlPanel getData={this.props.getData}/>
-              </Box>
+          <LoadingOverlay
+            active={this.props.isLoading}
+            spinner
+            text={this.props.loadingText}
+          >
+            <Grid container>
+              <Grid item xs={4}>
+                <Box className={classes.controlPanel}>
+                  <ControlPanel getData={this.props.getData} />
+                </Box>
+              </Grid>
+              <Grid item xs={8}>
+                <Box className={classes.detail}>
+                  <Detail />
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item xs={8}>
-              <Box className={classes.detail}>
-                <Detail />
-              </Box>
-            </Grid>
-          </Grid>
+          </LoadingOverlay>
         </main>
       </div>
     );
   }
 }
 
-export default connect(null, { getData })(withStyles(styles)(Main));
+export default connect(mapStateToProps, { getData })(withStyles(styles)(Main));

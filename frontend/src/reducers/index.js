@@ -3,17 +3,18 @@ import {
   ADD_TOP_K_QUERY,
   APPEND_DETAIL_LIST,
   DATA_LOADED,
-  DELETE_PROTECTED_NODE,
+  DELETE_PROTECTED_NODE, LOADING_DATA,
   SNACKBAR_CLOSE,
   SNACKBAR_OPEN,
   TOGGLE_GRAPH_MENU_BUTTON,
-  ToGGle_SHOW_NEGATIVE,
+  TOGGLE_SHOW_NEGATIVE,
   TOGGLE_SHOW_POSITIVE,
   UPDATE_ACTIVATED_TAB_INDEX,
   UPDATE_ALGORITHM_NAME,
   UPDATE_CONSTRAINTS,
   UPDATE_DATA_NAME,
-  UPDATE_K, UPDATE_LEVEL_BOUND,
+  UPDATE_K,
+  UPDATE_LEVEL_BOUND,
   UPDATE_LEVEL_LOWER_BOUND,
   UPDATE_LEVEL_UPPER_BOUND,
   UPDATE_PROTECTION_EXTENT,
@@ -37,7 +38,9 @@ const initialState = {
   detailList: {},
   perturbationSummary: [],
   labels: {},
-  updateK: 0
+  updateK: 0,
+  isLoading: true,
+  loadingText: "Initializing Data..."
 };
 
 function rootReducer(state = initialState, action) {
@@ -57,12 +60,22 @@ function rootReducer(state = initialState, action) {
     console.info("Data Loaded");
     console.info(action.payload);
     return Object.assign({}, state, action.payload, {
-      filteredPerturbations: action.payload.perturbations
+      filteredPerturbations: action.payload.perturbations,
+      isLoading: false
+    });
+  }
+
+  if (action.type === LOADING_DATA) {
+    return Object.assign({}, state, {
+      isLoading: true
     });
   }
 
   if (action.type === ADD_PROTECTED_NODE) {
-    let newProtectedNodes = new Set([...state.protectedNodes, ...action.payload]);
+    let newProtectedNodes = new Set([
+      ...state.protectedNodes,
+      ...action.payload
+    ]);
     return { ...state, protectedNodes: newProtectedNodes };
   }
 
@@ -140,7 +153,7 @@ function rootReducer(state = initialState, action) {
     action.type === TOGGLE_GRAPH_MENU_BUTTON ||
     action.type === UPDATE_LEVEL_BOUND ||
     action.type === TOGGLE_SHOW_POSITIVE ||
-    action.type === ToGGle_SHOW_NEGATIVE
+    action.type === TOGGLE_SHOW_NEGATIVE
   ) {
     let newState = Object.assign({}, state, {
       detailList: action.payload

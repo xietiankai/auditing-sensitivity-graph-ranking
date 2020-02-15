@@ -13,6 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import {
   getData,
   snackBarClose,
+  toggleLoading,
   updateAlgorithmName,
   updateConstraints,
   updateDataName,
@@ -75,6 +76,9 @@ const mapDispatchToProps = dispatch => {
     },
     snackBarClose: () => {
       dispatch(snackBarClose());
+    },
+    toggleLoading: () => {
+      dispatch(toggleLoading());
     }
   };
 };
@@ -86,6 +90,10 @@ class ControlPanel extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const loadDataHelper = () => {
+      this.props.toggleLoading();
+      this.props.getData();
+    };
     return (
       <Paper>
         <Box className={classes.dataConfigContainer} display={"flex"}>
@@ -125,7 +133,7 @@ class ControlPanel extends React.Component {
               className={classes.button}
               variant="contained"
               color="primary"
-              onClick={this.props.getData}
+              onClick={loadDataHelper}
             >
               Load Data
             </Button>

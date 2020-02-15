@@ -41,11 +41,13 @@ const mapDispatchToProps = dispatch => {
 function processingPieData(data, k, labels) {
   const labelMap = labels["politicalStandpoint"];
   let perturbationStat = {};
+  let labelToStringMap = {};
   data
     .slice(0, k)
     .sort((a, b) => a.rank - b.rank)
     .map(item => {
       const labelCat = labelMap[item["node_id"]]["value"];
+      labelToStringMap[labelCat] = labelMap[item["node_id"]]["label"];
       if (labelCat in perturbationStat) {
         let count = perturbationStat[labelCat];
         count++;
@@ -58,7 +60,7 @@ function processingPieData(data, k, labels) {
   return Object.keys(perturbationStat).map(key => {
     return {
       angle: perturbationStat[key],
-      label: key,
+      label: labelToStringMap[key],
       subLabel: (perturbationStat[key] / k).toFixed(2),
       color: clusteringColors[key]
     };

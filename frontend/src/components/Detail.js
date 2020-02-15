@@ -60,6 +60,10 @@ const styles = theme => ({
   influenceGraphViewContainer: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
+  },
+  emptyPanel: {
+    paddingTop: theme.spacing(54),
+    paddingLeft: theme.spacing(60)
   }
 });
 
@@ -83,7 +87,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(toggleGraphDisplayPNOption(removedID, direction)),
     updateLevelBound: (value, removedID) =>
       dispatch(updateLevelBound(removedID, value)),
-    addProtectedNode: nodeIDsArray => dispatch(addProtectedNode(nodeIDsArray)),
+    addProtectedNode: nodeIDsArray => dispatch(addProtectedNode(nodeIDsArray))
   };
 };
 
@@ -113,10 +117,14 @@ function TabPanel(props) {
 
 class Detail extends React.Component {
   render() {
-    let tabComponents = <Tab label="Empty" {...a11yProps(0)} />;
+    let tabComponents = <Tab disabled label="Null" {...a11yProps(0)} />;
     let tabPanelComponents = (
       <TabPanel value={this.props.activatedTab} index={0}>
-        Empty
+        <Box className={this.props.classes.emptyPanel}>
+          <Typography color={"textSecondary"}>
+            Select a node to diagnose the vulnerability.
+          </Typography>
+        </Box>
       </TabPanel>
     );
     console.log(this.props.detailList);

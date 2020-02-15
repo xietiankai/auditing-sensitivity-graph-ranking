@@ -4,10 +4,11 @@ import {
   APPEND_DETAIL_LIST,
   DATA_LOADED,
   DELETE_PROTECTED_NODE,
+  LOADING_DATA,
   SNACKBAR_CLOSE,
   SNACKBAR_OPEN,
   TOGGLE_GRAPH_MENU_BUTTON,
-  ToGGle_SHOW_NEGATIVE,
+  TOGGLE_SHOW_NEGATIVE,
   TOGGLE_SHOW_POSITIVE,
   UPDATE_ACTIVATED_TAB_INDEX,
   UPDATE_ALGORITHM_NAME,
@@ -144,7 +145,7 @@ export function toggleGraphDisplayPNOption(removedID, direction) {
   if (direction === "positive") {
     return { type: TOGGLE_SHOW_POSITIVE, payload: newDetailList };
   } else {
-    return { type: ToGGle_SHOW_NEGATIVE, payload: newDetailList };
+    return { type: TOGGLE_SHOW_NEGATIVE, payload: newDetailList };
   }
 }
 
@@ -211,5 +212,11 @@ export function getData() {
         const parsedData = JSON.parse(JSON.stringify(response.data));
         dispatch({ type: DATA_LOADED, payload: parsedData });
       });
+  };
+}
+
+export function toggleLoading() {
+  return {
+    type: LOADING_DATA
   };
 }
