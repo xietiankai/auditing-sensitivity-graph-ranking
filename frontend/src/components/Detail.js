@@ -7,6 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import {
+  addProtectedNode,
   toggleGraphDisplayPNOption,
   toggleGraphMenu,
   updateActivatedTabIndex,
@@ -81,7 +82,8 @@ const mapDispatchToProps = dispatch => {
     toggleGraphDisplayPNOption: (removedID, direction) =>
       dispatch(toggleGraphDisplayPNOption(removedID, direction)),
     updateLevelBound: (value, removedID) =>
-      dispatch(updateLevelBound(removedID, value))
+      dispatch(updateLevelBound(removedID, value)),
+    addProtectedNode: nodeIDsArray => dispatch(addProtectedNode(nodeIDsArray)),
   };
 };
 
@@ -307,7 +309,10 @@ class Detail extends React.Component {
                         </Menu>
                       </Box>
                     </Box>
-                    <Box id={"influence-graph-view"} className={this.props.classes.influenceGraphViewContainer}>
+                    <Box
+                      id={"influence-graph-view"}
+                      className={this.props.classes.influenceGraphViewContainer}
+                    >
                       <InfluenceGraphView
                         perturbation={
                           this.props.detailList[removedID]["removedResults"]
@@ -316,6 +321,7 @@ class Detail extends React.Component {
                         canvasWidth={820}
                         labels={this.props.labels}
                         removedID={removedID}
+                        addProtectedNodes={this.props.addProtectedNode}
                       />
                     </Box>
                   </Paper>

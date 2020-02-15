@@ -62,8 +62,7 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === ADD_PROTECTED_NODE) {
-    let newProtectedNodes = new Set(state.protectedNodes);
-    newProtectedNodes.add(action.payload);
+    let newProtectedNodes = new Set([...state.protectedNodes, ...action.payload]);
     return { ...state, protectedNodes: newProtectedNodes };
   }
 

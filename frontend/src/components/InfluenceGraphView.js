@@ -59,6 +59,10 @@ export default class InfluenceGraphView extends React.Component {
       .on("end", dragEnded);
   };
 
+  addProtectedNodesHelper2 = newNodesToAdd => {
+    this.props.addProtectedNodes(newNodesToAdd);
+  };
+
   contextMenu = (menu, openCallback) => {
     // create the div element that will hold the context menu
     d3.selectAll(".d3-context-menu")
@@ -79,10 +83,18 @@ export default class InfluenceGraphView extends React.Component {
       d3.select(".d3-context-menu").style("display", "none");
     });
 
+    const addProtectedNodesHelper1 = newNodesToAdd => {
+      this.addProtectedNodesHelper2(newNodesToAdd);
+    };
+
     const handleMenuClick = d => {
       d3.select(".d3-context-menu").style("display", "none");
+      console.log(d._groups);
+      const newNodesToAdd = d._groups[0].map(item => {
+        return item.id.slice(5);
+      });
+      addProtectedNodesHelper1(newNodesToAdd);
     };
-    console.log(this);
 
     // this gets executed when a contextmenu event occurs
     return function(data, index) {
@@ -112,8 +124,6 @@ export default class InfluenceGraphView extends React.Component {
           return d.title;
         })
         .on("click", () => {
-          console.log("#######################");
-          console.log(elm);
           handleMenuClick(elm);
         });
 
@@ -349,7 +359,7 @@ export default class InfluenceGraphView extends React.Component {
     /***
      * Lasso
      */
-    const handleLassoSelect = (item) => {
+    const handleLassoSelect = item => {
       console.log(item);
       console.log(this);
       this.contextMenu(lassoMenu).call(item);
