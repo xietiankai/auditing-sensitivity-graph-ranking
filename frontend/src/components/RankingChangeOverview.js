@@ -53,7 +53,7 @@ export default class RankingChangeOverview extends React.Component {
             data={processedData}
             colorType="literal"
             getColor={d => {
-              return d.y < 0 ? greenAndRed[1] : greenAndRed[0];
+              return d.y < 0 ? greenAndRed[0] : greenAndRed[1];
             }}
           />
           <XAxis />
