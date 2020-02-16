@@ -234,9 +234,9 @@ export default class InfluenceGraphView extends React.Component {
       })
       .attr("stroke", d => {
         if (d.influence > 0) {
-          return greenAndRed[0];
-        } else {
           return greenAndRed[1];
+        } else {
+          return greenAndRed[0];
         }
       })
       .attr("marker-end", "url(#arrowhead)");
@@ -310,7 +310,7 @@ export default class InfluenceGraphView extends React.Component {
           })
           .style("display", "inline-block")
           .html(() => {
-            return "<div>" + d.node_id + "</div>";
+            return "<div>" + d.node_id + "( " + d.rank_change + ")</div>";
           });
       })
       .on("mouseout", function(d) {

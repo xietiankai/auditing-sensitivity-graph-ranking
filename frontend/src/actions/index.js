@@ -174,11 +174,11 @@ export function updateConstraints() {
     let temp = [];
     if (protectionType === "increased") {
       temp = vulnerabilityList[nodeID].filter(
-        item => item["rank_change"] > threshold
+        item => item["rank_change"] < -threshold
       );
     } else if (protectionType === "decreased") {
       temp = vulnerabilityList[nodeID].filter(
-        item => item["rank_change"] < -threshold
+        item => item["rank_change"] > threshold
       );
     }
     bannedNodes = bannedNodes.concat(temp);

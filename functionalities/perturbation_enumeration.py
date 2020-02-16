@@ -65,9 +65,8 @@ def pre_perturbation(graph, node_to_remove, original_node_info, algorithm):
     new_res_nodes, _ = ranking_data_formation(graph=graph, algorithm=algorithm)
     perturbation_results = []
     for node in new_res_nodes.values():
-        node["rank_change"] = original_node_info[node["node_id"]]["rank"] - \
-                              node[
-                                  "rank"]
+        node["rank_change"] = node["rank"] - original_node_info[node["node_id"]]["rank"]
+
         perturbation_results.append(node)
 
     return perturbation_results
@@ -119,7 +118,7 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
                                                  "label"]) + "_pos"
                 influence_key_negative = str(label[item["node_id"]][
                                                  "label"]) + "_neg"
-                if item["rank_change"] < 0:
+                if item["rank_change"] > 0:
                     if influence_key_negative in label_influence:
                         temp_influence = label_influence[influence_key_negative]
                         temp_influence += abs(item["rank_change"])
@@ -127,7 +126,7 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
                         temp_influence = abs(item["rank_change"])
                     label_influence[influence_key_negative] = temp_influence
                     negative_influence += abs(item["rank_change"])
-                elif item["rank_change"] > 0:
+                elif item["rank_change"] < 0:
                     if influence_key_positive in label_influence:
                         temp_influence = label_influence[influence_key_positive]
                         temp_influence += abs(item["rank_change"])

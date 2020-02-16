@@ -46,6 +46,10 @@ const styles = theme => ({
   constrainContainer: {
     padding: theme.spacing(2)
   },
+  chipsArrayContainer: {
+    height: 60,
+    overflow: "auto"
+  },
   dataConfigContainer: {
     padding: theme.spacing(2)
   }
@@ -177,6 +181,7 @@ class ControlPanel extends React.Component {
             >
               <option value={0.01}>1%</option>
               <option value={0.02}>2%</option>
+              <option value={0.03}>3%</option>
               <option value={0.05}>5%</option>
               <option value={0.1}>10%</option>
               <option value={0.2}>20%</option>
