@@ -117,6 +117,7 @@ class BoxPlotComponent extends React.Component {
       });
       boxPlotDataUltimate[key] = tempArray;
     });
+    const xAxisFormat = ["before", "after", ""];
     let boxPlotComponents = Object.keys(boxPlotDataUltimate).map(key => {
       return (
         <Box display={"inline-flex"}>
@@ -128,6 +129,7 @@ class BoxPlotComponent extends React.Component {
               height={200}
               width={170}
             >
+              <XAxis tickFormat={v => xAxisFormat[v]} />
               <YAxis />
               <LineSeries color="#12939A" data={boxPlotDataUltimate[key]} />
               <BoxPlot
@@ -137,7 +139,7 @@ class BoxPlotComponent extends React.Component {
                 data={boxPlotDataUltimate[key]}
               />
             </FlexibleWidthXYPlot>
-            <Typography align={"center"}>Rank Distribution Change</Typography>
+            <Typography align={"center"}>{(key === "0") ? "Liberal": "Conserv"} Distribution</Typography>
           </Box>
         </Box>
       );

@@ -1,23 +1,26 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import {withStyles} from "@material-ui/styles";
-import {addTopKQuery, updateK} from "../actions";
-import {Box, Button, Typography} from "@material-ui/core";
+import { connect } from "react-redux";
+import { withStyles } from "@material-ui/styles";
+import { addTopKQuery, updateK } from "../actions";
+import { Box, Button, Typography } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import {clusteringColors} from "../styles";
+import { clusteringColors } from "../styles";
 import RadialChart from "react-vis/es/radial-chart";
 import Grid from "@material-ui/core/Grid";
 
 const styles = theme => ({
   distributionContainer: {
     padding: theme.spacing(2),
-    height: 290,
-    overflow: "auto"
+    height: 290
   },
   formControl: {
     marginRight: theme.spacing(1)
+  },
+  pieContainer: {
+    height: 235,
+    overflow: "auto"
   }
 });
 
@@ -139,7 +142,10 @@ class TopKDistributionView extends React.Component {
       <Box className={this.props.classes.distributionContainer}>
         <Box justifyContent="center" display={"flex"}>
           <Box>
-            <FormControl ariant="outlined" className={this.props.classes.formControl}>
+            <FormControl
+              ariant="outlined"
+              className={this.props.classes.formControl}
+            >
               <OutlinedInput
                 margin={"dense"}
                 id="outlined-adornment-weight"
@@ -174,7 +180,7 @@ class TopKDistributionView extends React.Component {
             </Button>
           </Box>
         </Box>
-        <Box>{kDistributionComponent}</Box>
+        <Box className={this.props.classes.pieContainer}>{kDistributionComponent}</Box>
       </Box>
     );
   }
