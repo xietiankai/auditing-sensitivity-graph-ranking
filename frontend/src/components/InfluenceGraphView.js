@@ -182,8 +182,8 @@ export default class InfluenceGraphView extends React.Component {
           })
       )
       .force("charge", d3.forceManyBody().strength(-1))
-      .force("center", d3.forceCenter(canvasWidth / 2.3, canvasHeight / 2))
-      .force("collision", d3.forceCollide(circleRadius + 5));
+      .force("center", d3.forceCenter(canvasWidth / 2.6, canvasHeight / 2))
+      .force("collision", d3.forceCollide(circleRadius + 3));
 
     const svg = baseGroup;
 
@@ -252,7 +252,7 @@ export default class InfluenceGraphView extends React.Component {
     const nodeScale = d3
       .scaleLinear()
       .domain(d3.extent(nodesData, d => Math.abs(d.rank_change)))
-      .range([6, 15]);
+      .range([4, 13]);
 
     const circles = node
       .append("circle")
@@ -303,10 +303,10 @@ export default class InfluenceGraphView extends React.Component {
       .on("mousemove", function(d) {
         tooltip
           .style("left", () => {
-            return d3.event.pageX + "px";
+            return d3.event.pageX - 600 + "px";
           })
           .style("top", () => {
-            return d3.event.pageY - 50 + "px";
+            return d3.event.pageY - 500 + "px";
           })
           .style("display", "inline-block")
           .html(() => {

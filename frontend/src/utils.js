@@ -14,7 +14,7 @@ export function toolTipGenerator(rootTag) {
     .style("background", "none repeat scroll 0 0 #424242")
     .style("border", "1px solid #6F257F")
     .style("padding", "10px")
-    .attr("z-index", 1500)
+    .style("z-index", 1800)
     .style("text-align", "center");
   return tooltip;
 }

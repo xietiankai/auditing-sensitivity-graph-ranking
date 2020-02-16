@@ -59,11 +59,18 @@ const styles = theme => ({
   },
   influenceGraphViewContainer: {
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
+    paddingRight: theme.spacing(2),
+    height: 565
   },
   emptyPanel: {
     paddingTop: theme.spacing(54),
     paddingLeft: theme.spacing(60)
+  },
+  formControlLabel: {
+    display: "block"
+  },
+  toolBox: {
+    width: 195
   }
 });
 
@@ -320,17 +327,86 @@ class Detail extends React.Component {
                     <Box
                       id={"influence-graph-view"}
                       className={this.props.classes.influenceGraphViewContainer}
+                      position="relative"
                     >
-                      <InfluenceGraphView
-                        perturbation={
-                          this.props.detailList[removedID]["removedResults"]
-                        }
-                        canvasHeight={556}
-                        canvasWidth={820}
-                        labels={this.props.labels}
-                        removedID={removedID}
-                        addProtectedNodes={this.props.addProtectedNode}
-                      />
+                      <Box position="absolute" zIndex="modal">
+                        <InfluenceGraphView
+                          perturbation={
+                            this.props.detailList[removedID]["removedResults"]
+                          }
+                          canvasHeight={556}
+                          canvasWidth={820}
+                          labels={this.props.labels}
+                          removedID={removedID}
+                          addProtectedNodes={this.props.addProtectedNode}
+                        />
+                      </Box>
+                      <Box
+                        position="absolute"
+                        zIndex="tooltip"
+                        top="5%"
+                        right="5%"
+                        className={this.props.classes.toolBox}
+                      >
+                        <Typography variant={"body1"}>Display</Typography>
+                        <FormControlLabel
+                          className={this.props.classes.formControlLabel}
+                          control={
+                            <Checkbox
+                              checked={
+                                this.props.detailList[removedID]["showPositive"]
+                              }
+                              onChange={() => {
+                                this.props.toggleGraphDisplayPNOption(
+                                  removedID,
+                                  "positive"
+                                );
+                              }}
+                              value="show positive"
+                              color="primary"
+                            />
+                          }
+                          label="show positive influence"
+                        />
+                        <FormControlLabel
+                          className={this.props.classes.formControlLabel}
+                          control={
+                            <Checkbox
+                              checked={
+                                this.props.detailList[removedID]["showNegative"]
+                              }
+                              onChange={() => {
+                                this.props.toggleGraphDisplayPNOption(
+                                  removedID,
+                                  "negative"
+                                );
+                              }}
+                              value="show negative"
+                              color="primary"
+                            />
+                          }
+                          label="show negative influence"
+                        />
+                        <Typography variant={"body1"}>Filter</Typography>
+                        <Slider
+                          min={1}
+                          max={5}
+                          step={1}
+                          value={[
+                            this.props.detailList[removedID]["levelLowerBound"],
+                            this.props.detailList[removedID]["levelUpperBound"]
+                          ]}
+                          onChange={(event, value) => {
+                            console.log(value);
+                            this.props.updateLevelBound(value, removedID);
+                          }}
+                          valueLabelDisplay="auto"
+                          aria-labelledby="range-slider"
+                          getAriaValueText={value => {
+                            return `level ${value}`;
+                          }}
+                        />
+                      </Box>
                     </Box>
                   </Paper>
                 </Grid>
