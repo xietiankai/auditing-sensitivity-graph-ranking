@@ -8,7 +8,9 @@ import { Box } from "@material-ui/core";
 const styles = theme => ({
   chipsContainer: {
     paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2)
+    paddingBottom: theme.spacing(2),
+    height: 55,
+    overflow: "auto"
   }
 });
 
