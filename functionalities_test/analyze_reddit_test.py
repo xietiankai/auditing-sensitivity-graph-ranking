@@ -41,10 +41,16 @@ for it in range(index, len(node_list)):
             strip=True)
         f.write(node_list[it] + ":" + cat + "\r")
         print(node_list[
-                  it] + ": " + cat + " has been written to the file successfully")
+                  it] + ": " + cat + " has been written to the file successfully" + str(it) + " out of " + str(len(node_list)))
     except requests.exceptions.RequestException as e:
         print(e)
         f.close()
+    except IndexError:
+        print("Index error for: " + node_list[it])
+        pass
+    except ValueError:
+        print("value error for: " + node_list[it])
+        pass
 
     ua.update()
     time.sleep(random.randint(1, 5))
