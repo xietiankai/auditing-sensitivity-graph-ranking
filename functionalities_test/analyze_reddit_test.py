@@ -32,8 +32,15 @@ url = "https://snoopsnoo.com/r/"
 index = sum(1 for line in open("node_cat_map.txt"))
 
 f = open("node_cat_map.txt", "a+")
+agent_counter = 0
+headers.update({'User-Agent': ua.firefox})
+
 for it in range(index, len(node_list)):
-    headers.update({'User-Agent': ua.firefox})
+    if agent_counter >= 10:
+        ua.update()
+        headers.update({'User-Agent': ua.firefox})
+        agent_counter = 0
+
     try:
         req = requests.get(url + node_list[it], headers)
         soup = BeautifulSoup(req.content, 'html.parser')
@@ -41,7 +48,8 @@ for it in range(index, len(node_list)):
             strip=True)
         f.write(node_list[it] + ":" + cat + "\r")
         print(node_list[
-                  it] + ": " + cat + " has been written to the file successfully" + str(it) + " out of " + str(len(node_list)))
+                  it] + ": " + cat + " has been written to the file successfully [" + str(
+            it) + "/" + str(len(node_list)) + ")")
     except requests.exceptions.RequestException as e:
         print(e)
         f.close()
@@ -52,7 +60,8 @@ for it in range(index, len(node_list)):
         print("value error for: " + node_list[it])
         pass
 
-    ua.update()
-    time.sleep(random.randint(1, 5))
+    agent_counter += 1
+
+    # time.sleep(random.randint(0, 2))
 
 print("Ok")
