@@ -1,6 +1,7 @@
 import networkx as nx
 from igraph import *
 from os.path import dirname
+import csv
 
 BASE_PATH = dirname(dirname(os.path.abspath(__file__)))
 
@@ -38,6 +39,42 @@ def load_polblogs(filter_threshold=30):
         "politicalStandpoint": label_dict
     }
     return new_graph, label_dict_set
+
+
+def load_reddit():
+    """Load the reddit data
+
+    Returns:
+        G0 (networkx object): loaded networkx object
+        label_dict_set (dict): a dict of labels
+
+    """
+    reddit_path = os.path.join(BASE_PATH, "data", "soc-redditHyperlinks-body.tsv")
+    with open(reddit_path) as tsvfile:
+        tsvreader = csv.reader(tsvfile, delimiter="\t")
+        node_set = set()
+        new_graph = nx.DiGraph()
+        for line in tsvreader:
+            new_graph.add_edge(line[0], line[1], weight=1.0)
+            node_set.add(line[0])
+            node_set.add(line[1])
+        Gcc = sorted(nx.weakly_connected_component_subgraphs(new_graph),
+                     key=len,
+                     reverse=True)
+        G0 = new_graph.subgraph(Gcc[0])
+
+    label_dict = {}
+    label_path = os.os.path.join(BASE_PATH, "data", "node_cat_map.txt")
+    with open(label_path) as txt_file:
+        for line in txt_file:
+            key_value = line.strip().split(":")
+            label_dict[key_value[0]] = key_value[1]
+
+    label_dict_set = {
+        "category": label_dict
+    }
+
+    return G0, label_dict_set
 
 
 def load_data_from_text(data_name="polblogs"):

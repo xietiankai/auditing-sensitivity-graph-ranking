@@ -175,12 +175,15 @@ class DetailTable extends React.Component {
           style={{
             backgroundColor: leftPanelBackgroundColor,
           }}
+          title={"Detail"}
+
           data={this.props.perturbation}
           options={{
             pageSize: 4,
             minBodyHeight: 290,
             maxBodyHeight: 290,
             padding: "dense",
+
             // showTitle: false,
             paging: false,
             // searchFieldAlignment: "left",
