@@ -1,9 +1,16 @@
 import {blueGrey, grey, orange} from "@material-ui/core/colors";
 
+// export const themeColor = {
+//   primaryColor: "#344955",
+//   secondaryColor: "#ffa600"
+// };
+
 export const themeColor = {
-  primaryColor: "#344955",
+  primaryColor: "#333234",
   secondaryColor: "#ffa600"
 };
+
+export const backGroundColor = "#E9EDED";
 
 export const loadDashboardStyles = {
   root: {

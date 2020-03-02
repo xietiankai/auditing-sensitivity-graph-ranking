@@ -239,7 +239,7 @@ export default class InfluenceGraphView extends React.Component {
           return greenAndRed[0];
         }
       })
-      .attr("marker-end", "url(#arrowhead)");
+      // .attr("marker-end", "url(#arrowhead)");
 
     const node = svg
       .append("g")
