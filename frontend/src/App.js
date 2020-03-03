@@ -15,11 +15,23 @@ const theme = createMuiTheme({
       main: themeColor.secondaryColor
     }
   },
-  typography: {
-    // In Chinese and Japanese the characters are usually larger,
-    // so a smaller fontsize may be appropriate.
-    fontSize: 12
-  }
+
+    typography: {
+    fontSize: 12,
+    fontFamily: [
+        '"Helvetica Neue"',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
 });
 
 function App() {

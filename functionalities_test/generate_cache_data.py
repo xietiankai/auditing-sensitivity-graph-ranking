@@ -17,4 +17,4 @@ def generate_cache_data(data_name, algorithm_name):
 
 
 if __name__ == "__main__":
-    generate_cache_data(data_name="polblogs", algorithm_name="hits")
+    generate_cache_data(data_name="polblogs", algorithm_name="pagerank")

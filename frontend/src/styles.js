@@ -7,7 +7,7 @@ import {blueGrey, grey, orange} from "@material-ui/core/colors";
 
 
 
-export const backGroundColor = "#E9EDED";
+
 
 export const loadDashboardStyles = {
   root: {
@@ -72,14 +72,18 @@ export const graphEdgeColor = "#B5b5b5";
 
 // Modify
 export const themeColor = {
-  primaryColor: "#444444",
+  primaryColor: "#3D4c5a",
   secondaryColor: "#ffa600"
 };
+export const backGroundColor = "#EEEEEE";
 
-export const clusteringColors = ["#b3cde3", "#fddaec", "#ffb0b0", "#ffc864"];
+export const clusteringColors = ["#4fc4d8", "#f7d371", "#ffb0b0", "#ffc864"];
 
-export const radarChartMainColor = "#fed9a6";
+export const radarChartMainColor = "#8299a4";
 
-export const greenAndRed = ["#ccebc5", "#fbb4ae"];
+export const greenAndRed = ["#9ee99d", "#fda682"];
 
-export const vulnerabilityBarColor = "#decbe4";
+export const vulnerabilityBarColor = "#8299a4";
+
+
+

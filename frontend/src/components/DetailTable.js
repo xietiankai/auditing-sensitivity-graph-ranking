@@ -180,8 +180,8 @@ class DetailTable extends React.Component {
           data={this.props.perturbation}
           options={{
             pageSize: 4,
-            minBodyHeight: 290,
-            maxBodyHeight: 290,
+            minBodyHeight: 297,
+            maxBodyHeight: 297,
             padding: "dense",
 
             // showTitle: false,
