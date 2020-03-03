@@ -15,6 +15,7 @@ import ControlPanel from "./ControlPanel";
 import { getData, updateDataName } from "../actions";
 import Snackbar from "@material-ui/core/Snackbar";
 import Detail from "./Detail";
+import {backGroundColor} from "../styles";
 
 const styles = theme => ({
   root: {
@@ -28,10 +29,10 @@ const styles = theme => ({
     width: "100%",
     flexGrow: 1,
     marginTop: theme.spacing(6),
-    backgroundColor: "#EDF0F2"
+    backgroundColor: backGroundColor
   },
   tabBar: {
-    backgroundColor: "#D2DBE0"
+    backgroundColor: backGroundColor
   },
   tab: {
     maxWidth: 170

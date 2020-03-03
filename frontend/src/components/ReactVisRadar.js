@@ -25,6 +25,7 @@ import CircularGridLines from "react-vis/dist/plot/circular-grid-lines";
 import "react-vis/dist/style.css";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
+import {radarChartMainColor} from "../styles";
 
 const styles = themes => ({});
 
@@ -55,7 +56,9 @@ class ReactVisRadar extends Component {
           style={{
             polygons: {
               fillOpacity: 0.5,
-              strokeWidth: 2
+              strokeWidth: 0.5,
+              fill: radarChartMainColor,
+              stroke: radarChartMainColor
             },
             axes: {
               text: {

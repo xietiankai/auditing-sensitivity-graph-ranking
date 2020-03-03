@@ -2,6 +2,7 @@ import * as React from "react";
 import * as d3 from "d3";
 import { findDOMNode } from "react-dom";
 import {
+  circleStrokeColor,
   clusteringColors,
   graphEdgeColor,
   greenAndRed,
@@ -178,12 +179,12 @@ export default class InfluenceGraphView extends React.Component {
             return d.node_id;
           })
           .distance(d => {
-            return d.target.level * 72;
+            return d.target.level * 50;
           })
       )
       .force("charge", d3.forceManyBody().strength(-1))
       .force("center", d3.forceCenter(canvasWidth / 2.6, canvasHeight / 2))
-      .force("collision", d3.forceCollide(circleRadius + 3));
+      .force("collision", d3.forceCollide(circleRadius + 1));
 
     const svg = baseGroup;
 
@@ -252,7 +253,7 @@ export default class InfluenceGraphView extends React.Component {
     const nodeScale = d3
       .scaleLinear()
       .domain(d3.extent(nodesData, d => Math.abs(d.rank_change)))
-      .range([4, 13]);
+      .range([3, 12]);
 
     const circles = node
       .append("circle")
@@ -278,19 +279,19 @@ export default class InfluenceGraphView extends React.Component {
         if (d.level === 0) {
           return "black";
         } else {
-          return "white";
+          return circleStrokeColor;
         }
       })
       .attr("stroke-width", d => {
         if (d.level === 0) {
-          return 3;
-        } else {
           return 2;
+        } else {
+          return 1;
         }
       })
       .attr("r", d => {
         if (d.level === 0) {
-          return 25;
+          return 20;
         } else {
           return nodeScale(Math.abs(d.rank_change));
         }
@@ -432,37 +433,37 @@ export default class InfluenceGraphView extends React.Component {
     /*****
      * Drawing Grids
      */
-    const svg = d3.select("#impact-graph-chart-" + removedID);
-    const x = d3
-      .scaleLinear()
-      .domain([-1, 1])
-      .range([-1, canvasWidth]);
-    const y = d3
-      .scaleLinear()
-      .domain([-1, 1])
-      .range([canvasHeight, 0]);
-
-    const xAxisGrid = d3
-      .axisBottom(x)
-      .tickSize(-canvasHeight)
-      .tickFormat("")
-      .ticks(100);
-    const yAxisGrid = d3
-      .axisLeft(y)
-      .tickSize(-canvasWidth)
-      .tickFormat("")
-      .ticks(100);
-    // Create grids.
-    svg
-      .append("g")
-      .attr("class", "x axis-grid")
-      .attr("transform", "translate(-3," + canvasHeight + ")")
-      .call(xAxisGrid);
-    svg
-      .append("g")
-      .attr("class", "y axis-grid")
-      .attr("transform", "translate(-5,0)")
-      .call(yAxisGrid);
+    // const svg = d3.select("#impact-graph-chart-" + removedID);
+    // const x = d3
+    //   .scaleLinear()
+    //   .domain([-1, 1])
+    //   .range([-1, canvasWidth]);
+    // const y = d3
+    //   .scaleLinear()
+    //   .domain([-1, 1])
+    //   .range([canvasHeight, 0]);
+    //
+    // const xAxisGrid = d3
+    //   .axisBottom(x)
+    //   .tickSize(-canvasHeight)
+    //   .tickFormat("")
+    //   .ticks(100);
+    // const yAxisGrid = d3
+    //   .axisLeft(y)
+    //   .tickSize(-canvasWidth)
+    //   .tickFormat("")
+    //   .ticks(100);
+    // // Create grids.
+    // svg
+    //   .append("g")
+    //   .attr("class", "x axis-grid")
+    //   .attr("transform", "translate(-3," + canvasHeight + ")")
+    //   .call(xAxisGrid);
+    // svg
+    //   .append("g")
+    //   .attr("class", "y axis-grid")
+    //   .attr("transform", "translate(-5,0)")
+    //   .call(yAxisGrid);
     baseGroup.raise();
   }
 

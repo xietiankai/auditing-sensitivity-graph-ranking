@@ -25,7 +25,9 @@ export const loadDashboardStyles = {
 
 // export const greenAndRed = ["#66c2a5", "#f46d43"];
 
-export const greenAndRed = ["#8dd3c7", "#fb8072"];
+// export const greenAndRed = ["#8dd3c7", "#fb8072"];
+
+export const greenAndRed = ["#56B89A", "#E43A2F"];
 
 export const contextMenuColor = grey[700];
 
@@ -60,7 +62,9 @@ export const rightPanelButtonColor = "#757575";
 
 export const leftPanelBackgroundColor = "#FFFFFF";
 
-export const clusteringColors = ["#19AFD0", "#FFB900", "#ffb0b0", "#ffc864"];
+// export const clusteringColors = ["#19AFD0", "#FFB900", "#ffb0b0", "#ffc864"];
+
+export const clusteringColors = ["#658CB8", "#BA9738", "#ffb0b0", "#ffc864"];
 
 export const circleStrokeColor = "#7f7f7f";
 
@@ -69,3 +73,5 @@ export const cardHeaderColor = orange[100];
 export const nodeColor = blueGrey[500];
 
 export const graphEdgeColor = "#B5b5b5";
+
+export const radarChartMainColor = "#346D7C";
