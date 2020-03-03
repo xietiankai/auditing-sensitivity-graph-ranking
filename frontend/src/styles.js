@@ -5,10 +5,7 @@ import {blueGrey, grey, orange} from "@material-ui/core/colors";
 //   secondaryColor: "#ffa600"
 // };
 
-export const themeColor = {
-  primaryColor: "#333234",
-  secondaryColor: "#ffa600"
-};
+
 
 export const backGroundColor = "#E9EDED";
 
@@ -27,7 +24,6 @@ export const loadDashboardStyles = {
 
 // export const greenAndRed = ["#8dd3c7", "#fb8072"];
 
-export const greenAndRed = ["#56B89A", "#E43A2F"];
 
 export const contextMenuColor = grey[700];
 
@@ -64,7 +60,6 @@ export const leftPanelBackgroundColor = "#FFFFFF";
 
 // export const clusteringColors = ["#19AFD0", "#FFB900", "#ffb0b0", "#ffc864"];
 
-export const clusteringColors = ["#658CB8", "#BA9738", "#ffb0b0", "#ffc864"];
 
 export const circleStrokeColor = "#7f7f7f";
 
@@ -74,4 +69,17 @@ export const nodeColor = blueGrey[500];
 
 export const graphEdgeColor = "#B5b5b5";
 
-export const radarChartMainColor = "#346D7C";
+
+// Modify
+export const themeColor = {
+  primaryColor: "#444444",
+  secondaryColor: "#ffa600"
+};
+
+export const clusteringColors = ["#b3cde3", "#fddaec", "#ffb0b0", "#ffc864"];
+
+export const radarChartMainColor = "#fed9a6";
+
+export const greenAndRed = ["#ccebc5", "#fbb4ae"];
+
+export const vulnerabilityBarColor = "#decbe4";

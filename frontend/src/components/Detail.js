@@ -146,9 +146,10 @@ class Detail extends React.Component {
             "removedResults"
           ]["statistical"].map(item => {
             return (
-              <Typography variant={"body2"}>
-                {item.axis}: {item.value}
-              </Typography>
+              <Box display={"flex"} style={{width: "70%"}}>
+                <Box flexGrow={1}>{item.axis}</Box>
+                <Box>{item.value}</Box>
+              </Box>
             );
           });
           return (
@@ -173,21 +174,40 @@ class Detail extends React.Component {
                           />
                         </Grid>
                         <Grid item md={5}>
-                          <Typography>
-                            [No.{" "}
-                            {
-                              this.props.detailList[removedID][
-                                "removedResults"
-                              ]["rank"]
-                            }
-                            ][
-                            {
-                              this.props.detailList[removedID][
-                                "removedResults"
-                              ]["politicalStandpoint"]["label"]
-                            }
-                            ] {removedID}
-                          </Typography>
+                          <Typography>{removedID}</Typography>
+                          <Box display={"flex"}>
+                            <Box>
+                              <Chip
+                                size="small"
+                                key={
+                                  this.props.detailList[removedID][
+                                    "removedResults"
+                                  ]["rank"]
+                                }
+                                label={
+                                  "No. " +
+                                  this.props.detailList[removedID][
+                                    "removedResults"
+                                  ]["rank"]
+                                }
+                              />
+                            </Box>
+                            <Box>
+                              <Chip
+                                size="small"
+                                key={
+                                  this.props.detailList[removedID][
+                                    "removedResults"
+                                  ]["politicalStandpoint"]["label"]
+                                }
+                                label={
+                                  this.props.detailList[removedID][
+                                    "removedResults"
+                                  ]["politicalStandpoint"]["label"]
+                                }
+                              />
+                            </Box>
+                          </Box>
                           {influenceViewLabels}
                         </Grid>
                         <Grid item md={12}>
