@@ -39,7 +39,7 @@ const mapDispatchToProps = dispatch => {
 
 class DetailTable extends React.Component {
   render() {
-    const labelName = "politicalStandpoint";
+    const labelName = Object.keys(this.props.labels)[0];
     let watchTableColumns = [
       {
         title: "Node Name",

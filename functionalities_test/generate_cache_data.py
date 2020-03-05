@@ -9,6 +9,8 @@ def generate_cache_data(data_name, algorithm_name):
     meta_data = MetaData(graph_object=graph_object,
                          label_dict_set=label_dict_set,
                          algorithm_name=algorithm_name)
+    print(len(graph_object.nodes))
+    print(len(graph_object.edges))
     with open(
             "../cached_data/" + data_name + "_" + algorithm_name + "_filthre_30.json",
             "w") as jf:
@@ -17,4 +19,4 @@ def generate_cache_data(data_name, algorithm_name):
 
 
 if __name__ == "__main__":
-    generate_cache_data(data_name="polblogs", algorithm_name="pagerank")
+    generate_cache_data(data_name="reddit", algorithm_name="pagerank")

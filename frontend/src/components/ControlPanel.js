@@ -114,6 +114,7 @@ class ControlPanel extends React.Component {
                 }}
               >
                 <option value={"polblogs"}>Polblogs</option>
+                <option value={"reddit"}>Reddit</option>
               </Select>
             </FormControl>
             <FormControl variant="outlined" className={classes.formControl}>

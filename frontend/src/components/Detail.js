@@ -198,12 +198,12 @@ class Detail extends React.Component {
                                 key={
                                   this.props.detailList[removedID][
                                     "removedResults"
-                                  ]["politicalStandpoint"]["label"]
+                                  ][Object.keys(this.props.labels)[0]]["label"]
                                 }
                                 label={
                                   this.props.detailList[removedID][
                                     "removedResults"
-                                  ]["politicalStandpoint"]["label"]
+                                  ][Object.keys(this.props.labels)[0]]["label"]
                                 }
                               />
                             </Box>

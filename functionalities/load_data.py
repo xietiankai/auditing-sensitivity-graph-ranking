@@ -41,7 +41,7 @@ def load_polblogs(filter_threshold=30):
     return new_graph, label_dict_set
 
 
-def load_reddit():
+def load_reddit(filter_threshold=15):
     """Load the reddit data
 
     Returns:
@@ -49,32 +49,43 @@ def load_reddit():
         label_dict_set (dict): a dict of labels
 
     """
-    reddit_path = os.path.join(BASE_PATH, "data", "soc-redditHyperlinks-body.tsv")
-    with open(reddit_path) as tsvfile:
-        tsvreader = csv.reader(tsvfile, delimiter="\t")
-        node_set = set()
-        new_graph = nx.DiGraph()
-        for line in tsvreader:
-            new_graph.add_edge(line[0], line[1], weight=1.0)
-            node_set.add(line[0])
-            node_set.add(line[1])
-        Gcc = sorted(nx.weakly_connected_component_subgraphs(new_graph),
-                     key=len,
-                     reverse=True)
-        G0 = new_graph.subgraph(Gcc[0])
-
+    path = os.path.join(BASE_PATH, "data", "reddit.gml")
+    graph = nx.read_gml(path)
+    graph = graph.to_directed()
+    # Gcc = sorted(nx.weakly_connected_component_subgraphs(graph),
+    #                  key=len,
+    #                  reverse=True)
+    # G0 = graph.subgraph(Gcc[0])
+    new_graph = nx.DiGraph()
+    for u, v, data in graph.edges(data=True):
+        if graph.degree(u) >= filter_threshold and graph.degree(
+                v) >= filter_threshold:
+            if new_graph.has_edge(u, v):
+                new_graph[u][v]['weight'] = 1.0
+            else:
+                new_graph.add_edge(u, v, weight=1.0)
     label_dict = {}
-    label_path = os.os.path.join(BASE_PATH, "data", "node_cat_map.txt")
+    id = 0
+    label_set = {}      #to test label id duplicate
+    whiteSet = {"Gaming", "Locations", "Sports", "Technology"}
+    label_path = os.path.join(BASE_PATH, "data", "node_cat_map.txt")
     with open(label_path) as txt_file:
         for line in txt_file:
             key_value = line.strip().split(":")
-            label_dict[key_value[0]] = key_value[1]
+            if key_value[1] not in whiteSet:
+                continue
+            if key_value[1] in label_set.keys():
+                label_dict[key_value[0]] = {"label": key_value[1], "value": label_set[key_value[1]]}
+            else:
+                label_dict[key_value[0]] = {"label": key_value[1], "value": id}
+                label_set[key_value[1]] = id
+                id += 1
 
     label_dict_set = {
         "category": label_dict
     }
 
-    return G0, label_dict_set
+    return new_graph, label_dict_set
 
 
 def load_data_from_text(data_name="polblogs"):
@@ -91,4 +102,7 @@ def load_data_from_text(data_name="polblogs"):
     label_dict_set = {}
     if data_name == "polblogs":
         graph_object, label_dict_set = load_polblogs()
+    elif data_name == "reddit":
+        graph_object, label_dict_set = load_reddit()
+
     return graph_object, label_dict_set

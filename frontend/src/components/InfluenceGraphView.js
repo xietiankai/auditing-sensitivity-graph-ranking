@@ -273,7 +273,7 @@ export default class InfluenceGraphView extends React.Component {
       .attr("id", d => "node-" + d.node_id)
       .attr(
         "fill",
-        d => clusteringColors[labels["politicalStandpoint"][d.node_id]["value"]]
+        d => clusteringColors[labels[Object.keys(labels)[0]][d.node_id]["value"]]
       )
       .attr("stroke", d => {
         if (d.level === 0) {

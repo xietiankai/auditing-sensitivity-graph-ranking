@@ -42,7 +42,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 function processingPieData(data, k, labels) {
-  const labelMap = labels["politicalStandpoint"];
+  const labelMap = labels[Object.keys(labels)[0]];
   let perturbationStat = {};
   let labelToStringMap = {};
   data

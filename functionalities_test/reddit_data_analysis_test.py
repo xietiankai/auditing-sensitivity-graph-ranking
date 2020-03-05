@@ -15,7 +15,7 @@ category_link = {}
 graph = nx.DiGraph()
 
 banedSet = {}
-whiteSet = {}
+whiteSet = {"Gaming", "Locations", "Sports", "Technology"}
 with open("../data/soc-redditHyperlinks-body.tsv") as tsvfile:
     tsvreader = csv.reader(tsvfile, delimiter="\t")
     for line in tsvreader:
@@ -30,8 +30,8 @@ with open("../data/soc-redditHyperlinks-body.tsv") as tsvfile:
             #     continue
             # if category[line[0]] not in whiteSet or category[line[1]] not in whiteSet or category[line[0]] == category[line[1]]:
             #     continue
-            # if category[line[0]] not in whiteSet or category[line[1]] not in whiteSet:
-            #     continue
+            if category[line[0]] not in whiteSet or category[line[1]] not in whiteSet:
+                continue
             link_key = category[line[0]] + "->" + category[line[1]]
             link_count = category_link.get(link_key, 0)
             link_count += 1
@@ -57,5 +57,5 @@ print(json.dumps(category_link, indent=2))
 #     plt.gca().spines[pos].set_visible(False)
 #
 # plt.show()
-nx.write_gml(graph, "reddit.gml")
+nx.write_gml(graph, "../data/reddit.gml")
 
