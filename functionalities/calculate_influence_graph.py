@@ -1,7 +1,7 @@
 import copy
 
 
-def calculate_influence_graph(graph, remove_res, remove_id, level_threshold=5):
+def calculate_influence_graph(graph, remove_res, remove_id, level_threshold=10):
     filtered_change_res = {}
     nodes_res = []
     edges_res = []

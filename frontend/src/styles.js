@@ -77,7 +77,7 @@ export const themeColor = {
 };
 export const backGroundColor = "#EEEEEE";
 
-export const clusteringColors = ["#4fc4d8", "#f7d371", "#ffb0b0", "#ffc864"];
+export const clusteringColors = ["#4fc4d8", "#f7d371", "#ffb0b0", "#bebaba"];
 
 export const radarChartMainColor = "#8299a4";
 

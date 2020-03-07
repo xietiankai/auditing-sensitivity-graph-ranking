@@ -67,7 +67,7 @@ def load_reddit(filter_threshold=15):
     label_dict = {}
     id = 0
     label_set = {}      #to test label id duplicate
-    whiteSet = {"Gaming", "Locations", "Sports", "Technology"}
+    whiteSet = {"Sports", "Lifestyle","Hobbies and Interests"}
     label_path = os.path.join(BASE_PATH, "data", "node_cat_map.txt")
     with open(label_path) as txt_file:
         for line in txt_file:
