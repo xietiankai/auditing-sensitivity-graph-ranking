@@ -28,13 +28,14 @@ class MetaDataEncoder(json.JSONEncoder):
 
 
 class MetaData:
-    def __init__(self, graph_object, label_dict_set, algorithm_name):
+    def __init__(self, graph_object, label_dict_set, algorithm_name, labels):
         """Form the meta data.
 
         Args:
             graph_object (networkx object): networkx object
             label_dict_set (dict): a dict of label dicts
             algorithm_name (string): ranking algorithm names "pagerank" | "hits"
+            labels (array): a list of label names
         """
         self.nodes, self.edges = ranking_data_formation(graph=graph_object,
                                                         algorithm=algorithm_name)
@@ -46,3 +47,4 @@ class MetaData:
         self.vulnerabilityList = inverse_mapping(perturbations)
         self.perturbationSummary = summarize_perturbation_effect(perturbations)
         self.labels = label_dict_set
+        self.labelNames = labels

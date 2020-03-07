@@ -16,14 +16,17 @@ import {
 
 const styles = theme => ({
   boxPlotContainer: {
-    padding: theme.spacing(2)
-  }
+    padding: theme.spacing(2),
+    height: 274,
+    overflow: "auto"
+  },
 });
 
 const mapStateToProps = state => {
   return {
     nodes: state.nodes,
-    labels: state.labels
+    labels: state.labels,
+    labelNames: state.labelNames
   };
 };
 
@@ -139,7 +142,7 @@ class BoxPlotComponent extends React.Component {
                 data={boxPlotDataUltimate[key]}
               />
             </FlexibleWidthXYPlot>
-            <Typography align={"center"}>{(key === "0") ? "Liberal": "Conserv"} Distribution</Typography>
+            <Typography align={"center"}>{this.props.labelNames[key]} Distribution</Typography>
           </Box>
         </Box>
       );

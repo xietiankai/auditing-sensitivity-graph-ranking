@@ -38,7 +38,8 @@ def load_polblogs(filter_threshold=30):
     label_dict_set = {
         "politicalStandpoint": label_dict
     }
-    return new_graph, label_dict_set
+    labels = ["Liberal", "Conservative"]
+    return new_graph, label_dict_set, labels
 
 
 def load_reddit(filter_threshold=15):
@@ -84,8 +85,8 @@ def load_reddit(filter_threshold=15):
     label_dict_set = {
         "category": label_dict
     }
-
-    return new_graph, label_dict_set
+    labels = ["Sports", "Lifestyle","Hobbies and Interests"]
+    return new_graph, label_dict_set, labels
 
 
 def load_data_from_text(data_name="polblogs"):
@@ -100,9 +101,10 @@ def load_data_from_text(data_name="polblogs"):
     """
     graph_object = None
     label_dict_set = {}
+    labels = []
     if data_name == "polblogs":
-        graph_object, label_dict_set = load_polblogs()
+        graph_object, label_dict_set, labels = load_polblogs()
     elif data_name == "reddit":
-        graph_object, label_dict_set = load_reddit()
+        graph_object, label_dict_set, labels = load_reddit()
 
-    return graph_object, label_dict_set
+    return graph_object, label_dict_set, labels

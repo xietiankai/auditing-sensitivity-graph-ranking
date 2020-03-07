@@ -23,7 +23,6 @@ def load_data():
                 "algorithmName"] + "_filthre_30.json") as json_file:
         res = json.load(json_file)
     print("data loaded")
-    print(res)
     return jsonify(res)
 
 # @app.route('/loadData/', methods=['POST'])
