@@ -60,7 +60,7 @@ const styles = theme => ({
   influenceGraphViewContainer: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    height: 565
+    height: 560
   },
   emptyPanel: {
     paddingTop: theme.spacing(54),
@@ -160,7 +160,7 @@ class Detail extends React.Component {
             >
               <Grid container>
                 <Grid item md={5}>
-                  <Paper className={this.props.classes.leftView}>
+                  <Paper className={this.props.classes.leftView} elevation={0}>
                     <Box className={this.props.classes.cardHeader}>
                       <Typography variant="h6">Influence View</Typography>
                     </Box>
@@ -224,7 +224,7 @@ class Detail extends React.Component {
                   </Paper>
                 </Grid>
                 <Grid item md={7}>
-                  <Paper className={this.props.classes.rightView}>
+                  <Paper className={this.props.classes.rightView} elevation={0}>
                     {/*  <Box className={this.props.classes.cardHeader}>*/}
                     {/*    <Typography variant="body1">Table View</Typography>*/}
                     {/*  </Box>*/}
@@ -239,7 +239,7 @@ class Detail extends React.Component {
                   </Paper>
                 </Grid>
                 <Grid item md={8}>
-                  <Paper className={this.props.classes.leftView}>
+                  <Paper className={this.props.classes.leftView} elevation={0}>
                     <Box
                       className={this.props.classes.cardHeader}
                       display={"flex"}
@@ -354,7 +354,7 @@ class Detail extends React.Component {
                           perturbation={
                             this.props.detailList[removedID]["removedResults"]
                           }
-                          canvasHeight={556}
+                          canvasHeight={550}
                           canvasWidth={820}
                           labels={this.props.labels}
                           removedID={removedID}
@@ -431,7 +431,7 @@ class Detail extends React.Component {
                   </Paper>
                 </Grid>
                 <Grid item md={4}>
-                  <Paper className={this.props.classes.rightView}>
+                  <Paper className={this.props.classes.rightView} elevation={0}>
                     <Box className={this.props.classes.cardHeader}>
                       <Typography variant="h6">Distribution View</Typography>
                     </Box>
@@ -453,7 +453,7 @@ class Detail extends React.Component {
     }
     return (
       <div id="detail" className={this.props.classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="default" elevation={0}>
           <Tabs
             value={this.props.activatedTab}
             onChange={this.props.updateActivatedTabIndex}
@@ -462,6 +462,7 @@ class Detail extends React.Component {
             variant="scrollable"
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
+
           >
             {tabComponents}
           </Tabs>

@@ -17,7 +17,7 @@ import {
 const styles = theme => ({
   boxPlotContainer: {
     padding: theme.spacing(2),
-    height: 274,
+    height: 270,
     overflow: "auto"
   },
 });

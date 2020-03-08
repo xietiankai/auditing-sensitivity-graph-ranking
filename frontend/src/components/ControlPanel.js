@@ -54,7 +54,7 @@ const styles = theme => ({
     padding: theme.spacing(2)
   },
   rulesContainer: {
-    height: 210
+    height: 200
   }
 });
 
@@ -103,7 +103,7 @@ class ControlPanel extends React.Component {
       this.props.getData();
     };
     let rulesComponents = (
-      <Card className={classes.root} variant="outlined">
+      <Card className={classes.root} elevation={0}>
         <CardContent>
           <Typography
             className={classes.title}
@@ -118,7 +118,7 @@ class ControlPanel extends React.Component {
     if (this.props.rules.length !== 0) {
       rulesComponents = this.props.rules.map(item => {
         return (
-          <Card className={classes.root} variant="outlined">
+          <Card className={classes.root} elevation={0}>
             <CardContent>
               <Typography
                 className={classes.title}
@@ -139,7 +139,7 @@ class ControlPanel extends React.Component {
       });
     }
     return (
-      <Paper>
+      <Paper elevation={0}>
         <Box className={classes.dataConfigContainer} display={"flex"}>
           <Box flexGrow={1}>
             <FormControl variant="outlined" className={classes.formControl}>
@@ -176,9 +176,10 @@ class ControlPanel extends React.Component {
           <Box>
             <Button
               className={classes.button}
-              variant="contained"
+              variant="outlined"
               color="primary"
               onClick={loadDataHelper}
+
             >
               Load Data
             </Button>
@@ -232,7 +233,7 @@ class ControlPanel extends React.Component {
             </Select>
           </FormControl>
           <Button
-            variant="contained"
+            variant="outlined"
             color="primary"
             onClick={this.props.updateConstraints}
           >

@@ -16,6 +16,7 @@ import { getData, updateDataName } from "../actions";
 import Snackbar from "@material-ui/core/Snackbar";
 import Detail from "./Detail";
 import {backGroundColor} from "../styles";
+import "./css/Main.css"
 
 const styles = theme => ({
   root: {
@@ -71,7 +72,7 @@ class Main extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
+        <AppBar position="fixed" className={classes.appBar} elevation={0}>
           <Toolbar variant="dense">
             <IconButton
               color="inherit"
