@@ -28,6 +28,7 @@ const initialState = {
   filteredPerturbations: [],
   nodes: {},
   edges: [],
+  rules: [],
   protectedNodes: new Set(),
   protectionType: "increased",
   protectionExtent: 0.01,

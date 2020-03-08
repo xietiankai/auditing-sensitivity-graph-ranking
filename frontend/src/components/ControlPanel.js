@@ -52,6 +52,9 @@ const styles = theme => ({
   },
   dataConfigContainer: {
     padding: theme.spacing(2)
+  },
+  rulesContainer: {
+    height: 210
   }
 });
 
@@ -62,7 +65,8 @@ const mapStateToProps = state => {
     protectionType: state.protectionType,
     protectionExtent: state.protectionExtent,
     snackbarOpen: state.snackbarOpen,
-    snackbarMessage: state.snackbarMessage
+    snackbarMessage: state.snackbarMessage,
+    rules: state.rules
   };
 };
 
@@ -98,6 +102,42 @@ class ControlPanel extends React.Component {
       this.props.toggleLoading();
       this.props.getData();
     };
+    let rulesComponents = (
+      <Card className={classes.root} variant="outlined">
+        <CardContent>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+            No rules yet
+          </Typography>
+        </CardContent>
+      </Card>
+    );
+    if (this.props.rules.length !== 0) {
+      rulesComponents = this.props.rules.map(item => {
+        return (
+          <Card className={classes.root} variant="outlined">
+            <CardContent>
+              <Typography
+                className={classes.title}
+                color="textSecondary"
+                gutterBottom
+              >
+                {item.protectedNodes}
+              </Typography>
+              <Typography className={classes.pos} color="textSecondary">
+                {item.protectionType}
+              </Typography>
+              <Typography variant="body2" component="p">
+                {item.protectionExtent}
+              </Typography>
+            </CardContent>
+          </Card>
+        );
+      });
+    }
     return (
       <Paper>
         <Box className={classes.dataConfigContainer} display={"flex"}>
@@ -149,6 +189,8 @@ class ControlPanel extends React.Component {
         <VulnerabilityTable />
         <Divider />
         <Box className={classes.constrainContainer}>
+          <Typography variant={"h6"}>Rules</Typography>
+          <Box className={classes.rulesContainer}>{rulesComponents}</Box>
           <Typography variant={"h6"}>Protected Nodes</Typography>
           <ChipsArray />
           <Typography variant={"h6"}>Constraints</Typography>

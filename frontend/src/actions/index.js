@@ -167,6 +167,7 @@ export function updateConstraints() {
   const perturbations = store.getState().perturbations;
   const protectedNodes = store.getState().protectedNodes;
   const vulnerabilityList = store.getState().vulnerabilityList;
+  let rules = store.getState().rules;
   let bannedNodes = [];
   const threshold = perturbations.length * protectionExtent;
   // console.log(threshold);
@@ -191,12 +192,23 @@ export function updateConstraints() {
     item => !bannedNodesSet.has(item["remove_id"])
   );
   // console.log("after length:" + filteredPerturbations.length);
+  rules.push({
+    protectedNodes: protectedNodes,
+    protectionType: protectionType,
+    protectionExtent: protectionExtent
+  });
+  console.log("###############################");
+  console.log(rules);
   return {
     type: UPDATE_CONSTRAINTS,
     payload: {
       filteredPerturbations: filteredPerturbations,
       snackbarOpen: true,
-      snackbarMessage: "Pulled " + filteredPerturbations.length + " records."
+      snackbarMessage: "Pulled " + filteredPerturbations.length + " records.",
+      rules: rules,
+      protectedNodes: new Set(),
+      protectionType: "increased",
+      protectionExtent: 0.01
     }
   };
 }
