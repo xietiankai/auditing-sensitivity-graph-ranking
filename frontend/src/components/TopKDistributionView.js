@@ -170,7 +170,7 @@ class TopKDistributionView extends React.Component {
           <Box>
             <Button
               className={this.props.classes.button}
-              variant="contained"
+              variant="outlined"
               color="primary"
               onClick={() => {
                 this.props.addTopKQuery(this.props.removedID);

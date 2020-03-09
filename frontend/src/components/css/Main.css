@@ -1,3 +1,15 @@
 main ::-webkit-scrollbar {
-    display: none;
+  display: none;
+  width: 0.25rem;
+  height: 0.25rem;
+  background: #ffffff;
+}
+
+main ::-webkit-scrollbar-thumb {
+  background: #e2e2e2;
+    border-radius: 20px;
+}
+
+main :hover::-webkit-scrollbar {
+  display: block;
 }

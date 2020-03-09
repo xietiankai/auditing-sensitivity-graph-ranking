@@ -85,7 +85,7 @@ def load_reddit(filter_threshold=15):
     label_dict_set = {
         "category": label_dict
     }
-    labels = ["Sports", "Lifestyle","Hobbies and Interests"]
+    labels = ["Lifestyle","Hobbies","Sports"]
     return new_graph, label_dict_set, labels
 
 
