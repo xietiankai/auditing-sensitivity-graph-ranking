@@ -54,14 +54,21 @@ const styles = theme => ({
     padding: theme.spacing(2)
   },
   rulesContainer: {
-    height: 200
+    height: 184,
+    overflow: "auro",
+    border: "1px solid #e0e0e0",
+    marginBottom: theme.spacing(2)
   },
   rulesCard: {
-    border: "1px solid #e0e0e0"
+    // border: "1px solid #e0e0e0"
   },
   updateConstraintsButton: {
     marginTop: theme.spacing(1),
     width: "100%"
+  },
+  rulesContent: {
+    paddingTop: theme.spacing(2),
+    paddingLeft: theme.spacing(2)
   }
 });
 
@@ -110,26 +117,17 @@ class ControlPanel extends React.Component {
       this.props.getData();
     };
     let rulesComponents = (
-      <Card className={classes.rulesCard} elevation={0}>
-        <CardContent>
-          <Typography className={classes.title} color="textSecondary">
-            No rules yet
-          </Typography>
-        </CardContent>
-      </Card>
+      <Typography className={classes.rulesContent} color="textSecondary">
+        No rules yet
+      </Typography>
     );
     if (this.props.rules.length !== 0) {
       rulesComponents = this.props.rules.map(item => {
         return (
-          <Card className={classes.rulesCard} elevation={0}>
-            <CardContent>
-              <Typography className={classes.title} color="textSecondary">
-                To protect {Array.from(item.protectedNodes).toString()} from
-                their ranking {item.protectionType} by{" "}
-                {item.protectionExtent * 100} %
-              </Typography>
-            </CardContent>
-          </Card>
+          <Typography className={classes.rulesContent} color="textSecondary">
+            - To protect {Array.from(item.protectedNodes).toString()} from their
+            ranking {item.protectionType} by {item.protectionExtent * 100} %
+          </Typography>
         );
       });
     }

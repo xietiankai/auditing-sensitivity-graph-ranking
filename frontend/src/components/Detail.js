@@ -129,7 +129,7 @@ class Detail extends React.Component {
       <TabPanel value={this.props.activatedTab} index={0}>
         <Box className={this.props.classes.emptyPanel}>
           <Typography color={"textSecondary"}>
-            Select a node to diagnose the vulnerability.
+            Select a node to diagnose the Sensitivity.
           </Typography>
         </Box>
       </TabPanel>
@@ -147,8 +147,8 @@ class Detail extends React.Component {
           ]["statistical"].map(item => {
             return (
               <Box display={"flex"} style={{width: "70%"}}>
-                <Box flexGrow={1}>{item.axis}</Box>
-                <Box>{item.value}</Box>
+                <Box flexGrow={1}><Typography variant={"body2"} color={"textSecondary"}> {item.axis}</Typography></Box>
+                <Box><Typography variant={"body2"}  color={"textSecondary"}> {item.value}</Typography></Box>
               </Box>
             );
           });
@@ -368,7 +368,7 @@ class Detail extends React.Component {
                         right="5%"
                         className={this.props.classes.toolBox}
                       >
-                        <Typography variant={"body1"}>Display</Typography>
+                        <Typography variant={"body1"}>Display Options</Typography>
                         <FormControlLabel
                           className={this.props.classes.formControlLabel}
                           control={
@@ -410,7 +410,7 @@ class Detail extends React.Component {
                         <Typography variant={"body1"}>Filter</Typography>
                         <Slider
                           min={1}
-                          max={5}
+                          max={10}
                           step={1}
                           value={[
                             this.props.detailList[removedID]["levelLowerBound"],

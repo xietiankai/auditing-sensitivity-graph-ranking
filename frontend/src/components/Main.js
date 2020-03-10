@@ -84,7 +84,7 @@ class Main extends React.Component {
               <TimelineIcon />
             </IconButton>
             <Typography variant="h5" noWrap>
-              Graph-based Ranking Vulnerability Analysis
+              Graph-based Ranking Sensitivity Analysis
             </Typography>
           </Toolbar>
         </AppBar>

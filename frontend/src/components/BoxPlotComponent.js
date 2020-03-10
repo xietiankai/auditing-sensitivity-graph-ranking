@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { FlexibleWidthXYPlot, LineSeries, XAxis, YAxis } from "react-vis";
 import BoxPlot from "./BoxPlot";
-import { clusteringColors } from "../styles";
+import {clusteringColors, greenAndRed} from "../styles";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import {
@@ -121,7 +121,10 @@ class BoxPlotComponent extends React.Component {
       boxPlotDataUltimate[key] = tempArray;
     });
     const xAxisFormat = ["before", "after", ""];
+    console.log("@$#&)#^))#$^)&)^#@)^@&#$)^#$^)");
+
     let boxPlotComponents = Object.keys(boxPlotDataUltimate).map(key => {
+      console.log(boxPlotDataUltimate[key]);
       return (
         <Box display={"inline-flex"}>
           <Box justifyContent="center">
@@ -134,7 +137,10 @@ class BoxPlotComponent extends React.Component {
             >
               <XAxis tickFormat={v => xAxisFormat[v]} />
               <YAxis />
-              <LineSeries color="#12939A" data={boxPlotDataUltimate[key]} />
+              <LineSeries color={
+                (boxPlotDataUltimate[key][0].y > boxPlotDataUltimate[key][1].y) ?
+                    greenAndRed[0]: greenAndRed[1]
+              } data={boxPlotDataUltimate[key]} />
               <BoxPlot
                 colorType="literal"
                 opacityType="literal"
