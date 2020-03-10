@@ -81,7 +81,8 @@ export const clusteringColors = ["#4fc4d8", "#f7d371", "#ffb0b0", "#bebaba"];
 
 export const radarChartMainColor = "#8299a4";
 
-export const greenAndRed = ["#9ee99d", "#fda682"];
+// export const greenAndRed = ["#9ee99d", "#fda682"];
+export const greenAndRed = ["#99d594", "#fc8d59"];
 
 export const vulnerabilityBarColor = "#8299a4";
 

@@ -29,10 +29,10 @@ import {greenAndRed} from "../styles";
 
 export default class RankingChangeOverview extends React.Component {
   render() {
-    const { removeRes } = this.props;
+    const { removeRes, originalRanking } = this.props;
     const processedData = removeRes.map((item) => {
       return {
-        x: item.rank,
+        x: originalRanking[item.node_id].rank,
         y0: 0,
         y: item.rank_change
       }

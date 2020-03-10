@@ -78,7 +78,8 @@ const mapStateToProps = state => {
   return {
     activatedTab: state.activatedTab,
     detailList: state.detailList,
-    labels: state.labels
+    labels: state.labels,
+    nodes: state.nodes,
   };
 };
 
@@ -217,6 +218,7 @@ class Detail extends React.Component {
                                 "removedResults"
                               ]["remove_res"]
                             }
+                            originalRanking={this.props.nodes}
                           />
                         </Grid>
                       </Grid>
