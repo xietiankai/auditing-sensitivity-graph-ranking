@@ -30,7 +30,8 @@ const mapStateToProps = state => {
     activatedTab: state.activatedTab,
     detailList: state.detailList,
     labels: state.labels,
-    nodes: state.nodes
+    nodes: state.nodes,
+    labelNames: state.labelNames
   };
 };
 
@@ -59,7 +60,7 @@ function processingPieData(data, k, labels) {
         perturbationStat[labelCat] = 1;
       }
     });
-  console.log(perturbationStat);
+
   return Object.keys(perturbationStat).map(key => {
     return {
       angle: perturbationStat[key],

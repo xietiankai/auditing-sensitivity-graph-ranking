@@ -55,6 +55,13 @@ const styles = theme => ({
   },
   rulesContainer: {
     height: 200
+  },
+  rulesCard: {
+    border: "1px solid #e0e0e0"
+  },
+  updateConstraintsButton: {
+    marginTop: theme.spacing(1),
+    width: "100%"
   }
 });
 
@@ -103,13 +110,9 @@ class ControlPanel extends React.Component {
       this.props.getData();
     };
     let rulesComponents = (
-      <Card className={classes.root} elevation={0}>
+      <Card className={classes.rulesCard} elevation={0}>
         <CardContent>
-          <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-          >
+          <Typography className={classes.title} color="textSecondary">
             No rules yet
           </Typography>
         </CardContent>
@@ -118,20 +121,12 @@ class ControlPanel extends React.Component {
     if (this.props.rules.length !== 0) {
       rulesComponents = this.props.rules.map(item => {
         return (
-          <Card className={classes.root} elevation={0}>
+          <Card className={classes.rulesCard} elevation={0}>
             <CardContent>
-              <Typography
-                className={classes.title}
-                color="textSecondary"
-                gutterBottom
-              >
-                {item.protectedNodes}
-              </Typography>
-              <Typography className={classes.pos} color="textSecondary">
-                {item.protectionType}
-              </Typography>
-              <Typography variant="body2" component="p">
-                {item.protectionExtent}
+              <Typography className={classes.title} color="textSecondary">
+                To protect {Array.from(item.protectedNodes).toString()} from
+                their ranking {item.protectionType} by{" "}
+                {item.protectionExtent * 100} %
               </Typography>
             </CardContent>
           </Card>
@@ -179,7 +174,6 @@ class ControlPanel extends React.Component {
               variant="outlined"
               color="primary"
               onClick={loadDataHelper}
-
             >
               Load Data
             </Button>
@@ -192,53 +186,61 @@ class ControlPanel extends React.Component {
         <Box className={classes.constrainContainer}>
           <Typography variant={"h6"}>Rules</Typography>
           <Box className={classes.rulesContainer}>{rulesComponents}</Box>
-          <Typography variant={"h6"}>Protected Nodes</Typography>
-          <ChipsArray />
-          <Typography variant={"h6"}>Constraints</Typography>
-          Protect selected nodes from their ranking
-          <FormControl variant="outlined" className={classes.formControl}>
-            <Select
-              native
-              value={this.props.protectionType}
-              onChange={this.props.updateProtectionType}
-              inputProps={{
-                name: "protectType",
-                id: "protect-type",
-                className: classes.select
-              }}
-            >
-              <option value={"increased"}>increased</option>
-              <option value={"decreased"}>decreased</option>
-            </Select>
-          </FormControl>
-          by
-          <FormControl variant="outlined" className={classes.formControl}>
-            <Select
-              native
-              value={this.props.protectionExtent}
-              onChange={this.props.updateProtectionExtent}
-              inputProps={{
-                name: "protectExtent",
-                id: "protect-extent",
-                className: classes.select
-              }}
-            >
-              <option value={0.01}>1%</option>
-              <option value={0.02}>2%</option>
-              <option value={0.03}>3%</option>
-              <option value={0.05}>5%</option>
-              <option value={0.1}>10%</option>
-              <option value={0.2}>20%</option>
-              <option value={0.3}>30%</option>
-            </Select>
-          </FormControl>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={this.props.updateConstraints}
-          >
-            Update constraints
-          </Button>
+          <Grid container>
+            <Grid item md={6}>
+              <Typography variant={"h6"}>Protected Nodes</Typography>
+              <ChipsArray />
+            </Grid>
+            <Grid item md={6}>
+              <Typography variant={"h6"}>Constraints</Typography>
+              Protect selected nodes from their ranking
+              <FormControl variant="outlined" className={classes.formControl}>
+                <Select
+                  native
+                  value={this.props.protectionType}
+                  onChange={this.props.updateProtectionType}
+                  inputProps={{
+                    name: "protectType",
+                    id: "protect-type",
+                    className: classes.select
+                  }}
+                >
+                  <option value={"increased"}>increased</option>
+                  <option value={"decreased"}>decreased</option>
+                </Select>
+              </FormControl>
+              <Typography>by</Typography>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <Select
+                  native
+                  value={this.props.protectionExtent}
+                  onChange={this.props.updateProtectionExtent}
+                  inputProps={{
+                    name: "protectExtent",
+                    id: "protect-extent",
+                    className: classes.select
+                  }}
+                >
+                  <option value={0.01}>1%</option>
+                  <option value={0.02}>2%</option>
+                  <option value={0.03}>3%</option>
+                  <option value={0.05}>5%</option>
+                  <option value={0.1}>10%</option>
+                  <option value={0.2}>20%</option>
+                  <option value={0.3}>30%</option>
+                </Select>
+              </FormControl>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={this.props.updateConstraints}
+                className={classes.updateConstraintsButton}
+              >
+                Update constraints
+              </Button>
+            </Grid>
+          </Grid>
+
           <Snackbar
             anchorOrigin={{
               vertical: "bottom",

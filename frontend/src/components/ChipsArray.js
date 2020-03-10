@@ -7,10 +7,13 @@ import { Box } from "@material-ui/core";
 
 const styles = theme => ({
   chipsContainer: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-    height: 55,
-    overflow: "auto"
+    // paddingTop: theme.spacing(2),
+    // paddingBottom: theme.spacing(2),
+    padding: theme.spacing(1),
+    height: 149,
+    marginRight: theme.spacing(2),
+    overflow: "auto",
+    border: "1px solid #e0e0e0"
   }
 });
 
