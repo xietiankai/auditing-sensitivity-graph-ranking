@@ -22,8 +22,8 @@ import {
 } from "../constants/actionTypes";
 
 const initialState = {
-  dataName: "reddit",
-  algorithmName: "pagerank",
+  dataName: "polblogs",
+  algorithmName: "hits",
   perturbations: [],
   filteredPerturbations: [],
   nodes: {},

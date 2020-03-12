@@ -219,6 +219,7 @@ class ControlPanel extends React.Component {
                     className: classes.select
                   }}
                 >
+                  <option value={0.00}>0</option>
                   <option value={0.01}>1%</option>
                   <option value={0.02}>2%</option>
                   <option value={0.03}>3%</option>

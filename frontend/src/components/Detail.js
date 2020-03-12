@@ -219,6 +219,7 @@ class Detail extends React.Component {
                               ]["remove_res"]
                             }
                             originalRanking={this.props.nodes}
+                            labels={this.props.labels}
                           />
                         </Grid>
                       </Grid>

@@ -168,37 +168,43 @@ export function updateConstraints() {
   const protectedNodes = store.getState().protectedNodes;
   const vulnerabilityList = store.getState().vulnerabilityList;
   let rules = store.getState().rules;
-  let bannedNodes = [];
-  const threshold = perturbations.length * protectionExtent;
-  // console.log(threshold);
-  Array.from(protectedNodes).map(nodeID => {
-    let temp = [];
-    if (protectionType === "increased") {
-      temp = vulnerabilityList[nodeID].filter(
-        item => item["rank_change"] < -threshold
-      );
-    } else if (protectionType === "decreased") {
-      temp = vulnerabilityList[nodeID].filter(
-        item => item["rank_change"] > threshold
-      );
-    }
-    bannedNodes = bannedNodes.concat(temp);
-  });
-  // console.log("banned nodes");
-  // console.log(bannedNodes);
-  // console.log("previous length: " + perturbations.length);
-  const bannedNodesSet = new Set(bannedNodes.map(node => node["node_id"]));
-  const filteredPerturbations = perturbations.filter(
-    item => !bannedNodesSet.has(item["remove_id"])
-  );
-  // console.log("after length:" + filteredPerturbations.length);
+
   rules.push({
     protectedNodes: protectedNodes,
     protectionType: protectionType,
     protectionExtent: protectionExtent
   });
-  console.log("###############################");
-  console.log(rules);
+
+  let bannedNodes = [];
+
+  rules.map(item => {
+    const threshold = perturbations.length * item.protectionExtent;
+    // console.log(threshold);
+    Array.from(item.protectedNodes).map(nodeID => {
+      let temp = [];
+      if (item.protectionType === "increased") {
+        temp = vulnerabilityList[nodeID].filter(
+          item => item["rank_change"] < -threshold
+        );
+      } else if (item.protectionType === "decreased") {
+        temp = vulnerabilityList[nodeID].filter(
+          item => item["rank_change"] > threshold
+        );
+      }
+      bannedNodes = bannedNodes.concat(temp);
+    });
+  });
+
+  console.log("banned nodes");
+  console.log(bannedNodes);
+  console.log("previous length: " + perturbations.length);
+
+  const bannedNodesSet = new Set(bannedNodes.map(node => node["node_id"]));
+  const filteredPerturbations = perturbations.filter(
+    item => !bannedNodesSet.has(item["remove_id"])
+  );
+  console.log("after length:" + filteredPerturbations.length);
+
   return {
     type: UPDATE_CONSTRAINTS,
     payload: {

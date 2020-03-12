@@ -87,14 +87,22 @@ class DetailTable extends React.Component {
         render: rowData => {
           if (rowData.rank_change > 0) {
             return (
-              <div style={{ color: greenAndRed[1] }}>{"+" + rowData.rank_change}</div>
+              <div style={{ color: greenAndRed[1] }}>
+                {"+" + rowData.rank_change}
+              </div>
             );
           } else if (rowData.rank_change < 0) {
-            return <div style={{ color: greenAndRed[0] }}> {rowData.rank_change}</div>;
+            return (
+              <div style={{ color: greenAndRed[0] }}>
+                {" "}
+                {rowData.rank_change}
+              </div>
+            );
           } else {
-            return "0";
+            return 0;
           }
-        }
+        },
+        customSort: (a, b) => a.rank_change - b.rank_change
       },
       {
         title: "Label",
@@ -173,10 +181,9 @@ class DetailTable extends React.Component {
           className={this.props.classes.root}
           columns={watchTableColumns}
           style={{
-            backgroundColor: leftPanelBackgroundColor,
+            backgroundColor: leftPanelBackgroundColor
           }}
           title={"Detail"}
-
           data={this.props.perturbation}
           options={{
             pageSize: 4,
@@ -190,7 +197,7 @@ class DetailTable extends React.Component {
             searchFieldStyle: {
               minWidth: 500,
               maxHeight: 30,
-              marginRight:20
+              marginRight: 20
             },
             headerStyle: {
               paddingTop: 0,

@@ -25,16 +25,17 @@ import {
   YAxis,
   VerticalBarSeries
 } from "react-vis";
-import {greenAndRed} from "../styles";
+import {clusteringColors, greenAndRed} from "../styles";
 
 export default class RankingChangeOverview extends React.Component {
   render() {
-    const { removeRes, originalRanking } = this.props;
+    const { removeRes, originalRanking, labels } = this.props;
     const processedData = removeRes.map((item) => {
       return {
         x: originalRanking[item.node_id].rank,
         y0: 0,
-        y: item.rank_change
+        y: item.rank_change,
+        cat: labels[Object.keys(labels)[0]][item.node_id]["value"]
       }
     });
 
@@ -53,7 +54,8 @@ export default class RankingChangeOverview extends React.Component {
             data={processedData}
             colorType="literal"
             getColor={d => {
-              return d.y < 0 ? greenAndRed[0] : greenAndRed[1];
+              return clusteringColors[d.cat];
+              // return d.y < 0 ? greenAndRed[0] : greenAndRed[1];
             }}
           />
           <XAxis />

@@ -15,7 +15,8 @@ category_link = {}
 graph = nx.DiGraph()
 
 banedSet = {}
-whiteSet = {"Sports", "Lifestyle","Hobbies and Interests"}
+whiteSet = {"Sports", "Other", "General"}
+
 with open("../data/soc-redditHyperlinks-body.tsv") as tsvfile:
     tsvreader = csv.reader(tsvfile, delimiter="\t")
     for line in tsvreader:

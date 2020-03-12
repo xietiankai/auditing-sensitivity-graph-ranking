@@ -68,7 +68,8 @@ def load_reddit(filter_threshold=15):
     label_dict = {}
     id = 0
     label_set = {}      #to test label id duplicate
-    whiteSet = {"Sports", "Lifestyle","Hobbies and Interests"}
+    whiteSet = {"Sports", "Other", "General"}
+
     label_path = os.path.join(BASE_PATH, "data", "node_cat_map.txt")
     with open(label_path) as txt_file:
         for line in txt_file:
@@ -85,7 +86,7 @@ def load_reddit(filter_threshold=15):
     label_dict_set = {
         "category": label_dict
     }
-    labels = ["Lifestyle","Hobbies","Sports"]
+    labels = ["Other", "General", "Sports"]
     return new_graph, label_dict_set, labels
 
 
