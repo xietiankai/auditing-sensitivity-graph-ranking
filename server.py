@@ -39,3 +39,6 @@ def load_data():
 #                          label_dict_set=label_dict_set,
 #                          algorithm_name=request_raw["algorithmName"])
 #     return json.dumps(meta_data, cls=MetaDataEncoder)
+
+if __name__ == "__main__":
+    app.run(debug=True)

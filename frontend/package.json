@@ -2,7 +2,6 @@
   "name": "grava",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000/",
   "dependencies": {
     "@material-ui/core": "^4.3.2",
     "@material-ui/icons": "^4.2.1",
@@ -13,6 +12,7 @@
     "d3-boxplot": "^0.7.5",
     "d3-context-menu": "^1.1.1",
     "d3-lasso": "^0.0.5",
+    "http-proxy-middleware": "^1.0.3",
     "json-loader": "^0.5.7",
     "material-table": "^1.50.0",
     "prettier": "^1.18.2",
