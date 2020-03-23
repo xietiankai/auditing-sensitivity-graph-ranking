@@ -39,6 +39,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  
   "browserslist": {
     "production": [
       ">0.2%",
@@ -51,4 +52,5 @@
       "last 1 safari version"
     ]
   }
+    
 }

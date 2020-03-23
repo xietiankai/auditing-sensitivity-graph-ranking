@@ -5,15 +5,11 @@ services:
         build: ./
         expose: 
             - "5000"
-        # environment: 
-        #     API_HOST: "http://localhost:3000"
-        #     APP_SERVER_PORT: 5000
         ports: 
             - "5000:5000"
         volumes: 
             - .:/app
         command: gunicorn server:app -c ./gunicorn.conf.py
-        # command: python server.py
 
         networks: 
             - app-test
@@ -29,9 +25,6 @@ services:
             - app-test
         depends_on: 
             - backend
-        environment: 
-            - NODE_ENV=development
-            - HOST_URL="http://backend:5000"
         links:
             - backend
         command: yarn start

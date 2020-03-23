@@ -11,3 +11,4 @@ module.exports = function(app) {
   );
 };
 
+// "proxy": "http://backend:5000",
