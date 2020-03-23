@@ -13,6 +13,7 @@ services:
 
         networks: 
             - app-test
+    
     frontend:
         build: ./frontend
         expose: 
@@ -23,11 +24,15 @@ services:
             - ./frontend:/app
         networks: 
             - app-test
-        depends_on: 
-            - backend
-        links:
-            - backend
-        command: yarn start
+        # depends_on: 
+        #     - backend
+        # links:
+        #     - backend
+        stdin_open: true
+        tty: true
+        environment: 
+            - CI=true
+        command: npm start
         
 
 networks:
