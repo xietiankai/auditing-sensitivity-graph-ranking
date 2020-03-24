@@ -187,15 +187,15 @@ class DetailTable extends React.Component {
           data={this.props.perturbation}
           options={{
             pageSize: 4,
-            minBodyHeight: 297,
-            maxBodyHeight: 297,
+            minBodyHeight: 660,
+            maxBodyHeight: 660,
             padding: "dense",
 
             // showTitle: false,
             paging: false,
             // searchFieldAlignment: "left",
             searchFieldStyle: {
-              minWidth: 500,
+              minWidth: 300,
               maxHeight: 30,
               marginRight: 20
             },

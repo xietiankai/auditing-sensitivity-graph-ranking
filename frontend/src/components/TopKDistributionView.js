@@ -12,14 +12,15 @@ import Grid from "@material-ui/core/Grid";
 
 const styles = theme => ({
   distributionContainer: {
-    padding: theme.spacing(2),
-    height: 290
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    height: 200
   },
   formControl: {
     marginRight: theme.spacing(1)
   },
   pieContainer: {
-    height: 235,
+    height: 150,
     overflow: "auto"
   }
 });
@@ -73,9 +74,9 @@ function processingPieData(data, k, labels) {
 
 export function TopKPieComponent(props) {
   const { k, perturbation, labels, nodes } = props;
-  const radialChartSize = 195;
-  const radialChartRadius = 45;
-  const radialChartInnerRadius = 30;
+  const radialChartSize = 150;
+  const radialChartRadius = 40;
+  const radialChartInnerRadius = 25;
   const before = processingPieData(Object.values(nodes), k, labels);
   const after = processingPieData(perturbation["remove_res"], k, labels);
 
@@ -161,9 +162,6 @@ class TopKDistributionView extends React.Component {
                   </InputAdornment>
                 }
                 aria-describedby="outlined-weight-helper-text"
-                inputProps={{
-                  "aria-label": "weight"
-                }}
                 labelWidth={0}
               />
             </FormControl>

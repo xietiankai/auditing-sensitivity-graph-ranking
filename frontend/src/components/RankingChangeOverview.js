@@ -48,7 +48,7 @@ export default class RankingChangeOverview extends React.Component {
     );
     return (
       <div>
-        <XYPlot width={480} height={100} yDomain={[yDomain.min, yDomain.max]}>
+        <XYPlot width={720} height={100} yDomain={[yDomain.min, yDomain.max]}>
           <VerticalBarSeries
             className="difference-example"
             data={processedData}

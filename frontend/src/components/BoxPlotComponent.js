@@ -17,7 +17,7 @@ import {
 const styles = theme => ({
   boxPlotContainer: {
     padding: theme.spacing(2),
-    height: 270,
+    height: 200,
     overflow: "auto"
   },
 });
@@ -132,8 +132,8 @@ class BoxPlotComponent extends React.Component {
               animation
               yDomain={[Object.keys(this.props.nodes).length, 0]}
               xDomain={[-1, 2]}
-              height={200}
-              width={170}
+              height={170}
+              width={135}
             >
               <XAxis tickFormat={v => xAxisFormat[v]} />
               <YAxis />

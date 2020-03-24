@@ -212,12 +212,12 @@ export default class InfluenceGraphView extends React.Component {
     const edgeScale = d3
       .scaleLinear()
       .domain(d3.extent(edgesData, d => Math.abs(d.influence)))
-      .range([1, 20]);
+      .range([1, 15]);
 
     const link = svg
       .append("g")
       .attr("class", "edges")
-      .attr("stroke-opacity", 0.5)
+      .attr("stroke-opacity", 1)
       .selectAll("line")
       .data(edgesData)
       .join("line")
@@ -275,20 +275,20 @@ export default class InfluenceGraphView extends React.Component {
         "fill",
         d => clusteringColors[labels[Object.keys(labels)[0]][d.node_id]["value"]]
       )
-      .attr("stroke", d => {
-        if (d.level === 0) {
-          return "black";
-        } else {
-          return circleStrokeColor;
-        }
-      })
-      .attr("stroke-width", d => {
-        if (d.level === 0) {
-          return 2;
-        } else {
-          return 1;
-        }
-      })
+      // .attr("stroke", d => {
+      //   if (d.level === 0) {
+      //     return "black";
+      //   } else {
+      //     return circleStrokeColor;
+      //   }
+      // })
+      // .attr("stroke-width", d => {
+      //   if (d.level === 0) {
+      //     return 2;
+      //   } else {
+      //     return 1;
+      //   }
+      // })
       .attr("r", d => {
         if (d.level === 0) {
           return 20;

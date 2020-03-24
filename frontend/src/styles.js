@@ -70,21 +70,37 @@ export const nodeColor = blueGrey[500];
 export const graphEdgeColor = "#B5b5b5";
 
 
-// Modify
+// Modify version 1
+// export const themeColor = {
+//   primaryColor: "#3D4c5a",
+//   secondaryColor: "#ffa600"
+// };
+// export const backGroundColor = "#EEEEEE";
+//
+// export const clusteringColors = ["#4fc4d8", "#f7d371", "#ffb0b0", "#bebaba"];
+//
+// export const radarChartMainColor = "#8299a4";
+//
+// // export const greenAndRed = ["#9ee99d", "#fda682"];
+// export const greenAndRed = ["#99d594", "#fc8d59"];
+//
+// export const vulnerabilityBarColor = "#8299a4";
+
+// Modify version 2
+
 export const themeColor = {
-  primaryColor: "#3D4c5a",
+  primaryColor: "#424242",
   secondaryColor: "#ffa600"
 };
-export const backGroundColor = "#EEEEEE";
+export const backGroundColor = "#E5E5E5";
 
-export const clusteringColors = ["#4fc4d8", "#f7d371", "#ffb0b0", "#bebaba"];
+export const clusteringColors = ["#16a1be", "#efb605", "#ffb0b0", "#bebaba"];
 
-export const radarChartMainColor = "#8299a4";
+export const radarChartMainColor = "#A0A0A0";
 
 // export const greenAndRed = ["#9ee99d", "#fda682"];
-export const greenAndRed = ["#99d594", "#fc8d59"];
+export const greenAndRed = ["#cfede2", "#f9d1d3"];
 
-export const vulnerabilityBarColor = "#8299a4";
-
+export const vulnerabilityBarColor = "#A0A0A0";
 
 
