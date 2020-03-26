@@ -1,22 +1,21 @@
 import React from "react";
-import axios from "axios";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import TimelineIcon from "@material-ui/icons/Timeline";
-import { withStyles } from "@material-ui/styles";
-import { Box, Button, Card, CardContent, CssBaseline } from "@material-ui/core";
-import { connect } from "react-redux";
+import {withStyles} from "@material-ui/styles";
+import {Box, CssBaseline} from "@material-ui/core";
+import {connect} from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import LoadingOverlay from 'react-loading-overlay';
-
+import LoadingOverlay from "react-loading-overlay";
 import ControlPanel from "./ControlPanel";
-import { getData, updateDataName } from "../actions";
-import Snackbar from "@material-ui/core/Snackbar";
+import {getData} from "../actions";
+import {css} from "@emotion/core";
 import Detail from "./Detail";
 import {backGroundColor} from "../styles";
-import "./css/Main.css"
+import "./css/Main.css";
+import {SyncLoader} from "react-spinners";
 
 const styles = theme => ({
   root: {
@@ -58,7 +57,6 @@ const mapStateToProps = state => {
   };
 };
 
-
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -91,7 +89,18 @@ class Main extends React.Component {
         <main className={classes.content}>
           <LoadingOverlay
             active={this.props.isLoading}
-            spinner
+            spinner={
+              <SyncLoader
+
+                css={css`
+                  display: block;
+                  margin-bottom: 10;
+                  border-color: red;
+                `}
+                size={12}
+                color={"#ffffff"}
+              />
+            }
             text={this.props.loadingText}
           >
             <Grid container>

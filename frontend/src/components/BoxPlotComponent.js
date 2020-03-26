@@ -1,18 +1,10 @@
 import * as React from "react";
-import { Box, Typography } from "@material-ui/core";
-import { FlexibleWidthXYPlot, LineSeries, XAxis, YAxis } from "react-vis";
+import {Box, Typography} from "@material-ui/core";
+import {FlexibleWidthXYPlot, LineSeries, XAxis, YAxis} from "react-vis";
 import BoxPlot from "./BoxPlot";
 import {clusteringColors, greenAndRed} from "../styles";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
-import {
-  snackBarClose,
-  updateAlgorithmName,
-  updateConstraints,
-  updateDataName,
-  updateProtectionExtent,
-  updateProtectionType
-} from "../actions";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/styles";
 
 const styles = theme => ({
   boxPlotContainer: {

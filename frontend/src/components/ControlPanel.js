@@ -1,17 +1,14 @@
 import * as React from "react";
 import Grid from "@material-ui/core/Grid";
-import { Box, Button, Card, CardContent } from "@material-ui/core";
+import {Box, Button} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
-import MenuItem from "@material-ui/core/MenuItem";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/styles";
 import CloseIcon from "@material-ui/icons/Close";
 import {
-  getData,
   snackBarClose,
   toggleLoading,
   updateAlgorithmName,

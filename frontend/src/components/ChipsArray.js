@@ -1,9 +1,9 @@
 import * as React from "react";
 import Chip from "@material-ui/core/Chip";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
-import { deleteProtectedNode } from "../actions";
-import { Box } from "@material-ui/core";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/styles";
+import {deleteProtectedNode} from "../actions";
+import {Box} from "@material-ui/core";
 
 const styles = theme => ({
   chipsContainer: {

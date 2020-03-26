@@ -1,9 +1,9 @@
 import React from "react";
-import { ThemeProvider } from "@material-ui/styles";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { themeColor } from "./styles";
+import {ThemeProvider} from "@material-ui/styles";
+import {createMuiTheme} from "@material-ui/core/styles";
+import {themeColor} from "./styles";
 import Main from "./components/Main";
-import { Provider } from "react-redux";
+import {Provider} from "react-redux";
 import store from "./store";
 
 const theme = createMuiTheme({

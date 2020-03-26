@@ -1,6 +1,6 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -18,19 +18,16 @@ import BoxPlotComponent from "./BoxPlotComponent";
 import TopKDistributionView from "./TopKDistributionView";
 import InfluenceGraphView from "./InfluenceGraphView";
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import "../components/css/Detail.css";
 import DetailTable from "./DetailTable";
 import SettingsIcon from "@material-ui/icons/Settings";
-import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Slider from "@material-ui/core/Slider";
-import MenuList from "@material-ui/core/MenuList";
 import RankingChangeOverview from "./RankingChangeOverview";
 import Chip from "@material-ui/core/Chip";
 
@@ -422,7 +419,7 @@ class Detail extends React.Component {
                                     ]
                                   }
                                   canvasHeight={510}
-                                  canvasWidth={820}
+                                  canvasWidth={690}
                                   labels={this.props.labels}
                                   removedID={removedID}
                                   addProtectedNodes={
@@ -433,8 +430,8 @@ class Detail extends React.Component {
                               <Box
                                 position="absolute"
                                 zIndex="tooltip"
-                                top="5%"
-                                right="5%"
+                                top="3%"
+                                right="3%"
                                 className={this.props.classes.toolBox}
                               >
                                 <Typography variant={"body1"}>

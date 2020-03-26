@@ -1,12 +1,7 @@
 import React, {Component} from "react";
 import {findDOMNode} from "react-dom";
 import "./css/GraphView.css";
-import {
-  clusteringColors,
-  graphEdgeColor,
-  strokeColor,
-  targetStrokeColor
-} from "../styles";
+import {clusteringColors, graphEdgeColor, strokeColor, targetStrokeColor} from "../styles";
 
 import * as d3 from "d3";
 import {toolTipGenerator} from "../utils";

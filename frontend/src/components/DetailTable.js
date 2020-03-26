@@ -1,22 +1,11 @@
 import * as React from "react";
 import MaterialTable from "material-table";
-import {
-  clusteringColors,
-  greenAndRed,
-  leftPanelBackgroundColor
-} from "../styles";
-import { Box, Paper, Typography } from "@material-ui/core";
+import {greenAndRed, leftPanelBackgroundColor} from "../styles";
+import {Box, Paper} from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
-import {
-  snackBarClose,
-  updateAlgorithmName,
-  updateConstraints,
-  updateDataName,
-  updateProtectionExtent,
-  updateProtectionType
-} from "../actions";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
+import {updateDataName} from "../actions";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/styles";
 import "../components/css/DetailTable.css";
 
 const styles = theme => ({

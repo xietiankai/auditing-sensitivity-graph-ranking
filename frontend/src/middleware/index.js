@@ -1,4 +1,4 @@
-import { UPDATE_DATA_NAME } from "../constants/actionTypes";
+import {UPDATE_DATA_NAME} from "../constants/actionTypes";
 
 export function doNothingMiddleware({ getState, dispatch }) {
   return function(next) {

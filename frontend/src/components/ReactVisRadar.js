@@ -18,13 +18,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import React, { Component } from "react";
+import React, {Component} from "react";
 
 import RadarChart from "react-vis/dist/radar-chart";
 import CircularGridLines from "react-vis/dist/plot/circular-grid-lines";
 import "react-vis/dist/style.css";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/styles";
 import {radarChartMainColor} from "../styles";
 
 const styles = themes => ({});

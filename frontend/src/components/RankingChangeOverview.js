@@ -19,13 +19,9 @@
 // THE SOFTWARE.
 
 import React from "react";
-import {
-  XYPlot,
-  XAxis,
-  YAxis,
-  VerticalBarSeries
-} from "react-vis";
-import {clusteringColors, greenAndRed} from "../styles";
+import {VerticalBarSeries, XAxis, XYPlot, YAxis} from "react-vis";
+import {clusteringColors} from "../styles";
+import ChartLabel from "react-vis/es/plot/chart-label";
 
 export default class RankingChangeOverview extends React.Component {
   render() {
@@ -60,6 +56,25 @@ export default class RankingChangeOverview extends React.Component {
           />
           <XAxis />
           <YAxis />
+          <ChartLabel
+            text="Ranking Positions"
+            className="alt-x-label"
+            includeMargin={false}
+            xPercent={0.025}
+            yPercent={1.01}
+            />
+
+          <ChartLabel
+            text="Ranking Changes"
+            className="alt-y-label"
+            includeMargin={false}
+            xPercent={0.06}
+            yPercent={0.06}
+            // style={{
+            //   transform: 'rotate(-90)',
+            //   textAnchor: 'end'
+            // }}
+            />
         </XYPlot>
       </div>
     );
