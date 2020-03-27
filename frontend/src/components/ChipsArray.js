@@ -28,9 +28,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 class ChipsArray extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     let chipsArray = <Chip size="small" key={"none"} label={"None"} disabled />;

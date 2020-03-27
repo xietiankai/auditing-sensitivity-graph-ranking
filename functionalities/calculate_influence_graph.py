@@ -156,17 +156,17 @@ def calculate_influence_graph(graph, remove_res, remove_id, level_threshold=10):
                                           "rank_change"]})
                     nodes_to_iterate.put(neighbor)
                     remains.remove(neighbor)
-                else:
-                    visited_nodes[neighbor] += 1
-                    new_index = visited_nodes[neighbor]
-                    node_name = neighbor + "##" + str(new_index)
-                    nodes_res.append({"node_id": node_name, "level": layer_count[neighbor],
-                                      "rank_change": filtered_change_res[neighbor]["rank_change"]})
-                    edges_res.append({"source": node, "target": node_name,
-                                      "source_id": node,
-                                      "target_id": node_name,
-                                      "influence": filtered_change_res[neighbor][
-                                          "rank_change"]})
+                # else:
+                #     visited_nodes[neighbor] += 1
+                #     new_index = visited_nodes[neighbor]
+                #     node_name = neighbor + "##" + str(new_index)
+                #     nodes_res.append({"node_id": node_name, "level": layer_count[neighbor],
+                #                       "rank_change": filtered_change_res[neighbor]["rank_change"]})
+                #     edges_res.append({"source": node, "target": node_name,
+                #                       "source_id": node,
+                #                       "target_id": node_name,
+                #                       "influence": filtered_change_res[neighbor][
+                #                           "rank_change"]})
     print(remove_id)
     for remain_item in list(remains):
         nodes_res.append({"node_id": remain_item, "level": "inf",

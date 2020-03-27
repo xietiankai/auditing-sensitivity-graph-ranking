@@ -90,17 +90,17 @@ export const graphEdgeColor = "#B5b5b5";
 
 export const themeColor = {
   primaryColor: "#424242",
-  secondaryColor: "#ffa600"
+  secondaryColor: "#7e7e7e"
 };
 export const backGroundColor = "#E5E5E5";
 
-export const clusteringColors = ["#16a1be", "#efb605", "#ffb0b0", "#bebaba"];
+export const clusteringColors = ["#4387b0", "#ffa600", "#ffb0b0", "#bebaba"];
 
-export const radarChartMainColor = "#A0A0A0";
+export const radarChartMainColor = "#de5e6c";
 
 // export const greenAndRed = ["#9ee99d", "#fda682"];
 export const greenAndRed = ["#cfede2", "#f9d1d3"];
 
-export const vulnerabilityBarColor = "#A0A0A0";
+export const vulnerabilityBarColor = "#de5e6c";
 
 

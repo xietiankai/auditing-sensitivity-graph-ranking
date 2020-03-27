@@ -1,6 +1,6 @@
 import * as React from "react";
-import {connect} from "react-redux";
-import {withStyles} from "@material-ui/styles";
+import { connect } from "react-redux";
+import { withStyles } from "@material-ui/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -33,7 +33,7 @@ import Chip from "@material-ui/core/Chip";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
     width: "100%"
     // backgroundColor: theme.palette.background.paper
   },
@@ -64,10 +64,19 @@ const styles = theme => ({
     paddingLeft: theme.spacing(60)
   },
   formControlLabel: {
-    display: "block"
+    display: "block",
+    color: "#7c7c7c"
   },
   toolBox: {
-    width: 195
+    display: "flex",
+    width: 580,
+    paddingLeft: theme.spacing(2)
+  },
+  appBar: {
+    zIndex: 100
+  },
+  slider: {
+    width: 135
   }
 });
 
@@ -377,8 +386,9 @@ class Detail extends React.Component {
                                   <MenuItem>
                                     <Slider
                                       min={1}
-                                      max={5}
+                                      max={10}
                                       step={1}
+                                      color={"secondary"}
                                       value={[
                                         this.props.detailList[removedID][
                                           "levelLowerBound"
@@ -430,87 +440,100 @@ class Detail extends React.Component {
                               <Box
                                 position="absolute"
                                 zIndex="tooltip"
-                                top="3%"
-                                right="3%"
-                                className={this.props.classes.toolBox}
+                                top="90%"
+                                right="2%"
                               >
-                                <Typography variant={"body1"}>
-                                  Display Options
-                                </Typography>
-                                <FormControlLabel
-                                  className={
-                                    this.props.classes.formControlLabel
-                                  }
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        this.props.detailList[removedID][
-                                          "showPositive"
-                                        ]
+                                <Paper
+                                  variant="outlined"
+                                  className={this.props.classes.toolBox}
+                                >
+                                  <Box>
+                                    <FormControlLabel
+                                      className={
+                                        this.props.classes.formControlLabel
                                       }
-                                      onChange={() => {
-                                        this.props.toggleGraphDisplayPNOption(
-                                          removedID,
-                                          "positive"
+                                      control={
+                                        <Checkbox
+                                          checked={
+                                            this.props.detailList[removedID][
+                                              "showPositive"
+                                            ]
+                                          }
+                                          onChange={() => {
+                                            this.props.toggleGraphDisplayPNOption(
+                                              removedID,
+                                              "positive"
+                                            );
+                                          }}
+                                          value="show positive"
+                                          color="secondary"
+                                        />
+                                      }
+                                      label="positive influence"
+                                    />
+                                  </Box>
+                                  <Box>
+                                    <FormControlLabel
+                                      className={
+                                        this.props.classes.formControlLabel
+                                      }
+                                      control={
+                                        <Checkbox
+                                          checked={
+                                            this.props.detailList[removedID][
+                                              "showNegative"
+                                            ]
+                                          }
+                                          onChange={() => {
+                                            this.props.toggleGraphDisplayPNOption(
+                                              removedID,
+                                              "negative"
+                                            );
+                                          }}
+                                          value="show negative"
+                                          color="secondary"
+                                        />
+                                      }
+                                      label="negative influence"
+                                    />
+                                  </Box>
+                                  <Box style={{paddingTop: 8}}>
+                                    <Typography
+                                      variant={"body1"}
+                                      color={"textSecondary"}
+                                    >
+                                      Influence Distance
+                                    </Typography>
+                                  </Box>
+                                  <Box style={{paddingTop: 5, paddingLeft: 9}}>
+                                    <Slider
+                                      className={this.props.classes.slider}
+                                      min={1}
+                                      max={10}
+                                      step={1}
+                                      value={[
+                                        this.props.detailList[removedID][
+                                          "levelLowerBound"
+                                        ],
+                                        this.props.detailList[removedID][
+                                          "levelUpperBound"
+                                        ]
+                                      ]}
+                                      onChange={(event, value) => {
+                                        console.log(value);
+                                        this.props.updateLevelBound(
+                                          value,
+                                          removedID
                                         );
                                       }}
-                                      value="show positive"
-                                      color="primary"
-                                    />
-                                  }
-                                  label="show positive influence"
-                                />
-                                <FormControlLabel
-                                  className={
-                                    this.props.classes.formControlLabel
-                                  }
-                                  control={
-                                    <Checkbox
-                                      checked={
-                                        this.props.detailList[removedID][
-                                          "showNegative"
-                                        ]
-                                      }
-                                      onChange={() => {
-                                        this.props.toggleGraphDisplayPNOption(
-                                          removedID,
-                                          "negative"
-                                        );
+                                      valueLabelDisplay="auto"
+                                      aria-labelledby="range-slider"
+                                      getAriaValueText={value => {
+                                        return `level ${value}`;
                                       }}
-                                      value="show negative"
-                                      color="primary"
                                     />
-                                  }
-                                  label="show negative influence"
-                                />
-                                <Typography variant={"body1"}>
-                                  Filter
-                                </Typography>
-                                <Slider
-                                  min={1}
-                                  max={10}
-                                  step={1}
-                                  value={[
-                                    this.props.detailList[removedID][
-                                      "levelLowerBound"
-                                    ],
-                                    this.props.detailList[removedID][
-                                      "levelUpperBound"
-                                    ]
-                                  ]}
-                                  onChange={(event, value) => {
-                                    console.log(value);
-                                    this.props.updateLevelBound(
-                                      value,
-                                      removedID
-                                    );
-                                  }}
-                                  valueLabelDisplay="auto"
-                                  aria-labelledby="range-slider"
-                                  getAriaValueText={value => {
-                                    return `level ${value}`;
-                                  }}
-                                />
+                                  </Box>
+                                </Paper>
                               </Box>
                             </Box>
                           </Paper>
@@ -541,7 +564,12 @@ class Detail extends React.Component {
     }
     return (
       <div id="detail" className={this.props.classes.root}>
-        <AppBar position="static" color="default" elevation={0}>
+        <AppBar
+          position="static"
+          color="default"
+          elevation={0}
+          className={this.props.classes.appBar}
+        >
           <Tabs
             value={this.props.activatedTab}
             onChange={this.props.updateActivatedTabIndex}

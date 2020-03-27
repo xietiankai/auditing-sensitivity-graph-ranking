@@ -57,19 +57,19 @@ export default class RankingChangeOverview extends React.Component {
           <XAxis />
           <YAxis />
           <ChartLabel
-            text="Ranking Positions"
+            text="Ranking"
             className="alt-x-label"
-            includeMargin={false}
-            xPercent={0.025}
-            yPercent={1.01}
+            includeMargin={true}
+            xPercent={0.92}
+            yPercent={0.38}
             />
 
           <ChartLabel
-            text="Ranking Changes"
+            text="Ranking Change"
             className="alt-y-label"
-            includeMargin={false}
-            xPercent={0.06}
-            yPercent={0.06}
+            includeMargin={true}
+            xPercent={0.08}
+            yPercent={-0.25}
             // style={{
             //   transform: 'rotate(-90)',
             //   textAnchor: 'end'
