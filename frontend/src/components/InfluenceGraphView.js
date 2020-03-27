@@ -174,12 +174,12 @@ export default class InfluenceGraphView extends React.Component {
           .distance(d => {
             //return d.target.level * 10;
             // return Math.exp(d.target.level) *5
-            return 100;
+            return 50;
           })
       )
-      .force("charge", d3.forceManyBody().strength(-80))
+      .force("charge", d3.forceManyBody().strength(-10))
       .force("center", d3.forceCenter(canvasWidth / 2.6, canvasHeight / 2))
-      .force("collision", d3.forceCollide(circleRadius + 10));
+      .force("collision", d3.forceCollide(circleRadius + 5));
 
     const svg = baseGroup;
 
@@ -225,7 +225,7 @@ export default class InfluenceGraphView extends React.Component {
     const edgeScale = d3
       .scaleLinear()
       .domain(d3.extent(edgesData, d => Math.abs(d.influence)))
-      .range([1, 15]);
+      .range([2, 8]);
 
     const link = svg
       .append("g")
@@ -273,7 +273,7 @@ export default class InfluenceGraphView extends React.Component {
     const nodeScale = d3
       .scaleLinear()
       .domain(d3.extent(nodesData, d => Math.abs(d.rank_change)))
-      .range([10, 20]);
+      .range([5, 15]);
 
     const circles = node
       .append("circle")
@@ -320,7 +320,7 @@ export default class InfluenceGraphView extends React.Component {
       })
       .attr("r", d => {
         if (d.level === 0) {
-          return 30;
+          return 20;
         } else {
           return nodeScale(Math.abs(d.rank_change));
         }
