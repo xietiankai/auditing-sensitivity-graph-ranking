@@ -1,9 +1,9 @@
 import React from "react";
-import {ThemeProvider} from "@material-ui/styles";
-import {createMuiTheme} from "@material-ui/core/styles";
-import {themeColor} from "./styles";
+import { ThemeProvider } from "@material-ui/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { themeColor } from "./styles";
 import Main from "./components/Main";
-import {Provider} from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store";
 
 const theme = createMuiTheme({
@@ -16,22 +16,55 @@ const theme = createMuiTheme({
     }
   },
 
-    typography: {
-    fontSize: 12,
-    fontFamily: [
-        '"Helvetica Neue"',
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
+  typography: {
+    // h1
+    // h2
+    // h3
+    // h4
+    // h5
+    // h6
+    // subtitle1
+    // subtitle2
+    // body1
+    // body2
+    // button
+    // caption
+    // overline
 
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
+    fontSize: 11,
+
+    // Title
+    h1: {
+      fontSize: 20,
+      fontFamily: "Arial"
+    },
+    // View title
+    h6: {
+      fontSize: 17,
+      fontWeight: 100,
+      fontStyle: 'regular',
+    },
+    // Subtitle
+    subtitle1: {
+      fontSize: 13
+    },
+    // axis % legend
+    subtitle2: {
+      fontSize: 11
+    }
   },
+  fontFamily: [
+    "Roboto",
+    '"Helvetica Neue"',
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Arial",
+    "sans-serif",
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"'
+  ].join(",")
 });
 
 function App() {

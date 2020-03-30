@@ -1,6 +1,6 @@
 import * as React from "react";
 import MaterialTable from "material-table";
-import {greenAndRed, leftPanelBackgroundColor} from "../styles";
+import {greenAndRed, leftPanelBackgroundColor, textGreen, textRed} from "../styles";
 import {Box, Paper} from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import {updateDataName} from "../actions";
@@ -76,13 +76,13 @@ class DetailTable extends React.Component {
         render: rowData => {
           if (rowData.rank_change > 0) {
             return (
-              <div style={{ color: greenAndRed[1] }}>
+              <div style={{ color: textRed }}>
                 {"+" + rowData.rank_change}
               </div>
             );
           } else if (rowData.rank_change < 0) {
             return (
-              <div style={{ color: greenAndRed[0] }}>
+              <div style={{ color: textGreen }}>
                 {" "}
                 {rowData.rank_change}
               </div>

@@ -51,10 +51,10 @@ const styles = theme => ({
     padding: theme.spacing(2)
   },
   rulesContainer: {
-    height: 184,
-    overflow: "auro",
+    height: 180,
+    overflow: "auto",
     border: "1px solid #e0e0e0",
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(1)
   },
   rulesCard: {
     // border: "1px solid #e0e0e0"
@@ -114,14 +114,14 @@ class ControlPanel extends React.Component {
       this.props.getData();
     };
     let rulesComponents = (
-      <Typography className={classes.rulesContent} color="textSecondary">
+      <Typography variant={"body1"} className={classes.rulesContent} color="textSecondary">
         No rules yet
       </Typography>
     );
     if (this.props.rules.length !== 0) {
       rulesComponents = this.props.rules.map(item => {
         return (
-          <Typography className={classes.rulesContent} color="textSecondary">
+          <Typography variant={"body1"} className={classes.rulesContent} color="textSecondary">
             - To protect {Array.from(item.protectedNodes).toString()} from their
             ranking {item.protectionType} by {item.protectionExtent * 100} %
           </Typography>
@@ -179,15 +179,15 @@ class ControlPanel extends React.Component {
         <VulnerabilityTable />
         <Divider />
         <Box className={classes.constrainContainer}>
-          <Typography variant={"h6"}>Rules</Typography>
+          <Typography variant={"h6"} gutterBottom>Rules</Typography>
           <Box className={classes.rulesContainer}>{rulesComponents}</Box>
           <Grid container>
             <Grid item md={6}>
-              <Typography variant={"h6"}>Protected Nodes</Typography>
+              <Typography variant={"h6"} gutterBottom>Protected Nodes</Typography>
               <ChipsArray />
             </Grid>
             <Grid item md={6}>
-              <Typography variant={"h6"}>Constraints</Typography>
+              <Typography variant={"h6"} gutterBottom>Constraints</Typography>
               Protect selected nodes from their ranking
               <FormControl variant="outlined" className={classes.formControl}>
                 <Select
@@ -204,7 +204,7 @@ class ControlPanel extends React.Component {
                   <option value={"decreased"}>decreased</option>
                 </Select>
               </FormControl>
-              <Typography>by</Typography>
+              <Typography variant={"body1"}>by</Typography>
               <FormControl variant="outlined" className={classes.formControl}>
                 <Select
                   native

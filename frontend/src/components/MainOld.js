@@ -44,6 +44,7 @@ const TabPanel = props => {
 
   return (
     <Typography
+        variant={"subtitle1"}
       component="div"
       role="tabpanel"
       hidden={value !== index}

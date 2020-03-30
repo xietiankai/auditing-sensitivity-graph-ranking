@@ -10,7 +10,7 @@ export function toolTipGenerator(rootTag) {
     .style("font-family", "Sans-serif")
     .style("font-size", "12px")
     .style("color", "white")
-    .style("border-radius", "25px")
+    .style("border-radius", "2px")
     .style("background", "none repeat scroll 0 0 #424242")
     .style("border", "1px solid #6F257F")
     .style("padding", "10px")

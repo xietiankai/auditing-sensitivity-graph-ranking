@@ -117,6 +117,7 @@ function TabPanel(props) {
 
   return (
     <Typography
+      variant={"subtitle1"}
       component="div"
       role="tabpanel"
       hidden={value !== index}
@@ -135,7 +136,7 @@ class Detail extends React.Component {
     let tabPanelComponents = (
       <TabPanel value={this.props.activatedTab} index={0}>
         <Box className={this.props.classes.emptyPanel}>
-          <Typography color={"textSecondary"}>
+          <Typography variant={"subtitle1"} color={"textSecondary"}>
             Select a node to diagnose the Sensitivity.
           </Typography>
         </Box>
@@ -155,13 +156,12 @@ class Detail extends React.Component {
             return (
               <Box display={"flex"} style={{ width: "70%" }}>
                 <Box flexGrow={1}>
-                  <Typography variant={"body2"} color={"textSecondary"}>
+                  <Typography variant={"subtitle2"} color={"textSecondary"}>
                     {item.axis}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant={"body2"} color={"textSecondary"}>
-                    {" "}
+                  <Typography variant={"subtitle2"} color={"textSecondary"}>
                     {item.value}
                   </Typography>
                 </Box>
@@ -190,7 +190,7 @@ class Detail extends React.Component {
                           />
                         </Grid>
                         <Grid item md={5}>
-                          <Typography>{removedID}</Typography>
+                          <Typography variant={"body1"}>{removedID}</Typography>
                           <Box display={"flex"}>
                             <Box>
                               <Chip
@@ -497,7 +497,7 @@ class Detail extends React.Component {
                                       label="negative influence"
                                     />
                                   </Box>
-                                  <Box style={{paddingTop: 8}}>
+                                  <Box style={{ paddingTop: 8 }}>
                                     <Typography
                                       variant={"body1"}
                                       color={"textSecondary"}
@@ -505,7 +505,9 @@ class Detail extends React.Component {
                                       Influence Distance
                                     </Typography>
                                   </Box>
-                                  <Box style={{paddingTop: 5, paddingLeft: 9}}>
+                                  <Box
+                                    style={{ paddingTop: 5, paddingLeft: 9 }}
+                                  >
                                     <Slider
                                       className={this.props.classes.slider}
                                       min={1}

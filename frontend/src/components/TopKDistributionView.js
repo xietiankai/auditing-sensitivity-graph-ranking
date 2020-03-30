@@ -106,7 +106,7 @@ export function TopKPieComponent(props) {
             >
                {toolTip1 !== false && <Hint value={toolTip1} />}
             </RadialChart>
-            <Typography align={"center"}>Original Top-{k}</Typography>
+            <Typography variant={"subtitle1"} align={"center"}>Original Top-{k}</Typography>
           </Box>
         </Grid>
         <Grid item md={6}>
@@ -128,7 +128,7 @@ export function TopKPieComponent(props) {
             >
               {toolTip2 !== false && <Hint value={toolTip2} />}
             </RadialChart>
-            <Typography align={"center"}>Perturbed Top-{k}</Typography>
+            <Typography variant={"subtitle1"} align={"center"}>Perturbed Top-{k}</Typography>
           </Box>
         </Grid>
       </Grid>

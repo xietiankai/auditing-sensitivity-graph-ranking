@@ -43,7 +43,7 @@ export default class RankingChangeOverview extends React.Component {
       { max: -Infinity, min: Infinity }
     );
     return (
-      <div>
+      <div style={{paddingLeft: 10, paddingRight: 10 }}>
         <XYPlot width={720} height={100} yDomain={[yDomain.min, yDomain.max]}>
           <VerticalBarSeries
             className="difference-example"

@@ -124,8 +124,8 @@ class BoxPlotComponent extends React.Component {
               animation
               yDomain={[Object.keys(this.props.nodes).length, 0]}
               xDomain={[-1, 2]}
-              height={170}
-              width={135}
+              height={150}
+              width={155}
             >
               <XAxis tickFormat={v => xAxisFormat[v]} />
               <YAxis />
@@ -140,7 +140,7 @@ class BoxPlotComponent extends React.Component {
                 data={boxPlotDataUltimate[key]}
               />
             </FlexibleWidthXYPlot>
-            <Typography align={"center"}>{this.props.labelNames[key]} Distribution</Typography>
+            <Typography variant={"subtitle1"} align={"center"}>{this.props.labelNames[key]} Distribution</Typography>
           </Box>
         </Box>
       );

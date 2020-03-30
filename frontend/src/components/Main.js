@@ -100,7 +100,7 @@ class Main extends React.Component {
               >
                 <TimelineIcon />
               </IconButton>
-              <Typography variant="h5" noWrap>
+              <Typography variant="h1" noWrap>
                 Graph-based Ranking Sensitivity Analysis
               </Typography>
             </Toolbar>

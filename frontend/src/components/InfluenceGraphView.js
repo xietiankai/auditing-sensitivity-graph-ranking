@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as d3 from "d3";
-import {findDOMNode} from "react-dom";
-import {circleStrokeColor, clusteringColors, greenAndRed} from "../styles";
+import { findDOMNode } from "react-dom";
+import { circleStrokeColor, clusteringColors, greenAndRed } from "../styles";
 import "../components/css/InfluenceGraphView.css";
-import {toolTipGenerator} from "../utils";
+import { toolTipGenerator } from "../utils";
 
 const circleMenu = [
   {
@@ -172,6 +172,9 @@ export default class InfluenceGraphView extends React.Component {
             return d.node_id;
           })
           .distance(d => {
+            if (d.target.level === "inf") {
+              return 500;
+            }
             //return d.target.level * 10;
             // return Math.exp(d.target.level) *5
             return 50;
@@ -231,9 +234,10 @@ export default class InfluenceGraphView extends React.Component {
       .append("g")
       .attr("class", "edges")
       .attr("stroke-opacity", 0.7)
-      .selectAll("line")
+      .selectAll(".edges")
       .data(edgesData)
-      .join("line")
+      .enter()
+      .append("path")
       .attr("class", d => {
         let classString = "";
         if (d.influence > 0) {
@@ -246,6 +250,7 @@ export default class InfluenceGraphView extends React.Component {
       .attr("stroke-width", d => {
         return edgeScale(Math.abs(d.influence));
       })
+      .attr("fill", "none")
       .attr("stroke", d => {
         if (d.influence > 0) {
           return greenAndRed[1];
@@ -253,6 +258,10 @@ export default class InfluenceGraphView extends React.Component {
           return greenAndRed[0];
         }
       })
+        .style("stroke-dasharray", d=> {
+          if (d.target.level === "inf") {
+            return ("3, 3");
+        }})
       .attr("marker-end", d => {
         if (d.influence > 0) {
           return "url(#arrowhead-neg)";
@@ -260,7 +269,6 @@ export default class InfluenceGraphView extends React.Component {
           return "url(#arrowhead-pos)";
         }
       });
-
 
     const node = svg
       .append("g")
@@ -279,7 +287,7 @@ export default class InfluenceGraphView extends React.Component {
       .append("circle")
       .attr("class", d => {
         let classString = "";
-        if (d.level !== 0|| d.level === "inf") {
+        if (d.level !== 0 || d.level === "inf") {
           if (d.rank_change > 0) {
             classString += "negative level-" + d.level;
           } else {
@@ -291,19 +299,18 @@ export default class InfluenceGraphView extends React.Component {
         return classString;
       })
       .attr("id", d => "node-" + d.node_id)
-      .attr(
-        "fill",
-        d =>{
-          if (labels[Object.keys(labels)[0]][d.node_id]) {
-            return clusteringColors[labels[Object.keys(labels)[0]][d.node_id]["value"]]
-          }
-          else {
-            // console.log(d.node_id.split("_")[0]);
-            return clusteringColors[labels[Object.keys(labels)[0]][d.node_id.split("##")[0]]["value"]]
-          }
+      .attr("fill", d => {
+        if (labels[Object.keys(labels)[0]][d.node_id]) {
+          return clusteringColors[
+            labels[Object.keys(labels)[0]][d.node_id]["value"]
+          ];
+        } else {
+          // console.log(d.node_id.split("_")[0]);
+          return clusteringColors[
+            labels[Object.keys(labels)[0]][d.node_id.split("##")[0]]["value"]
+          ];
         }
-
-      )
+      })
       .attr("stroke", d => {
         if (d.level === 0) {
           return "black";
@@ -349,18 +356,52 @@ export default class InfluenceGraphView extends React.Component {
       .on("contextmenu", this.contextMenu(circleMenu));
 
     simulation.on("tick", () => {
-      link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
+      // link
+      //   .attr("x1", d => d.source.x)
+      //   .attr("y1", d => d.source.y)
+      //
+      //   .attr("x2", d => d.target.x)
+      //   .attr("y2", d => d.target.y);
 
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
+      link.attr("d", positionLink);
 
       circles.attr("cx", d => d.x).attr("cy", d => d.y);
     });
 
     function zoomed() {
       svg.attr("transform", d3.event.transform);
+    }
+
+    // links are drawn as curved paths between nodes,
+    // through the intermediate nodes
+    function positionLink(d) {
+      let offset = 30;
+
+      let midpoint_x = (d.source.x + d.target.x) / 2;
+      let midpoint_y = (d.source.y + d.target.y) / 2;
+
+      let dx = d.target.x - d.source.x;
+      let dy = d.target.y - d.source.y;
+
+      let normalise = Math.sqrt(dx * dx + dy * dy);
+
+      let offSetX = midpoint_x + offset * (dy / normalise);
+      let offSetY = midpoint_y - offset * (dx / normalise);
+
+      return (
+        "M" +
+        d.source.x +
+        "," +
+        d.source.y +
+        "S" +
+        offSetX +
+        "," +
+        offSetY +
+        " " +
+        d.target.x +
+        "," +
+        d.target.y
+      );
     }
 
     const svgRoot = d3.select("#impact-graph-chart-" + removedID);
