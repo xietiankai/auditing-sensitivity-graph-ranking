@@ -1,22 +1,11 @@
 import * as React from "react";
 import MaterialTable from "material-table";
-import {
-  clusteringColors,
-  greenAndRed,
-  leftPanelBackgroundColor
-} from "../styles";
-import { Box, Paper, Typography } from "@material-ui/core";
+import {greenAndRed, leftPanelBackgroundColor, textGreen, textRed} from "../styles";
+import {Box, Paper} from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
-import {
-  snackBarClose,
-  updateAlgorithmName,
-  updateConstraints,
-  updateDataName,
-  updateProtectionExtent,
-  updateProtectionType
-} from "../actions";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
+import {updateDataName} from "../actions";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/styles";
 import "../components/css/DetailTable.css";
 
 const styles = theme => ({
@@ -87,13 +76,13 @@ class DetailTable extends React.Component {
         render: rowData => {
           if (rowData.rank_change > 0) {
             return (
-              <div style={{ color: greenAndRed[1] }}>
+              <div style={{ color: textRed }}>
                 {"+" + rowData.rank_change}
               </div>
             );
           } else if (rowData.rank_change < 0) {
             return (
-              <div style={{ color: greenAndRed[0] }}>
+              <div style={{ color: textGreen }}>
                 {" "}
                 {rowData.rank_change}
               </div>
@@ -187,15 +176,15 @@ class DetailTable extends React.Component {
           data={this.props.perturbation}
           options={{
             pageSize: 4,
-            minBodyHeight: 297,
-            maxBodyHeight: 297,
+            minBodyHeight: 660,
+            maxBodyHeight: 660,
             padding: "dense",
 
             // showTitle: false,
             paging: false,
             // searchFieldAlignment: "left",
             searchFieldStyle: {
-              minWidth: 500,
+              minWidth: 300,
               maxHeight: 30,
               marginRight: 20
             },

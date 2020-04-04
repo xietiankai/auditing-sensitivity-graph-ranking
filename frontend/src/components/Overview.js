@@ -1,14 +1,5 @@
-import { withStyles } from "@material-ui/styles";
-import {
-  Button,
-  Card,
-  CardContent,
-  FormControl,
-  Grid,
-  InputLabel,
-  Select,
-  Typography
-} from "@material-ui/core";
+import {withStyles} from "@material-ui/styles";
+import {Button, Card, CardContent, FormControl, Grid, InputLabel, Select, Typography} from "@material-ui/core";
 import React from "react";
 import VulnerabilityView from "./VulnerabilityView";
 import Divider from "@material-ui/core/Divider";

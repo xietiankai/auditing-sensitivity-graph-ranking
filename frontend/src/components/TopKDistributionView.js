@@ -9,17 +9,19 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { clusteringColors } from "../styles";
 import RadialChart from "react-vis/es/radial-chart";
 import Grid from "@material-ui/core/Grid";
+import Hint from "react-vis/es/plot/hint";
 
 const styles = theme => ({
   distributionContainer: {
-    padding: theme.spacing(2),
-    height: 290
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    height: 200
   },
   formControl: {
     marginRight: theme.spacing(1)
   },
   pieContainer: {
-    height: 235,
+    height: 150,
     overflow: "auto"
   }
 });
@@ -47,8 +49,9 @@ function processingPieData(data, k, labels) {
   let perturbationStat = {};
   let labelToStringMap = {};
   data
-    .slice(0, k)
     .sort((a, b) => a.rank - b.rank)
+    .slice(0, k)
+
     .map(item => {
       const labelCat = labelMap[item["node_id"]]["value"];
       labelToStringMap[labelCat] = labelMap[item["node_id"]]["label"];
@@ -73,11 +76,14 @@ function processingPieData(data, k, labels) {
 
 export function TopKPieComponent(props) {
   const { k, perturbation, labels, nodes } = props;
-  const radialChartSize = 195;
-  const radialChartRadius = 45;
-  const radialChartInnerRadius = 30;
+  const radialChartSize = 150;
+  const radialChartRadius = 40;
+  const radialChartInnerRadius = 25;
   const before = processingPieData(Object.values(nodes), k, labels);
   const after = processingPieData(perturbation["remove_res"], k, labels);
+
+  const [toolTip1, setToolTip1] = React.useState(false);
+  const [toolTip2, setToolTip2] = React.useState(false);
 
   return (
     <React.Fragment>
@@ -92,10 +98,18 @@ export function TopKPieComponent(props) {
               radius={radialChartRadius}
               padAngle={0.04}
               colorType="literal"
+              onValueMouseOver={v => setToolTip1(v)}
+              onSeriesMouseOut={v => setToolTip1(false)}
               // margin={radialChartMargin}
               showLabels={true}
-            />
-            <Typography align={"center"}>Original Top-{k}</Typography>
+              labelsStyle={{ fontSize: 10, color: "#7e7e7e" }}
+              labelsRadiusMultiplier={1.5}
+            >
+              {toolTip1 !== false && <Hint value={toolTip1} />}
+            </RadialChart>
+            <Typography variant={"subtitle1"} align={"center"}>
+              Original Top-{k}
+            </Typography>
           </Box>
         </Grid>
         <Grid item md={6}>
@@ -108,10 +122,18 @@ export function TopKPieComponent(props) {
               radius={radialChartRadius}
               padAngle={0.04}
               colorType="literal"
+              onValueMouseOver={v => setToolTip2(v)}
+              onSeriesMouseOut={v => setToolTip2(false)}
               // margin={radialChartMargin}
               showLabels={true}
-            />
-            <Typography align={"center"}>Perturbed Top-{k}</Typography>
+              labelsStyle={{ fontSize: 10, color: "#7e7e7e" }}
+              labelsRadiusMultiplier={1.5}
+            >
+              {toolTip2 !== false && <Hint value={toolTip2} />}
+            </RadialChart>
+            <Typography variant={"subtitle1"} align={"center"}>
+              Perturbed Top-{k}
+            </Typography>
           </Box>
         </Grid>
       </Grid>
@@ -161,9 +183,6 @@ class TopKDistributionView extends React.Component {
                   </InputAdornment>
                 }
                 aria-describedby="outlined-weight-helper-text"
-                inputProps={{
-                  "aria-label": "weight"
-                }}
                 labelWidth={0}
               />
             </FormControl>
@@ -181,7 +200,9 @@ class TopKDistributionView extends React.Component {
             </Button>
           </Box>
         </Box>
-        <Box className={this.props.classes.pieContainer}>{kDistributionComponent}</Box>
+        <Box className={this.props.classes.pieContainer}>
+          {kDistributionComponent}
+        </Box>
       </Box>
     );
   }

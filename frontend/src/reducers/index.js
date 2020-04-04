@@ -3,9 +3,9 @@ import {
   ADD_TOP_K_QUERY,
   APPEND_DETAIL_LIST,
   DATA_LOADED,
-  DELETE_PROTECTED_NODE, LOADING_DATA,
+  DELETE_PROTECTED_NODE,
+  LOADING_DATA,
   SNACKBAR_CLOSE,
-  SNACKBAR_OPEN,
   TOGGLE_GRAPH_MENU_BUTTON,
   TOGGLE_SHOW_NEGATIVE,
   TOGGLE_SHOW_POSITIVE,
@@ -15,8 +15,6 @@ import {
   UPDATE_DATA_NAME,
   UPDATE_K,
   UPDATE_LEVEL_BOUND,
-  UPDATE_LEVEL_LOWER_BOUND,
-  UPDATE_LEVEL_UPPER_BOUND,
   UPDATE_PROTECTION_EXTENT,
   UPDATE_PROTECTION_TYPE
 } from "../constants/actionTypes";
@@ -41,7 +39,7 @@ const initialState = {
   labels: {},
   updateK: 0,
   isLoading: true,
-  loadingText: "Initializing Data..."
+  loadingText: "Loading..."
 };
 
 function rootReducer(state = initialState, action) {

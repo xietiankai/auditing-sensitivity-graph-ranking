@@ -3,13 +3,13 @@ import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/styles";
+import {withStyles} from "@material-ui/styles";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { Box, Paper, Typography } from "@material-ui/core";
+import {Box, Paper, Typography} from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import { green, red } from "@material-ui/core/colors";
+import {green, red} from "@material-ui/core/colors";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import Divider from "@material-ui/core/Divider";
@@ -18,11 +18,7 @@ import axios from "axios";
 import MaterialTable from "material-table";
 import "./css/DetailView.css";
 import "./css/SummaryView.css";
-import {
-  clusteringColors,
-  leftPanelBackgroundColor,
-  rightPanelBackgroundColor
-} from "../styles";
+import {clusteringColors, leftPanelBackgroundColor, rightPanelBackgroundColor} from "../styles";
 import Card from "@material-ui/core/Card";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -32,7 +28,7 @@ import StarIcon from "@material-ui/icons/Star";
 import ImpactGraphView from "./ImpactGraphView";
 import RadialChart from "react-vis/es/radial-chart";
 import BoxPlot from "./BoxPlot";
-import { FlexibleWidthXYPlot, LineSeries, YAxis } from "react-vis";
+import {FlexibleWidthXYPlot, LineSeries, YAxis} from "react-vis";
 
 const d3 = require("d3");
 

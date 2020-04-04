@@ -1,14 +1,7 @@
 import * as React from "react";
 import * as d3 from "d3";
 import { findDOMNode } from "react-dom";
-import {
-  circleStrokeColor,
-  clusteringColors,
-  graphEdgeColor,
-  greenAndRed,
-  strokeColor,
-  targetStrokeColor
-} from "../styles";
+import { circleStrokeColor, clusteringColors, greenAndRed } from "../styles";
 import "../components/css/InfluenceGraphView.css";
 import { toolTipGenerator } from "../utils";
 
@@ -90,7 +83,7 @@ export default class InfluenceGraphView extends React.Component {
 
     const handleMenuClick = d => {
       d3.select(".d3-context-menu").style("display", "none");
-      console.log(d._groups);
+      // console.log(d._groups);
       const newNodesToAdd = d._groups[0].map(item => {
         return item.id.slice(5);
       });
@@ -99,8 +92,8 @@ export default class InfluenceGraphView extends React.Component {
 
     // this gets executed when a contextmenu event occurs
     return function(data, index) {
-      console.log(data);
-      console.log(index);
+      // console.log(data);
+      // console.log(index);
       let elm = this;
 
       d3.selectAll(".d3-context-menu").html("");
@@ -179,12 +172,17 @@ export default class InfluenceGraphView extends React.Component {
             return d.node_id;
           })
           .distance(d => {
-            return d.target.level * 50;
+            if (d.target.level === "inf") {
+              return 500;
+            }
+            //return d.target.level * 10;
+            // return Math.exp(d.target.level) *5
+            return 50;
           })
       )
-      .force("charge", d3.forceManyBody().strength(-1))
+      .force("charge", d3.forceManyBody().strength(-10))
       .force("center", d3.forceCenter(canvasWidth / 2.6, canvasHeight / 2))
-      .force("collision", d3.forceCollide(circleRadius + 1));
+      .force("collision", d3.forceCollide(circleRadius + 5));
 
     const svg = baseGroup;
 
@@ -194,7 +192,7 @@ export default class InfluenceGraphView extends React.Component {
     svg
       .append("defs")
       .append("marker")
-      .attr("id", "arrowhead")
+      .attr("id", "arrowhead-pos")
       .attr("markerUnits", "userSpaceOnUse")
       .attr("viewBox", "-0 -5 10 10")
       .attr("refX", 20)
@@ -204,23 +202,42 @@ export default class InfluenceGraphView extends React.Component {
       .attr("markerHeight", 8)
       .attr("xoverflow", "visible")
       .append("svg:path")
-
       .attr("d", "M 0,-5 L 10 ,0 L 0,5")
-      .attr("fill", "#999")
+      .attr("fill", greenAndRed[0])
+      .attr("opacity", 0.5)
+      .style("stroke", "none");
+
+    svg
+      .append("defs")
+      .append("marker")
+      .attr("id", "arrowhead-neg")
+      .attr("markerUnits", "userSpaceOnUse")
+      .attr("viewBox", "-0 -5 10 10")
+      .attr("refX", 20)
+      .attr("refY", 0)
+      .attr("orient", "auto")
+      .attr("markerWidth", 8)
+      .attr("markerHeight", 8)
+      .attr("xoverflow", "visible")
+      .append("svg:path")
+      .attr("d", "M 0,-5 L 10 ,0 L 0,5")
+      .attr("fill", greenAndRed[1])
+      .attr("opacity", 0.7)
       .style("stroke", "none");
 
     const edgeScale = d3
       .scaleLinear()
       .domain(d3.extent(edgesData, d => Math.abs(d.influence)))
-      .range([1, 20]);
+      .range([2, 8]);
 
     const link = svg
       .append("g")
       .attr("class", "edges")
-      .attr("stroke-opacity", 0.5)
-      .selectAll("line")
+      .attr("stroke-opacity", 0.7)
+      .selectAll(".edges")
       .data(edgesData)
-      .join("line")
+      .enter()
+      .append("path")
       .attr("class", d => {
         let classString = "";
         if (d.influence > 0) {
@@ -233,6 +250,7 @@ export default class InfluenceGraphView extends React.Component {
       .attr("stroke-width", d => {
         return edgeScale(Math.abs(d.influence));
       })
+      .attr("fill", "none")
       .attr("stroke", d => {
         if (d.influence > 0) {
           return greenAndRed[1];
@@ -240,7 +258,17 @@ export default class InfluenceGraphView extends React.Component {
           return greenAndRed[0];
         }
       })
-      // .attr("marker-end", "url(#arrowhead)");
+        .style("stroke-dasharray", d=> {
+          if (d.target.level === "inf") {
+            return ("3, 3");
+        }})
+      .attr("marker-end", d => {
+        if (d.influence > 0) {
+          return "url(#arrowhead-neg)";
+        } else {
+          return "url(#arrowhead-pos)";
+        }
+      });
 
     const node = svg
       .append("g")
@@ -253,13 +281,13 @@ export default class InfluenceGraphView extends React.Component {
     const nodeScale = d3
       .scaleLinear()
       .domain(d3.extent(nodesData, d => Math.abs(d.rank_change)))
-      .range([3, 12]);
+      .range([5, 15]);
 
     const circles = node
       .append("circle")
       .attr("class", d => {
         let classString = "";
-        if (d.level !== 0) {
+        if (d.level !== 0 || d.level === "inf") {
           if (d.rank_change > 0) {
             classString += "negative level-" + d.level;
           } else {
@@ -271,10 +299,18 @@ export default class InfluenceGraphView extends React.Component {
         return classString;
       })
       .attr("id", d => "node-" + d.node_id)
-      .attr(
-        "fill",
-        d => clusteringColors[labels[Object.keys(labels)[0]][d.node_id]["value"]]
-      )
+      .attr("fill", d => {
+        if (labels[Object.keys(labels)[0]][d.node_id]) {
+          return clusteringColors[
+            labels[Object.keys(labels)[0]][d.node_id]["value"]
+          ];
+        } else {
+          // console.log(d.node_id.split("_")[0]);
+          return clusteringColors[
+            labels[Object.keys(labels)[0]][d.node_id.split("##")[0]]["value"]
+          ];
+        }
+      })
       .attr("stroke", d => {
         if (d.level === 0) {
           return "black";
@@ -320,18 +356,52 @@ export default class InfluenceGraphView extends React.Component {
       .on("contextmenu", this.contextMenu(circleMenu));
 
     simulation.on("tick", () => {
-      link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
+      // link
+      //   .attr("x1", d => d.source.x)
+      //   .attr("y1", d => d.source.y)
+      //
+      //   .attr("x2", d => d.target.x)
+      //   .attr("y2", d => d.target.y);
 
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
+      link.attr("d", positionLink);
 
       circles.attr("cx", d => d.x).attr("cy", d => d.y);
     });
 
     function zoomed() {
       svg.attr("transform", d3.event.transform);
+    }
+
+    // links are drawn as curved paths between nodes,
+    // through the intermediate nodes
+    function positionLink(d) {
+      let offset = 30;
+
+      let midpoint_x = (d.source.x + d.target.x) / 2;
+      let midpoint_y = (d.source.y + d.target.y) / 2;
+
+      let dx = d.target.x - d.source.x;
+      let dy = d.target.y - d.source.y;
+
+      let normalise = Math.sqrt(dx * dx + dy * dy);
+
+      let offSetX = midpoint_x + offset * (dy / normalise);
+      let offSetY = midpoint_y - offset * (dx / normalise);
+
+      return (
+        "M" +
+        d.source.x +
+        "," +
+        d.source.y +
+        "S" +
+        offSetX +
+        "," +
+        offSetY +
+        " " +
+        d.target.x +
+        "," +
+        d.target.y
+      );
     }
 
     const svgRoot = d3.select("#impact-graph-chart-" + removedID);
@@ -361,8 +431,6 @@ export default class InfluenceGraphView extends React.Component {
      * Lasso
      */
     const handleLassoSelect = item => {
-      console.log(item);
-      console.log(this);
       this.contextMenu(lassoMenu).call(item);
     };
 

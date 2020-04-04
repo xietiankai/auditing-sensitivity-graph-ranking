@@ -69,7 +69,7 @@ def ranking_data_formation(graph, algorithm):
         for node in graph:
             node_meta = {
                 "node_id": node,
-                "rank_value": r[0][node] + r[1][node],
+                "rank_value": r[1][node],
                 "node_degree": graph.degree(node),
                 "predecessors": list(graph.predecessors(node)),
                 "successors": list(graph.successors(node))

@@ -1,23 +1,15 @@
 import * as React from "react";
-import { Box, Typography } from "@material-ui/core";
-import { FlexibleWidthXYPlot, LineSeries, XAxis, YAxis } from "react-vis";
+import {Box, Typography} from "@material-ui/core";
+import {FlexibleWidthXYPlot, LineSeries, XAxis, YAxis} from "react-vis";
 import BoxPlot from "./BoxPlot";
 import {clusteringColors, greenAndRed} from "../styles";
-import { connect } from "react-redux";
-import { withStyles } from "@material-ui/styles";
-import {
-  snackBarClose,
-  updateAlgorithmName,
-  updateConstraints,
-  updateDataName,
-  updateProtectionExtent,
-  updateProtectionType
-} from "../actions";
+import {connect} from "react-redux";
+import {withStyles} from "@material-ui/styles";
 
 const styles = theme => ({
   boxPlotContainer: {
     padding: theme.spacing(2),
-    height: 270,
+    height: 200,
     overflow: "auto"
   },
 });
@@ -132,8 +124,8 @@ class BoxPlotComponent extends React.Component {
               animation
               yDomain={[Object.keys(this.props.nodes).length, 0]}
               xDomain={[-1, 2]}
-              height={200}
-              width={170}
+              height={150}
+              width={155}
             >
               <XAxis tickFormat={v => xAxisFormat[v]} />
               <YAxis />
@@ -148,7 +140,7 @@ class BoxPlotComponent extends React.Component {
                 data={boxPlotDataUltimate[key]}
               />
             </FlexibleWidthXYPlot>
-            <Typography align={"center"}>{this.props.labelNames[key]} Distribution</Typography>
+            <Typography variant={"subtitle1"} align={"center"}>{this.props.labelNames[key]} Distribution</Typography>
           </Box>
         </Box>
       );
