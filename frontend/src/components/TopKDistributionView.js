@@ -49,8 +49,9 @@ function processingPieData(data, k, labels) {
   let perturbationStat = {};
   let labelToStringMap = {};
   data
-    .slice(0, k)
     .sort((a, b) => a.rank - b.rank)
+    .slice(0, k)
+
     .map(item => {
       const labelCat = labelMap[item["node_id"]]["value"];
       labelToStringMap[labelCat] = labelMap[item["node_id"]]["label"];
@@ -101,12 +102,14 @@ export function TopKPieComponent(props) {
               onSeriesMouseOut={v => setToolTip1(false)}
               // margin={radialChartMargin}
               showLabels={true}
-              labelsStyle={{fontSize: 10, color: "#7e7e7e"}}
+              labelsStyle={{ fontSize: 10, color: "#7e7e7e" }}
               labelsRadiusMultiplier={1.5}
             >
-               {toolTip1 !== false && <Hint value={toolTip1} />}
+              {toolTip1 !== false && <Hint value={toolTip1} />}
             </RadialChart>
-            <Typography variant={"subtitle1"} align={"center"}>Original Top-{k}</Typography>
+            <Typography variant={"subtitle1"} align={"center"}>
+              Original Top-{k}
+            </Typography>
           </Box>
         </Grid>
         <Grid item md={6}>
@@ -123,12 +126,14 @@ export function TopKPieComponent(props) {
               onSeriesMouseOut={v => setToolTip2(false)}
               // margin={radialChartMargin}
               showLabels={true}
-              labelsStyle={{fontSize: 10, color: "#7e7e7e"}}
+              labelsStyle={{ fontSize: 10, color: "#7e7e7e" }}
               labelsRadiusMultiplier={1.5}
             >
               {toolTip2 !== false && <Hint value={toolTip2} />}
             </RadialChart>
-            <Typography variant={"subtitle1"} align={"center"}>Perturbed Top-{k}</Typography>
+            <Typography variant={"subtitle1"} align={"center"}>
+              Perturbed Top-{k}
+            </Typography>
           </Box>
         </Grid>
       </Grid>
