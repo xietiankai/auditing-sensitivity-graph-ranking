@@ -494,7 +494,7 @@ export default class InfluenceGraphView extends React.Component {
    * @returns None
    */
   initializeCanvas() {
-    const { removedID, canvasHeight, canvasWidth } = this.props;
+    const { removedID} = this.props;
 
     const baseGroup = d3.select("#impact-graph-chart-base-" + removedID);
     this.renderSvg(baseGroup, this.props);

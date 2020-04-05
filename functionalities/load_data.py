@@ -2,6 +2,7 @@ import networkx as nx
 from igraph import *
 from os.path import dirname
 import csv
+from .facebook import load_facebook_data
 
 BASE_PATH = dirname(dirname(os.path.abspath(__file__)))
 
@@ -90,6 +91,12 @@ def load_reddit(filter_threshold=15):
     return new_graph, label_dict_set, labels
 
 
+def load_facebook():
+    graph = load_facebook_data()
+    return graph, "", ""
+
+
+
 def load_data_from_text(data_name="polblogs"):
     """Depend on data name to choose loading data function
 
@@ -107,5 +114,7 @@ def load_data_from_text(data_name="polblogs"):
         graph_object, label_dict_set, labels = load_polblogs()
     elif data_name == "reddit":
         graph_object, label_dict_set, labels = load_reddit()
+    elif data_name == "facebook":
+        graph_object, label_dict_set, labels = load_facebook()
 
     return graph_object, label_dict_set, labels

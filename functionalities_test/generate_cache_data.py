@@ -1,7 +1,11 @@
 import json
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+from metadata import MetaData, MetaDataEncoder
 
 from functionalities.load_data import load_data_from_text
-from metadata import MetaData, MetaDataEncoder
 
 
 def generate_cache_data(data_name, algorithm_name):
@@ -20,4 +24,4 @@ def generate_cache_data(data_name, algorithm_name):
 
 
 if __name__ == "__main__":
-    generate_cache_data(data_name="polblogs", algorithm_name="hits")
+    generate_cache_data(data_name="facebook", algorithm_name="pagerank")

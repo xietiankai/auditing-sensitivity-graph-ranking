@@ -34,7 +34,7 @@ class BoxPlotComponent extends React.Component {
       Object.keys(this.props.labels)[0]
     ];
 
-    this.props.perturbation.map(item => {
+    this.props.perturbation.forEach(item => {
       let rankArraysAfter = [];
 
       if (tempLabelHashMap[item["node_id"]]["value"] in boxPlotDataAfter) {
@@ -48,7 +48,7 @@ class BoxPlotComponent extends React.Component {
       ] = rankArraysAfter;
     });
 
-    Object.keys(this.props.nodes).map(key => {
+    Object.keys(this.props.nodes).forEach(key => {
       let rankArrays = [];
       if (tempLabelHashMap[key]["value"] in boxPlotData) {
         rankArrays = boxPlotData[tempLabelHashMap[key]["value"]];
@@ -75,7 +75,7 @@ class BoxPlotComponent extends React.Component {
 
     let boxPlotDataUltimate = {};
 
-    Object.keys(boxPlotData).map(key => {
+    Object.keys(boxPlotData).forEach(key => {
       let tempArray = [];
       if (key in boxPlotDataUltimate) {
         tempArray = boxPlotDataUltimate[key];
@@ -95,7 +95,7 @@ class BoxPlotComponent extends React.Component {
 
     console.log("boxplotdataafter");
     console.log(boxPlotDataAfter);
-    Object.keys(boxPlotDataAfter).map(key => {
+    Object.keys(boxPlotDataAfter).forEach(key => {
       let tempArray = [];
       if (key in boxPlotDataUltimate) {
         tempArray = boxPlotDataUltimate[key];

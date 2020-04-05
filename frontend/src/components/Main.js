@@ -15,7 +15,7 @@ import { css } from "@emotion/core";
 import Detail from "./Detail";
 import { backGroundColor } from "../styles";
 import "./css/Main.css";
-import {RingLoader, SyncLoader} from "react-spinners";
+import {RingLoader} from "react-spinners";
 
 const styles = theme => ({
   root: {
@@ -61,9 +61,6 @@ const mapStateToProps = state => {
 };
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     this.props.getData();
   }

@@ -44,7 +44,7 @@ class ReactVisRadar extends Component {
       domain: [0, item["value"]]
     }));
     let data = {};
-    removedNode["statistical"].map(item => {
+    removedNode["statistical"].forEach(item => {
       data[item["axis"]] = item["value"];
     });
     return (

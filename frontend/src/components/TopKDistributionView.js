@@ -51,8 +51,7 @@ function processingPieData(data, k, labels) {
   data
     .sort((a, b) => a.rank - b.rank)
     .slice(0, k)
-
-    .map(item => {
+    .forEach(item => {
       const labelCat = labelMap[item["node_id"]]["value"];
       labelToStringMap[labelCat] = labelMap[item["node_id"]]["label"];
       if (labelCat in perturbationStat) {

@@ -176,10 +176,10 @@ export function updateConstraints() {
 
   let bannedNodes = [];
 
-  rules.map(item => {
+  rules.forEach(item => {
     const threshold = perturbations.length * item.protectionExtent;
     // console.log(threshold);
-    Array.from(item.protectedNodes).map(nodeID => {
+    Array.from(item.protectedNodes).forEach(nodeID => {
       let temp = [];
       if (item.protectionType === "increased") {
         temp = vulnerabilityList[nodeID].filter(

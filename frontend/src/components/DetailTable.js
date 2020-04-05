@@ -1,6 +1,6 @@
 import * as React from "react";
 import MaterialTable from "material-table";
-import {greenAndRed, leftPanelBackgroundColor, textGreen, textRed} from "../styles";
+import {leftPanelBackgroundColor, textGreen, textRed} from "../styles";
 import {Box, Paper} from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import {updateDataName} from "../actions";
