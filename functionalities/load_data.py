@@ -93,7 +93,8 @@ def load_reddit(filter_threshold=15):
 
 def load_facebook():
     graph = load_facebook_data()
-    return graph, "", ""
+    return graph, {}, []
+
 
 
 
