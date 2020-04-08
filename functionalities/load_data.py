@@ -92,8 +92,15 @@ def load_reddit(filter_threshold=15):
 
 
 def load_facebook():
-    graph = load_facebook_data()
-    return graph, {}, []
+    graph, label_dict = load_facebook_data()
+    # label_dict = {}
+    # for i, v in enumerate(graph.nodes()):
+    #     label_dict[v] = {"label": "User", "value": 0}
+    print(label_dict)
+    label_dict_set = {
+        "category": label_dict
+    }
+    return graph, label_dict_set, ["Female", "Male", "Other"]
 
 
 

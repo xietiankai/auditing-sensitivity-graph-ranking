@@ -240,11 +240,19 @@ export default class InfluenceGraphView extends React.Component {
       .append("path")
       .attr("class", d => {
         let classString = "";
-        if (d.influence > 0) {
-          classString += "negative level-" + d.target.level;
-        } else {
-          classString += "positive level-" + d.target.level;
-        }
+          if (d.rank_change > 0) {
+            if (d.target.level === "inf") {
+              classString += "negative level-" + 10;
+            } else {
+              classString += "negative level-" + d.target.level;
+            }
+          } else {
+            if (d.target.level === "inf") {
+              classString += "positive level-" + 10;
+            } else {
+              classString += "positive level-" + d.target.level;
+            }
+          }
         return classString;
       })
       .attr("stroke-width", d => {
@@ -258,10 +266,11 @@ export default class InfluenceGraphView extends React.Component {
           return greenAndRed[0];
         }
       })
-        .style("stroke-dasharray", d=> {
-          if (d.target.level === "inf") {
-            return ("3, 3");
-        }})
+      .style("stroke-dasharray", d => {
+        if (d.target.level === "inf") {
+          return "3, 3";
+        }
+      })
       .attr("marker-end", d => {
         if (d.influence > 0) {
           return "url(#arrowhead-neg)";
@@ -289,11 +298,20 @@ export default class InfluenceGraphView extends React.Component {
         let classString = "";
         if (d.level !== 0 || d.level === "inf") {
           if (d.rank_change > 0) {
-            classString += "negative level-" + d.level;
+            if (d.level === "inf") {
+              classString += "negative level-" + 10;
+            } else {
+              classString += "negative level-" + d.level;
+            }
           } else {
-            classString += "positive level-" + d.level;
+            if (d.level === "inf") {
+              classString += "positive level-" + 10;
+            } else {
+              classString += "positive level-" + d.level;
+            }
           }
-        } else {
+        }
+        else {
           classString += "target level-0";
         }
         return classString;
@@ -494,7 +512,7 @@ export default class InfluenceGraphView extends React.Component {
    * @returns None
    */
   initializeCanvas() {
-    const { removedID} = this.props;
+    const { removedID } = this.props;
 
     const baseGroup = d3.select("#impact-graph-chart-base-" + removedID);
     this.renderSvg(baseGroup, this.props);

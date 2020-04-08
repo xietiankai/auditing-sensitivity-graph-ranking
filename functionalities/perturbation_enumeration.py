@@ -115,7 +115,7 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
             influence += abs(item["rank_change"])
             for label_name, label in label_dict_set.items():
                 ts = label[item["node_id"]]
-                print(label[item["node_id"]])
+                # print(label[item["node_id"]])
                 influence_key_positive = str(label[item["node_id"]][
                                                  "label"]) + "_pos"
                 influence_key_negative = str(label[item["node_id"]][

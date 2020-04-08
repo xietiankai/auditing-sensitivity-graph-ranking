@@ -20,8 +20,8 @@ import {
 } from "../constants/actionTypes";
 
 const initialState = {
-  dataName: "polblogs",
-  algorithmName: "hits",
+  dataName: "facebook",
+  algorithmName: "pagerank",
   perturbations: [],
   filteredPerturbations: [],
   nodes: {},
@@ -120,7 +120,7 @@ function rootReducer(state = initialState, action) {
       topKQueryList: [10],
       graphMenuOpen: null,
       levelLowerBound: 0,
-      levelUpperBound: 5,
+      levelUpperBound: 10,
       showPositive: true,
       showNegative: true
     };

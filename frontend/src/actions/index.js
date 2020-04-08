@@ -111,7 +111,7 @@ function updateGraphViewCanvas(removedID, direction, values) {
       .attr("display", "none");
   }
 
-  for (let i = 1; i < 6; i++) {
+  for (let i = 1; i < 11; i++) {
     if (i < values[0] || i > values[1]) {
       d3.select(svgIDBase)
         .selectAll(".level-" + i)
