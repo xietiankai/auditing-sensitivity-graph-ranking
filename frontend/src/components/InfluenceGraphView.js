@@ -240,7 +240,7 @@ export default class InfluenceGraphView extends React.Component {
             .append("path")
             .attr("class", d => {
                 let classString = "";
-                if (d.rank_change > 0) {
+                if (d.target.rank_change > 0) {
                     if (d.target.level === "inf") {
                         classString += "negative level-" + 10;
                     } else {
