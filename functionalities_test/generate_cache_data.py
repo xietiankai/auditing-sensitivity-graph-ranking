@@ -1,6 +1,6 @@
 import json
-import sys
 import os
+import sys
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 from metadata import MetaData, MetaDataEncoder

@@ -1,7 +1,7 @@
 import csv
 import json
+
 import networkx as nx
-import matplotlib.pyplot as plt
 
 category = {}
 
@@ -49,7 +49,6 @@ print("###################################################################")
 category_link = {k: v for k, v in sorted(category_link.items(), key=lambda item: item[1], reverse=True)}
 print(json.dumps(category_link, indent=2))
 
-
 # plt.figure(figsize=(30,30))
 # nx.draw_networkx(graph, with_labels=True)
 # plt.tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
@@ -59,4 +58,3 @@ print(json.dumps(category_link, indent=2))
 #
 # plt.show()
 nx.write_gml(graph, "../data/reddit.gml")
-

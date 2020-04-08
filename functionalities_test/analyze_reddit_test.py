@@ -1,6 +1,4 @@
 import csv
-import random
-import time
 
 import networkx as nx
 import requests

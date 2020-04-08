@@ -1,63 +1,63 @@
 .axis-grid line {
-  stroke: #efefef;
+    stroke: #efefef;
 }
 
 .lasso path {
-  stroke: rgb(80, 80, 80);
-  stroke-width: 2px;
+    stroke: rgb(80, 80, 80);
+    stroke-width: 2px;
 }
 
 .lasso .drawn {
-  fill-opacity: 0.05;
+    fill-opacity: 0.05;
 }
 
 .lasso .loop_close {
-  fill: none;
-  stroke-dasharray: 4, 4;
+    fill: none;
+    stroke-dasharray: 4, 4;
 }
 
 .lasso .origin {
-  fill: #3399ff;
-  fill-opacity: 0.5;
+    fill: #3399ff;
+    fill-opacity: 0.5;
 }
 
 .not_possible {
-  fill: rgb(200, 200, 200);
+    fill: rgb(200, 200, 200);
 }
 
 .possible {
-  fill: #ec888c;
+    fill: #ec888c;
 }
 
 .selected {
-  stroke-dasharray: 5, 5;
-  stroke: #282c34;
+    stroke-dasharray: 5, 5;
+    stroke: #282c34;
 }
 
 .d3-context-menu {
-  position: absolute;
-  display: none;
-  background-color: #f2f2f2;
-  border-radius: 4px;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  min-width: 150px;
-  border: 1px solid #d4d4d4;
-  z-index: 1200;
+    position: absolute;
+    display: none;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    min-width: 150px;
+    border: 1px solid #d4d4d4;
+    z-index: 1200;
 }
 
 .d3-context-menu > ul {
-  list-style-type: none;
-  margin: 4px 0px;
-  padding: 0px;
-  cursor: default;
+    list-style-type: none;
+    margin: 4px 0px;
+    padding: 0px;
+    cursor: default;
 }
 
 .d3-context-menu > ul > li {
-  padding: 4px 16px;
+    padding: 4px 16px;
 }
 
 .d3-context-menu > ul > li:hover {
-  background-color: #4677f8;
-  color: #fefefe;
+    background-color: #4677f8;
+    color: #fefefe;
 }

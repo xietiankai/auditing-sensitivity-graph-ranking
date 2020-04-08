@@ -1,27 +1,30 @@
 #!/usr/bin/env python
+import glob
+import os
+import os.path
+from os.path import dirname
+
 import networkx as nx
 import numpy as np
-import glob
-import os, os.path
-from os.path import dirname
-import math
 
 pathhack = os.path.dirname(os.path.realpath(__file__))
 BASE_PATH = dirname(dirname(os.path.abspath(__file__)))
 path = os.path.join(BASE_PATH, "data", "facebook")
 
 feat_file_name = "%s/feature_map.txt" % (path,)
-feature_index = {}  #numeric index to name
-inverted_feature_index = {} #name to numeric index
+feature_index = {}  # numeric index to name
+inverted_feature_index = {}  # name to numeric index
 network = nx.Graph()
 ego_nodes = []
 
+
 def parse_featname_line(line):
-    line = line[(line.find(' '))+1:]  # chop first field
+    line = line[(line.find(' ')) + 1:]  # chop first field
     split = line.split(';')
-    name = ';'.join(split[:-1]) # feature name
-    index = int(split[-1].split(" ")[-1]) #feature index
+    name = ';'.join(split[:-1])  # feature name
+    index = int(split[-1].split(" ")[-1])  # feature index
     return index, name
+
 
 def load_features():
     # may need to build the index first
@@ -39,15 +42,15 @@ def load_features():
             featname_file.close()
         keys = feat_index.keys()
         keys.sort()
-        out = open(feat_file_name,'w')
+        out = open(feat_file_name, 'w')
         for key in keys:
             out.write("%d %s\n" % (key, feat_index[key]))
         out.close()
-        
+
     # index built, read it in (even if we just built it by scanning)
     global feature_index
     global inverted_feature_index
-    index_file = open(feat_file_name,'r')
+    index_file = open(feat_file_name, 'r')
     for line in index_file:
         split = line.strip().split(' ')
         key = int(split[0])
@@ -58,6 +61,7 @@ def load_features():
     for key in feature_index.keys():
         val = feature_index[key]
         inverted_feature_index[val] = key
+
 
 def load_nodes():
     assert len(feature_index) > 0, "call load_features() first"
@@ -70,10 +74,10 @@ def load_nodes():
 
     # parse each node
     for node_id in node_ids:
-        featname_file = open("%s/%d.featnames" % (path,node_id), 'r')
-        feat_file     = open("%s/%d.feat"      % (path,node_id), 'r')
-        egofeat_file  = open("%s/%d.egofeat"   % (path,node_id), 'r')
-        edge_file     = open("%s/%d.edges"     % (path,node_id), 'r')
+        featname_file = open("%s/%d.featnames" % (path, node_id), 'r')
+        feat_file = open("%s/%d.feat" % (path, node_id), 'r')
+        egofeat_file = open("%s/%d.egofeat" % (path, node_id), 'r')
+        edge_file = open("%s/%d.edges" % (path, node_id), 'r')
 
         # parse ego node
         network.add_node(node_id)
@@ -99,22 +103,24 @@ def load_nodes():
                 key, val = parse_featname_line(line)
                 network.nodes[node_id]['features'][key] = features[i]
                 i += 1
-            
+
         featname_file.close()
         feat_file.close()
         egofeat_file.close()
         edge_file.close()
 
+
 def load_edges():
     global network
     assert network.order() > 0, "call load_nodes() first"
-    edge_file = open("%s/facebook_combined.txt" % (path,),"r")
+    edge_file = open("%s/facebook_combined.txt" % (path,), "r")
     for line in edge_file:
         # nodefrom nodeto
         split = [int(x) for x in line.split(" ")]
         node_from = split[0]
         node_to = split[1]
         network.add_edge(node_from, node_to)
+
 
 def load_network():
     """
@@ -126,27 +132,31 @@ def load_network():
     load_nodes()
     load_edges()
 
+
 def feature_matrix():
     n_nodes = network.number_of_nodes()
     n_features = len(feature_index)
 
     X = np.zeros((n_nodes, n_features))
-    for i,node in enumerate(network.nodes()):
-        X[i,:] = network.node[node]['features']
+    for i, node in enumerate(network.nodes()):
+        X[i, :] = network.node[node]['features']
 
     return X
+
 
 def universal_feature(feature_index):
     """
     Does every node have this feature?
 
     """
-    return len([x for x in network.nodes_iter() if network.node[x]['features'][feature_index] > 0]) // network.order() == 1
+    return len(
+        [x for x in network.nodes_iter() if network.node[x]['features'][feature_index] > 0]) // network.order() == 1
+
 
 def load_facebook_data():
     load_network()
     # print(feature_index)
-    filter_threshold = 200
+    filter_threshold = 150
     feature_dict = {}
     graph = network.to_directed()
     new_graph = nx.DiGraph()
@@ -159,33 +169,37 @@ def load_facebook_data():
             else:
                 new_graph.add_edge(u, v, weight=1.0)
             print(len(network.nodes[u]['features']))
-            print(int(network.nodes[u]['features'][78]))
+            print(int(network.nodes[u]['features'][77]))
             print(len(network.nodes[v]['features']))
-            print(int(network.nodes[v]['features'][78]))
-            feature_dict[u] = {"label": labels[int(network.nodes[u]['features'][78])], "value": int(network.nodes[u]['features'][78])}
-            feature_dict[v] = {"label": labels[int(network.nodes[v]['features'][78])], "value": int(network.nodes[v]['features'][78])}
+            print(int(network.nodes[v]['features'][77]))
+            feature_dict[u] = {"label": labels[int(network.nodes[u]['features'][77])],
+                               "value": int(network.nodes[u]['features'][78])}
+            feature_dict[v] = {"label": labels[int(network.nodes[v]['features'][77])],
+                               "value": int(network.nodes[v]['features'][78])}
     return new_graph, feature_dict
 
+
 if __name__ == '__main__':
-    print ("Running tests.")
-    print ("Loading network...")
+    print("Running tests.")
+    print("Loading network...")
     load_network()
-    print ("done.")
+    print("done.")
 
     failures = 0
+
+
     def test(actual, expected, test_name):
-        global failures  #lol python scope
+        global failures  # lol python scope
         try:
-            print ("testing {}...".format(test_name,))
-            assert actual == expected, "%s failed (%s != %s)!" % (test_name,actual, expected)
-            print ("{} passed ({} == {}).".format(test_name,actual,expected))
+            print("testing {}...".format(test_name, ))
+            assert actual == expected, "%s failed (%s != %s)!" % (test_name, actual, expected)
+            print("{} passed ({} == {}).".format(test_name, actual, expected))
         except AssertionError as e:
-            print (e)
+            print(e)
             failures += 1
-    
+
+
     test(network.order(), 4039, "order")
     test(network.size(), 88234, "size")
-    test(round(nx.average_clustering(network),4), 0.6055, "clustering")
-    print ("%d tests failed." % (failures,))
-    
-    
+    test(round(nx.average_clustering(network), 4), 0.6055, "clustering")
+    print("%d tests failed." % (failures,))

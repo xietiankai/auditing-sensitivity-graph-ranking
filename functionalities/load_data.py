@@ -1,7 +1,8 @@
+from os.path import dirname
+
 import networkx as nx
 from igraph import *
-from os.path import dirname
-import csv
+
 from .facebook import load_facebook_data
 
 BASE_PATH = dirname(dirname(os.path.abspath(__file__)))
@@ -68,7 +69,7 @@ def load_reddit(filter_threshold=15):
                 new_graph.add_edge(u, v, weight=1.0)
     label_dict = {}
     id = 0
-    label_set = {}      #to test label id duplicate
+    label_set = {}  # to test label id duplicate
     whiteSet = {"Sports", "Other", "General"}
 
     label_path = os.path.join(BASE_PATH, "data", "node_cat_map.txt")
@@ -101,8 +102,6 @@ def load_facebook():
         "category": label_dict
     }
     return graph, label_dict_set, ["Female", "Male", "Other"]
-
-
 
 
 def load_data_from_text(data_name="polblogs"):

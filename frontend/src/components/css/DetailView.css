@@ -1,6 +1,7 @@
 .MuiToolbar-regular {
     min-height: 48px;
 }
+
 h6 {
     font-size: 0.8rem !important;
 }
@@ -10,7 +11,7 @@ h6 {
     width: 10px;
 }
 
-#detail-view > div{
+#detail-view > div {
     scrollbar-width: thin;
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
 }
@@ -20,7 +21,7 @@ h6 {
 }
 
 #detail-view > div::-webkit-scrollbar-thumb {
-    background-color: var(--thumbBG) ;
+    background-color: var(--thumbBG);
     border-radius: 6px;
     border: 3px solid var(--scrollbarBG);
 }

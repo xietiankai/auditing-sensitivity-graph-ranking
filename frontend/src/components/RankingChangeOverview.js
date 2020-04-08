@@ -24,59 +24,59 @@ import {clusteringColors} from "../styles";
 import ChartLabel from "react-vis/es/plot/chart-label";
 
 export default class RankingChangeOverview extends React.Component {
-  render() {
-    const { removeRes, originalRanking, labels } = this.props;
-    const processedData = removeRes.map((item) => {
-      return {
-        x: originalRanking[item.node_id].rank,
-        y0: 0,
-        y: item.rank_change,
-        cat: labels[Object.keys(labels)[0]][item.node_id]["value"]
-      }
-    });
+    render() {
+        const {removeRes, originalRanking, labels} = this.props;
+        const processedData = removeRes.map((item) => {
+            return {
+                x: originalRanking[item.node_id].rank,
+                y0: 0,
+                y: item.rank_change,
+                cat: labels[Object.keys(labels)[0]][item.node_id]["value"]
+            }
+        });
 
-    const yDomain = processedData.reduce(
-      (res, row) => ({
-        max: Math.max(res.max, row.y, row.y0),
-        min: Math.min(res.min, row.y, row.y0)
-      }),
-      { max: -Infinity, min: Infinity }
-    );
-    return (
-      <div style={{paddingLeft: 10, paddingRight: 10 }}>
-        <XYPlot width={720} height={100} yDomain={[yDomain.min, yDomain.max]}>
-          <VerticalBarSeries
-            className="difference-example"
-            data={processedData}
-            colorType="literal"
-            getColor={d => {
-              return clusteringColors[d.cat];
-              // return d.y < 0 ? greenAndRed[0] : greenAndRed[1];
-            }}
-          />
-          <XAxis />
-          <YAxis />
-          <ChartLabel
-            text="Ranking"
-            className="alt-x-label"
-            includeMargin={true}
-            xPercent={0.92}
-            yPercent={0.38}
-            />
+        const yDomain = processedData.reduce(
+            (res, row) => ({
+                max: Math.max(res.max, row.y, row.y0),
+                min: Math.min(res.min, row.y, row.y0)
+            }),
+            {max: -Infinity, min: Infinity}
+        );
+        return (
+            <div style={{paddingLeft: 10, paddingRight: 10}}>
+                <XYPlot width={720} height={100} yDomain={[yDomain.min, yDomain.max]}>
+                    <VerticalBarSeries
+                        className="difference-example"
+                        data={processedData}
+                        colorType="literal"
+                        getColor={d => {
+                            return clusteringColors[d.cat];
+                            // return d.y < 0 ? greenAndRed[0] : greenAndRed[1];
+                        }}
+                    />
+                    <XAxis/>
+                    <YAxis/>
+                    <ChartLabel
+                        text="Ranking"
+                        className="alt-x-label"
+                        includeMargin={true}
+                        xPercent={0.92}
+                        yPercent={0.38}
+                    />
 
-          <ChartLabel
-            text="Ranking Change"
-            className="alt-y-label"
-            includeMargin={true}
-            xPercent={0.08}
-            yPercent={-0.25}
-            // style={{
-            //   transform: 'rotate(-90)',
-            //   textAnchor: 'end'
-            // }}
-            />
-        </XYPlot>
-      </div>
-    );
-  }
+                    <ChartLabel
+                        text="Ranking Change"
+                        className="alt-y-label"
+                        includeMargin={true}
+                        xPercent={0.08}
+                        yPercent={-0.25}
+                        // style={{
+                        //   transform: 'rotate(-90)',
+                        //   textAnchor: 'end'
+                        // }}
+                    />
+                </XYPlot>
+            </div>
+        );
+    }
 }

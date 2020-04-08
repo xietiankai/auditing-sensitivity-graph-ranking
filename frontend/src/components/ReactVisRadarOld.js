@@ -25,84 +25,84 @@ import CircularGridLines from "react-vis/dist/plot/circular-grid-lines";
 import "react-vis/dist/style.css";
 
 const DATA = [
-  {
-    explosions: 7,
-    wow: 10,
-    dog: 8,
-    sickMoves: 9,
-    nice: 7
-  }
+    {
+        explosions: 7,
+        wow: 10,
+        dog: 8,
+        sickMoves: 9,
+        nice: 7
+    }
 ];
 
 const DOMAIN = [
-  { name: "nice", domain: [0, 100], tickFormat: t => t.toFixed(2) },
-  { name: "explosions", domain: [6.9, 7.1] },
-  { name: "wow", domain: [0, 11] },
-  { name: "dog", domain: [0, 16] },
-  { name: "sickMoves", domain: [0, 20] }
+    {name: "nice", domain: [0, 100], tickFormat: t => t.toFixed(2)},
+    {name: "explosions", domain: [6.9, 7.1]},
+    {name: "wow", domain: [0, 11]},
+    {name: "dog", domain: [0, 16]},
+    {name: "sickMoves", domain: [0, 20]}
 ];
 
 export default class AnimatedRadar extends Component {
-  state = {
-    data: DATA
-  };
+    state = {
+        data: DATA
+    };
 
-  render() {
-    const { dataset, attackSummary } = this.props;
-    // console.log(dataset);
-    // console.log(attackSummary);
-    let domain = attackSummary.map((item, i) => ({
-      name: dataset.statistical[i].axis,
-      domain: [0, item["value"]]
-    }));
-    // console.log(domain);
-    let data = {};
-    dataset.statistical.map(item => {
-      data[item["axis"]] = item["value"];
-    });
+    render() {
+        const {dataset, attackSummary} = this.props;
+        // console.log(dataset);
+        // console.log(attackSummary);
+        let domain = attackSummary.map((item, i) => ({
+            name: dataset.statistical[i].axis,
+            domain: [0, item["value"]]
+        }));
+        // console.log(domain);
+        let data = {};
+        dataset.statistical.map(item => {
+            data[item["axis"]] = item["value"];
+        });
 
-    // console.log(data);
+        // console.log(data);
 
-    return (
-      <div className="centered-and-flexed">
-        <RadarChart
-          animation
-          data={[data]}
-          domains={domain}
-          style={{
-            polygons: {
-              fillOpacity: 0.5,
-              strokeWidth: 2
-            },
-            axes: {
-              text: {
-                fontSize: 10,
-                fill: "#B5B5B5"
-              }
-            },
-            labels: {
-              textAnchor: "middle",
-              fontSize: 10,
-              fill: "#6F6F7A"
-            }
-          }}
-          margin={{
-            left: 50,
-            top: 40,
-            bottom: 40,
-            right: 50
-          }}
-          tickFormat={t => ""}
-          width={230}
-          height={230}
-          startingAngle={0}
-        >
-          <CircularGridLines
-            tickValues={[...new Array(6)].map((v, i) => i / 6 - 1)}
-            style={{ fill: "none", stroke: "#E0E0E0", fontSize: 10 }}
-          />
-        </RadarChart>
-      </div>
-    );
-  }
+        return (
+            <div className="centered-and-flexed">
+                <RadarChart
+                    animation
+                    data={[data]}
+                    domains={domain}
+                    style={{
+                        polygons: {
+                            fillOpacity: 0.5,
+                            strokeWidth: 2
+                        },
+                        axes: {
+                            text: {
+                                fontSize: 10,
+                                fill: "#B5B5B5"
+                            }
+                        },
+                        labels: {
+                            textAnchor: "middle",
+                            fontSize: 10,
+                            fill: "#6F6F7A"
+                        }
+                    }}
+                    margin={{
+                        left: 50,
+                        top: 40,
+                        bottom: 40,
+                        right: 50
+                    }}
+                    tickFormat={t => ""}
+                    width={230}
+                    height={230}
+                    startingAngle={0}
+                >
+                    <CircularGridLines
+                        tickValues={[...new Array(6)].map((v, i) => i / 6 - 1)}
+                        style={{fill: "none", stroke: "#E0E0E0", fontSize: 10}}
+                    />
+                </RadarChart>
+            </div>
+        );
+    }
 }

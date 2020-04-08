@@ -6,18 +6,15 @@ import {blueGrey, grey, orange} from "@material-ui/core/colors";
 // };
 
 
-
-
-
 export const loadDashboardStyles = {
-  root: {
-    display: "flex"
-  },
-  content: {
-    flexGrow: 1,
-    height: "100vh",
-    overflow: "auto"
-  }
+    root: {
+        display: "flex"
+    },
+    content: {
+        flexGrow: 1,
+        height: "100vh",
+        overflow: "auto"
+    }
 };
 
 // export const greenAndRed = ["#66c2a5", "#f46d43"];
@@ -28,13 +25,13 @@ export const loadDashboardStyles = {
 export const contextMenuColor = grey[700];
 
 export const influenceFromGreenToRed = [
-  "#66c2a5",
-  "#abdda4",
-  "#e6f598",
-  "#ffffff",
-  "#fee08b",
-  "#fdae61",
-  "#f46d43"
+    "#66c2a5",
+    "#abdda4",
+    "#e6f598",
+    "#ffffff",
+    "#fee08b",
+    "#fdae61",
+    "#f46d43"
 ];
 
 export const infoColor = "#ffa000";
@@ -89,8 +86,8 @@ export const graphEdgeColor = "#B5b5b5";
 // Modify version 2
 
 export const themeColor = {
-  primaryColor: "#424242",
-  secondaryColor: "#7e7e7e"
+    primaryColor: "#424242",
+    secondaryColor: "#7e7e7e"
 };
 export const backGroundColor = "#E5E5E5";
 
