@@ -1,10 +1,11 @@
 import json
 import os
 import sys
+from os.path import dirname, abspath
 
-sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+sys.path.append(dirname(dirname(abspath(__file__))))
+
 from metadata import MetaData, MetaDataEncoder
-
 from functionalities.load_data import load_data_from_text
 
 

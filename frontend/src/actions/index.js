@@ -224,7 +224,7 @@ export function getData() {
             .post("/loadData/", {
                 dataName: getState().dataName,
                 algorithmName: getState().algorithmName
-            })
+            }, {timeout: 160000})
             .then(response => {
                 const parsedData = JSON.parse(JSON.stringify(response.data));
                 dispatch({type: DATA_LOADED, payload: parsedData});
