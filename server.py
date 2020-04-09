@@ -20,7 +20,7 @@ def load_data():
     res = {}
     print("load data")
     with open("cached_data/" + request_raw["dataName"] + "_" + request_raw[
-                "algorithmName"] + "_filthre_30.json") as json_file:
+                "algorithmName"] + "_overview.json") as json_file:
         res = json.load(json_file)
     print("data loaded")
     return jsonify(res)
@@ -41,4 +41,4 @@ def load_data():
 #     return json.dumps(meta_data, cls=MetaDataEncoder)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) 

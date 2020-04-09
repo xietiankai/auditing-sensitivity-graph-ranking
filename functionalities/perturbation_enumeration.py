@@ -140,7 +140,7 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
                     if influence_key_positive not in label_influence:
                         label_influence[influence_key_positive] = 0
                         label_influence[influence_key_negative] = 0
-
+        label_value = list(label_dict_set.values())
         data_item = {"remove_id": node,
                      "remove_res": perturbation_result,
                      "statistical": statistical_data,
@@ -150,10 +150,12 @@ def perturbation_preview(graph, original_node_info, label_dict_set, algorithm):
                      "label_influence": label_influence,
                      "rank": original_node_info[node]["rank"],
                      "influence_graph_nodes": influence_graph_nodes,
-                     "influence_graph_edges": influence_graph_edges
+                     "influence_graph_edges": influence_graph_edges,
+                     "label": label_value[0][node]
                      }
-        for label_name, label in label_dict_set.items():
-            data_item[label_name] = label[node]
+        # for label_name, label in label_dict_set.items():
+        #     data_item[label_name] = label[node]
         structured_data.append(data_item)
+
 
     return structured_data
