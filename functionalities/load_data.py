@@ -97,7 +97,7 @@ def load_facebook():
     # label_dict = {}
     # for i, v in enumerate(graph.nodes()):
     #     label_dict[v] = {"label": "User", "value": 0}
-    print(label_dict)
+    # print(label_dict)
     label_dict_set = {
         "category": label_dict
     }

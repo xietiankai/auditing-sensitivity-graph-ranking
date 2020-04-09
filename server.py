@@ -9,6 +9,23 @@ def hello():
     return f'Hello, {escape(name)}!'
 
 
+@app.route('/perturb/', methods=['POST'])
+def perturb():
+    """Given ID load perturbation data
+
+    Returns: meta data in json
+
+    """
+    request_raw = request.get_json()
+    res = {}
+    print("perturbing...")
+    with open("cached_data/" + request_raw["dataName"] + "_" + request_raw[
+                "algorithmName"] + "_detail_" + str(request_raw["removeID"]) +".json") as json_file:
+        res = json.load(json_file)
+    print("perturbation executed")
+    return jsonify(res)
+
+
 @app.route('/loadData/', methods=['POST'])
 def load_data():
     """Load data offline mode
@@ -20,7 +37,7 @@ def load_data():
     res = {}
     print("load data")
     with open("cached_data/" + request_raw["dataName"] + "_" + request_raw[
-                "algorithmName"] + "_filthre_30.json") as json_file:
+                "algorithmName"] + "_overview.json") as json_file:
         res = json.load(json_file)
     print("data loaded")
     return jsonify(res)
@@ -41,4 +58,4 @@ def load_data():
 #     return json.dumps(meta_data, cls=MetaDataEncoder)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) 

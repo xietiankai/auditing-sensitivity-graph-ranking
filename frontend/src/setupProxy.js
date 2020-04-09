@@ -9,6 +9,14 @@ module.exports = function (app) {
             secure: false
         })
     );
+    app.use(
+        '/perturb/*',
+        createProxyMiddleware({
+            target: 'http://localhost:5000',
+            changeOrigin: true,
+            secure: false
+        })
+    );
 };
 
 // "proxy": "http://backend:5000",

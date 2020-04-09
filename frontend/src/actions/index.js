@@ -55,7 +55,21 @@ export function updateActivatedTabIndex(payload) {
 }
 
 export function appendDetailList(payload) {
-    return {type: APPEND_DETAIL_LIST, payload};
+    return function (dispatch, getState, nodeID = payload) {
+        axios
+            .post("/perturb/", {
+                dataName: getState().dataName,
+                algorithmName: getState().algorithmName,
+                removeID: nodeID
+            }, {timeout: 160000})
+            .then(response => {
+                const parsedData = JSON.parse(JSON.stringify(response.data));
+                console.log("#############3");
+                console.log(parsedData);
+                dispatch({type: APPEND_DETAIL_LIST, payload: parsedData});
+            });
+    };
+    // return {type: APPEND_DETAIL_LIST, payload};
 }
 
 export function updateK(payload) {
