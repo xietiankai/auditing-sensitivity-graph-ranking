@@ -156,7 +156,7 @@ def universal_feature(feature_index):
 def load_facebook_data():
     load_network()
     # print(feature_index)
-    filter_threshold = 200
+    filter_threshold = 150
     feature_dict = {}
     graph = network.to_directed()
     new_graph = nx.DiGraph()
@@ -168,10 +168,10 @@ def load_facebook_data():
                 new_graph[u][v]['weight'] = 1.0
             else:
                 new_graph.add_edge(u, v, weight=1.0)
-            print(len(network.nodes[u]['features']))
-            print(int(network.nodes[u]['features'][77]))
-            print(len(network.nodes[v]['features']))
-            print(int(network.nodes[v]['features'][77]))
+            # print(len(network.nodes[u]['features']))
+            # print(int(network.nodes[u]['features'][77]))
+            # print(len(network.nodes[v]['features']))
+            # print(int(network.nodes[v]['features'][77]))
             feature_dict[u] = {"label": labels[int(network.nodes[u]['features'][77])],
                                "value": int(network.nodes[u]['features'][77])}
             feature_dict[v] = {"label": labels[int(network.nodes[v]['features'][77])],

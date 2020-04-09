@@ -166,7 +166,7 @@ def calculate_influence_graph(graph, remove_res, remove_id, level_threshold=10):
                 #                       "target_id": node_name,
                 #                       "influence": filtered_change_res[neighbor][
                 #                           "rank_change"]})
-    print(remove_id)
+    # print(remove_id)
     for remain_item in list(remains):
         nodes_res.append({"node_id": remain_item, "level": "inf",
                           "rank_change": filtered_change_res[remain_item]["rank_change"]})

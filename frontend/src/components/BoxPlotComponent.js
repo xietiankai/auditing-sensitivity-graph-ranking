@@ -116,6 +116,7 @@ class BoxPlotComponent extends React.Component {
         console.log("@$#&)#^))#$^)&)^#@)^@&#$)^#$^)");
 
         let boxPlotComponents = Object.keys(boxPlotDataUltimate).map(key => {
+            if (boxPlotDataUltimate[key].length <2) return; 
             console.log(boxPlotDataUltimate[key]);
             return (
                 <Box display={"inline-flex"}>
