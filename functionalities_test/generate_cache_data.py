@@ -59,4 +59,4 @@ def generate_cache_data(data_name, algorithm_name):
 
 
 if __name__ == "__main__":
-    generate_cache_data(data_name="facebook", algorithm_name="pagerank")
+    generate_cache_data(data_name="polblogs", algorithm_name="hits")

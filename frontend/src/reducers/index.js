@@ -20,8 +20,8 @@ import {
 } from "../constants/actionTypes";
 
 const initialState = {
-    dataName: "facebook",
-    algorithmName: "pagerank",
+    dataName: "polblogs",
+    algorithmName: "hits",
     perturbations: [],
     filteredPerturbations: [],
     nodes: {},

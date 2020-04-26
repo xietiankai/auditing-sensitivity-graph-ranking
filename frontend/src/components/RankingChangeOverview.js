@@ -61,14 +61,14 @@ export default class RankingChangeOverview extends React.Component {
                         className="alt-x-label"
                         includeMargin={true}
                         xPercent={0.92}
-                        yPercent={0.38}
+                        yPercent={0.50}
                     />
 
                     <ChartLabel
                         text="Ranking Change"
                         className="alt-y-label"
                         includeMargin={true}
-                        xPercent={0.08}
+                        xPercent={0.07}
                         yPercent={-0.25}
                         // style={{
                         //   transform: 'rotate(-90)',

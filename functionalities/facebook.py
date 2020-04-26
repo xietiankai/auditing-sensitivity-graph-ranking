@@ -160,7 +160,7 @@ def load_facebook_data():
     feature_dict = {}
     graph = network.to_directed()
     new_graph = nx.DiGraph()
-    labels = ["Female", "Male", "Other"]
+    labels = ["Gender1", "Gender2", "Gender3"]
     for u, v, data in graph.edges(data=True):
         if graph.degree(u) >= filter_threshold and graph.degree(
                 v) >= filter_threshold:

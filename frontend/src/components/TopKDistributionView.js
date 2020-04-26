@@ -75,9 +75,9 @@ function processingPieData(data, k, labels) {
 
 export function TopKPieComponent(props) {
     const {k, perturbation, labels, nodes} = props;
-    const radialChartSize = 150;
-    const radialChartRadius = 40;
-    const radialChartInnerRadius = 25;
+    const radialChartSize = 130;
+    const radialChartRadius = 30;
+    const radialChartInnerRadius = 20;
     const before = processingPieData(Object.values(nodes), k, labels);
     const after = processingPieData(perturbation["remove_res"], k, labels);
 

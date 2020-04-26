@@ -101,7 +101,7 @@ def load_facebook():
     label_dict_set = {
         "category": label_dict
     }
-    return graph, label_dict_set, ["Female", "Male", "Other"]
+    return graph, label_dict_set, ["Gender1", "Gender2", "Gender3"]
 
 
 def load_data_from_text(data_name="polblogs"):
