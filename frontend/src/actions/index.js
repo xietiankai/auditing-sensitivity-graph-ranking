@@ -187,6 +187,8 @@ export function updateConstraints() {
         protectionType: protectionType,
         protectionExtent: protectionExtent
     });
+    console.log("###$@#$@#$@#$@#$@#4");
+    console.log(vulnerabilityList);
 
     let bannedNodes = [];
 

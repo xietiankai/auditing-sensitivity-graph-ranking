@@ -91,14 +91,14 @@ export const themeColor = {
 };
 export const backGroundColor = "#E5E5E5";
 
-export const clusteringColors = ["#4f9ecf", "#ffa400", "#f87dc7", "#bebaba"];
+export const clusteringColors = ["#4f9ecf", "#ffb13e", "#de6d9a", "#bebaba"];
 
-export const radarChartMainColor = "#de5e6c";
+export const radarChartMainColor = "#5886a5";
 
-// export const greenAndRed = ["#9ee99d", "#fda682"];
-export const greenAndRed = ["#cfede2", "#f9d1d3"];
+export const greenAndRed = ["#aed6dc", "#ff9a8d"];
+// export const greenAndRed = ["#cfede2", "#f9d1d3"];
 
-export const vulnerabilityBarColor = "#de5e6c";
+export const vulnerabilityBarColor = "#5886a5";
 
 export const textRed = "#D32f2f";
 export const textGreen = "#4caf50";

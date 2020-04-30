@@ -47,6 +47,7 @@ def generate_cache_data(data_name, algorithm_name):
                    "nodes": meta_data.nodes,
                    "labels": meta_data.labels,
                    "labelNames": meta_data.labelNames,
+                   "vulnerabilityList": meta_data.vulnerabilityList,
                    "perturbationSummary": meta_data.perturbationSummary}, jf, cls=MetaDataEncoder)
 
     print("overview data cached")
@@ -59,4 +60,4 @@ def generate_cache_data(data_name, algorithm_name):
 
 
 if __name__ == "__main__":
-    generate_cache_data(data_name="polblogs", algorithm_name="hits")
+    generate_cache_data(data_name="facebook", algorithm_name="pagerank")
