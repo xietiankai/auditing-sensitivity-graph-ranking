@@ -13,3 +13,4 @@ venv
 data
 cached_data
 ._cached_data
+cached_data.tar.gz
