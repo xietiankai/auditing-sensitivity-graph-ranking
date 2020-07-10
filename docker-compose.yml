@@ -9,7 +9,9 @@ services:
             - "5000:5000"
         volumes: 
             - .:/app
-        command: gunicorn server:app -c ./gunicorn.conf.py
+        command:
+            bash -c "gunicorn server:app -c ./gunicorn.conf.py"
+
 
         networks: 
             - app-test
@@ -32,7 +34,11 @@ services:
         tty: true
         environment: 
             - CI=true
-        command: npm start
+        command:
+            bash -c "npm install
+            && npm audit fix
+            && bash module_connector.sh
+            && npm start"
         
 
 networks:
