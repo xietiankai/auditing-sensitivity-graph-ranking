@@ -10,8 +10,7 @@ services:
         volumes: 
             - .:/app
         command:
-            bash -c "gunicorn server:app -c ./gunicorn.conf.py"
-
+            bash -c "bash backend_builder.sh"
 
         networks: 
             - app-test
