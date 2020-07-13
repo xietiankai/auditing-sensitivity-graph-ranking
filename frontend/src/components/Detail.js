@@ -11,7 +11,7 @@ import {
   toggleGraphDisplayPNOption,
   toggleGraphMenu,
   updateActivatedTabIndex,
-  updateLevelBound,
+  updateLevelBound
 } from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
 import BoxPlotComponent from "./BoxPlotComponent";
@@ -31,65 +31,66 @@ import Slider from "@material-ui/core/Slider";
 import RankingChangeOverview from "./RankingChangeOverview";
 import Chip from "@material-ui/core/Chip";
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     // flexGrow: 1,
-    width: "100%",
+    width: "100%"
     // backgroundColor: theme.palette.background.paper
   },
   cardHeader: {
     paddingLeft: theme.spacing(2),
     paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   tabContent: {},
   leftView: {
     marginRight: theme.spacing(1),
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1)
   },
   rightView: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1)
   },
   containerPadding: {
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   influenceGraphViewContainer: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    height: 515,
+    height: 515
   },
   emptyPanel: {
     paddingTop: theme.spacing(54),
-    paddingLeft: theme.spacing(60),
+    paddingLeft: theme.spacing(60)
   },
   formControlLabel: {
     display: "block",
-    color: "#7c7c7c",
+    color: "#7c7c7c"
   },
   toolBox: {
     display: "flex",
     width: 580,
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(2)
   },
   appBar: {
-    zIndex: 100,
+    zIndex: 100
   },
   slider: {
-    width: 135,
-  },
+    width: 135
+  }
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     activatedTab: state.activatedTab,
     detailList: state.detailList,
     labels: state.labels,
     nodes: state.nodes,
+    labelNames: state.labelNames
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateActivatedTabIndex: (event, value) =>
       dispatch(updateActivatedTabIndex(value)),
@@ -101,15 +102,14 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(toggleGraphDisplayPNOption(removedID, direction)),
     updateLevelBound: (value, removedID) =>
       dispatch(updateLevelBound(removedID, value)),
-    addProtectedNode: (nodeIDsArray) =>
-      dispatch(addProtectedNode(nodeIDsArray)),
+    addProtectedNode: nodeIDsArray => dispatch(addProtectedNode(nodeIDsArray))
   };
 };
 
 function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
-    "aria-controls": `scrollable-auto-tabpanel-${index}`,
+    "aria-controls": `scrollable-auto-tabpanel-${index}`
   };
 }
 
@@ -153,7 +153,7 @@ class Detail extends React.Component {
         (removedID, i) => {
           const influenceViewLabels = this.props.detailList[removedID][
             "removedResults"
-          ]["statistical"].map((item) => {
+          ]["statistical"].map(item => {
             return (
               <Box display={"flex"} style={{ width: "70%" }}>
                 <Box flexGrow={1}>
@@ -276,10 +276,18 @@ class Detail extends React.Component {
                             className={this.props.classes.leftView}
                             elevation={0}
                           >
-                            <Box className={this.props.classes.cardHeader}>
-                              <Typography variant="h6">
-                                Ranking Change Distribution View
-                              </Typography>
+                            <Box
+                              className={this.props.classes.cardHeader}
+                              display={"flex"}
+                            >
+                              <Box flexGrow={1}>
+                                <Typography variant="h6">
+                                  Ranking Change Distribution View
+                                </Typography>
+                              </Box>
+                              <Box>
+                                <svg id={"rcdv-legend"} height={"20"}></svg>
+                              </Box>
                             </Box>
                             <RankingChangeOverview
                               removeRes={
@@ -289,6 +297,7 @@ class Detail extends React.Component {
                               }
                               originalRanking={this.props.nodes}
                               labels={this.props.labels}
+                              labelNames={this.props.labelNames}
                             />
                           </Paper>
                         </Grid>
@@ -306,114 +315,117 @@ class Detail extends React.Component {
                                   Influence Graph View
                                 </Typography>
                               </Box>
-
-                              <Box id={"setting-button"}>
-                                <IconButton
-                                  aria-controls="simple-menu"
-                                  aria-haspopup="true"
-                                  onClick={(event) => {
-                                    this.props.toggleGraphMenuOpen(
-                                      event,
-                                      removedID
-                                    );
-                                  }}
-                                >
-                                  <SettingsIcon fontSize="small" />
-                                </IconButton>
-                                <Menu
-                                  id="simple-menu"
-                                  anchorEl={
-                                    this.props.detailList[removedID][
-                                      "graphMenuOpen"
-                                    ]
-                                  }
-                                  keepMounted
-                                  open={Boolean(
-                                    this.props.detailList[removedID][
-                                      "graphMenuOpen"
-                                    ]
-                                  )}
-                                  onClose={(event) => {
-                                    this.props.toggleGraphMenuClose(
-                                      event,
-                                      removedID
-                                    );
-                                  }}
-                                >
-                                  <MenuItem>
-                                    <FormControlLabel
-                                      control={
-                                        <Checkbox
-                                          checked={
-                                            this.props.detailList[removedID][
-                                              "showPositive"
-                                            ]
-                                          }
-                                          onChange={() => {
-                                            this.props.toggleGraphDisplayPNOption(
-                                              removedID,
-                                              "positive"
-                                            );
-                                          }}
-                                          value="show positive"
-                                          color="primary"
-                                        />
-                                      }
-                                      label="show positive"
-                                    />
-                                  </MenuItem>
-                                  <MenuItem>
-                                    <FormControlLabel
-                                      control={
-                                        <Checkbox
-                                          checked={
-                                            this.props.detailList[removedID][
-                                              "showNegative"
-                                            ]
-                                          }
-                                          onChange={() => {
-                                            this.props.toggleGraphDisplayPNOption(
-                                              removedID,
-                                              "negative"
-                                            );
-                                          }}
-                                          value="show negative"
-                                          color="primary"
-                                        />
-                                      }
-                                      label="show negative"
-                                    />
-                                  </MenuItem>
-                                  <MenuItem>
-                                    <Slider
-                                      min={1}
-                                      max={10}
-                                      step={1}
-                                      color={"secondary"}
-                                      value={[
-                                        this.props.detailList[removedID][
-                                          "levelLowerBound"
-                                        ],
-                                        this.props.detailList[removedID][
-                                          "levelUpperBound"
-                                        ],
-                                      ]}
-                                      onChange={(event, value) => {
-                                        console.log(value);
-                                        this.props.updateLevelBound(
-                                          value,
-                                          removedID
-                                        );
-                                      }}
-                                      valueLabelDisplay="auto"
-                                      aria-labelledby="range-slider"
-                                      getAriaValueText={(value) => {
-                                        return `level ${value}`;
-                                      }}
-                                    />
-                                  </MenuItem>
-                                </Menu>
+                              <Box>
+                                <svg id={"graph-legend"} height={"20"}></svg>
                               </Box>
+
+                              {/*<Box id={"setting-button"}>*/}
+                              {/*  <IconButton*/}
+                              {/*    aria-controls="simple-menu"*/}
+                              {/*    aria-haspopup="true"*/}
+                              {/*    onClick={(event) => {*/}
+                              {/*      this.props.toggleGraphMenuOpen(*/}
+                              {/*        event,*/}
+                              {/*        removedID*/}
+                              {/*      );*/}
+                              {/*    }}*/}
+                              {/*  >*/}
+                              {/*    <SettingsIcon fontSize="small" />*/}
+                              {/*  </IconButton>*/}
+                              {/*  <Menu*/}
+                              {/*    id="simple-menu"*/}
+                              {/*    anchorEl={*/}
+                              {/*      this.props.detailList[removedID][*/}
+                              {/*        "graphMenuOpen"*/}
+                              {/*      ]*/}
+                              {/*    }*/}
+                              {/*    keepMounted*/}
+                              {/*    open={Boolean(*/}
+                              {/*      this.props.detailList[removedID][*/}
+                              {/*        "graphMenuOpen"*/}
+                              {/*      ]*/}
+                              {/*    )}*/}
+                              {/*    onClose={(event) => {*/}
+                              {/*      this.props.toggleGraphMenuClose(*/}
+                              {/*        event,*/}
+                              {/*        removedID*/}
+                              {/*      );*/}
+                              {/*    }}*/}
+                              {/*  >*/}
+                              {/*    <MenuItem>*/}
+                              {/*      <FormControlLabel*/}
+                              {/*        control={*/}
+                              {/*          <Checkbox*/}
+                              {/*            checked={*/}
+                              {/*              this.props.detailList[removedID][*/}
+                              {/*                "showPositive"*/}
+                              {/*              ]*/}
+                              {/*            }*/}
+                              {/*            onChange={() => {*/}
+                              {/*              this.props.toggleGraphDisplayPNOption(*/}
+                              {/*                removedID,*/}
+                              {/*                "positive"*/}
+                              {/*              );*/}
+                              {/*            }}*/}
+                              {/*            value="show positive"*/}
+                              {/*            color="primary"*/}
+                              {/*          />*/}
+                              {/*        }*/}
+                              {/*        label="show positive"*/}
+                              {/*      />*/}
+                              {/*    </MenuItem>*/}
+                              {/*    <MenuItem>*/}
+                              {/*      <FormControlLabel*/}
+                              {/*        control={*/}
+                              {/*          <Checkbox*/}
+                              {/*            checked={*/}
+                              {/*              this.props.detailList[removedID][*/}
+                              {/*                "showNegative"*/}
+                              {/*              ]*/}
+                              {/*            }*/}
+                              {/*            onChange={() => {*/}
+                              {/*              this.props.toggleGraphDisplayPNOption(*/}
+                              {/*                removedID,*/}
+                              {/*                "negative"*/}
+                              {/*              );*/}
+                              {/*            }}*/}
+                              {/*            value="show negative"*/}
+                              {/*            color="primary"*/}
+                              {/*          />*/}
+                              {/*        }*/}
+                              {/*        label="show negative"*/}
+                              {/*      />*/}
+                              {/*    </MenuItem>*/}
+                              {/*    <MenuItem>*/}
+                              {/*      <Slider*/}
+                              {/*        min={1}*/}
+                              {/*        max={10}*/}
+                              {/*        step={1}*/}
+                              {/*        color={"secondary"}*/}
+                              {/*        value={[*/}
+                              {/*          this.props.detailList[removedID][*/}
+                              {/*            "levelLowerBound"*/}
+                              {/*          ],*/}
+                              {/*          this.props.detailList[removedID][*/}
+                              {/*            "levelUpperBound"*/}
+                              {/*          ],*/}
+                              {/*        ]}*/}
+                              {/*        onChange={(event, value) => {*/}
+                              {/*          console.log(value);*/}
+                              {/*          this.props.updateLevelBound(*/}
+                              {/*            value,*/}
+                              {/*            removedID*/}
+                              {/*          );*/}
+                              {/*        }}*/}
+                              {/*        valueLabelDisplay="auto"*/}
+                              {/*        aria-labelledby="range-slider"*/}
+                              {/*        getAriaValueText={(value) => {*/}
+                              {/*          return `level ${value}`;*/}
+                              {/*        }}*/}
+                              {/*      />*/}
+                              {/*    </MenuItem>*/}
+                              {/*  </Menu>*/}
+                              {/*</Box>*/}
                             </Box>
                             <Box
                               id={"influence-graph-view"}
@@ -432,6 +444,7 @@ class Detail extends React.Component {
                                   canvasHeight={510}
                                   canvasWidth={690}
                                   labels={this.props.labels}
+                                  labelNames={this.props.labelNames}
                                   removedID={removedID}
                                   addProtectedNodes={
                                     this.props.addProtectedNode
@@ -520,7 +533,7 @@ class Detail extends React.Component {
                                         ],
                                         this.props.detailList[removedID][
                                           "levelUpperBound"
-                                        ],
+                                        ]
                                       ]}
                                       onChange={(event, value) => {
                                         console.log(value);
@@ -531,7 +544,7 @@ class Detail extends React.Component {
                                       }}
                                       valueLabelDisplay="auto"
                                       aria-labelledby="range-slider"
-                                      getAriaValueText={(value) => {
+                                      getAriaValueText={value => {
                                         return `level ${value}`;
                                       }}
                                     />

@@ -37,6 +37,7 @@ const initialState = {
     detailList: {},
     perturbationSummary: [],
     labels: {},
+    labelNames: [],
     updateK: 0,
     isLoading: true,
     loadingText: "Loading..."
