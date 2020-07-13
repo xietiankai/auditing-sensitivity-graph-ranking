@@ -121,7 +121,7 @@ function rootReducer(state = initialState, action) {
             topKQueryList: [10],
             graphMenuOpen: null,
             levelLowerBound: 0,
-            levelUpperBound: 10,
+            levelUpperBound: 5,
             showPositive: true,
             showNegative: true
         };

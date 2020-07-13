@@ -11,7 +11,7 @@ import {
   toggleGraphDisplayPNOption,
   toggleGraphMenu,
   updateActivatedTabIndex,
-  updateLevelBound
+  updateLevelBound,
 } from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
 import BoxPlotComponent from "./BoxPlotComponent";
@@ -21,76 +21,72 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import "../components/css/Detail.css";
 import DetailTable from "./DetailTable";
-import SettingsIcon from "@material-ui/icons/Settings";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import IconButton from "@material-ui/core/IconButton";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Slider from "@material-ui/core/Slider";
 import RankingChangeOverview from "./RankingChangeOverview";
 import Chip from "@material-ui/core/Chip";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     // flexGrow: 1,
-    width: "100%"
+    width: "100%",
     // backgroundColor: theme.palette.background.paper
   },
   cardHeader: {
     paddingLeft: theme.spacing(2),
     paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1)
+    paddingBottom: theme.spacing(1),
   },
   tabContent: {},
   leftView: {
     marginRight: theme.spacing(1),
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   rightView: {
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   containerPadding: {
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
+    paddingRight: theme.spacing(2),
   },
   influenceGraphViewContainer: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    height: 515
+    height: 515,
   },
   emptyPanel: {
     paddingTop: theme.spacing(54),
-    paddingLeft: theme.spacing(60)
+    paddingLeft: theme.spacing(60),
   },
   formControlLabel: {
     display: "block",
-    color: "#7c7c7c"
+    color: "#7c7c7c",
   },
   toolBox: {
     display: "flex",
     width: 580,
-    paddingLeft: theme.spacing(2)
+    paddingLeft: theme.spacing(2),
   },
-  appBar: {
-    zIndex: 100
-  },
+  // appBar: {
+  //   zIndex: 100,
+  // },
   slider: {
-    width: 135
-  }
+    width: 135,
+  },
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     activatedTab: state.activatedTab,
     detailList: state.detailList,
     labels: state.labels,
     nodes: state.nodes,
-    labelNames: state.labelNames
+    labelNames: state.labelNames,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateActivatedTabIndex: (event, value) =>
       dispatch(updateActivatedTabIndex(value)),
@@ -102,14 +98,15 @@ const mapDispatchToProps = dispatch => {
       dispatch(toggleGraphDisplayPNOption(removedID, direction)),
     updateLevelBound: (value, removedID) =>
       dispatch(updateLevelBound(removedID, value)),
-    addProtectedNode: nodeIDsArray => dispatch(addProtectedNode(nodeIDsArray))
+    addProtectedNode: (nodeIDsArray) =>
+      dispatch(addProtectedNode(nodeIDsArray)),
   };
 };
 
 function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
-    "aria-controls": `scrollable-auto-tabpanel-${index}`
+    "aria-controls": `scrollable-auto-tabpanel-${index}`,
   };
 }
 
@@ -153,7 +150,7 @@ class Detail extends React.Component {
         (removedID, i) => {
           const influenceViewLabels = this.props.detailList[removedID][
             "removedResults"
-          ]["statistical"].map(item => {
+          ]["statistical"].map((item) => {
             return (
               <Box display={"flex"} style={{ width: "70%" }}>
                 <Box flexGrow={1}>
@@ -524,8 +521,8 @@ class Detail extends React.Component {
                                   >
                                     <Slider
                                       className={this.props.classes.slider}
-                                      min={1}
-                                      max={10}
+                                      min={0}
+                                      max={5}
                                       step={1}
                                       value={[
                                         this.props.detailList[removedID][
@@ -533,7 +530,7 @@ class Detail extends React.Component {
                                         ],
                                         this.props.detailList[removedID][
                                           "levelUpperBound"
-                                        ]
+                                        ],
                                       ]}
                                       onChange={(event, value) => {
                                         console.log(value);
@@ -544,7 +541,7 @@ class Detail extends React.Component {
                                       }}
                                       valueLabelDisplay="auto"
                                       aria-labelledby="range-slider"
-                                      getAriaValueText={value => {
+                                      getAriaValueText={(value) => {
                                         return `level ${value}`;
                                       }}
                                     />
@@ -591,8 +588,8 @@ class Detail extends React.Component {
             onChange={this.props.updateActivatedTabIndex}
             indicatorColor="primary"
             textColor="primary"
-            variant="scrollable"
-            scrollButtons="auto"
+            // variant="scrollable"
+            // scrollButtons="auto"
             aria-label="scrollable auto tabs example"
           >
             {tabComponents}
