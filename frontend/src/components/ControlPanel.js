@@ -17,11 +17,11 @@ import {
   updateProtectionExtent,
   updateProtectionType
 } from "../actions";
-import VulnerabilityTable from "./VulnerabilityTable";
 import ChipsArray from "./ChipsArray";
 import Paper from "@material-ui/core/Paper";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
+import SensitivityTable from "./SensitivityTable";
 
 const styles = theme => ({
     formControl: {
@@ -174,7 +174,7 @@ class ControlPanel extends React.Component {
                 </Box>
 
                 <Divider/>
-                <VulnerabilityTable/>
+                <SensitivityTable/>
                 <Divider/>
                 <Box className={classes.constrainContainer}>
                     <Typography variant={"h6"} gutterBottom>Rules</Typography>

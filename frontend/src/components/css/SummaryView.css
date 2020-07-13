@@ -1,4 +1,4 @@
-#summary-view > div::-webkit-scrollbar {
+/* #summary-view > div::-webkit-scrollbar {
     width: 10px;
 }
 
@@ -15,4 +15,4 @@
     background-color: var(--thumbBG);
     border-radius: 6px;
     border: 3px solid var(--scrollbarBG);
-}
+} */

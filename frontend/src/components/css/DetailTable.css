@@ -6,3 +6,7 @@
 #summary-view > div > div > div > h6 {
     padding-left: 20px;
 }
+
+#summary-view > div > div > div {
+    overflow: visible;
+}
