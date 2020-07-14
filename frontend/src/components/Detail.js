@@ -176,7 +176,7 @@ class Detail extends React.Component {
                 <Grid item md={5}>
                   <Paper className={this.props.classes.leftView} elevation={0}>
                     <Box className={this.props.classes.cardHeader}>
-                      <Typography variant="h6">Influence View</Typography>
+                      <Typography variant="h6">Influence Overview</Typography>
                     </Box>
                     <Box className={this.props.classes.containerPadding}>
                       <Grid container>
@@ -237,7 +237,7 @@ class Detail extends React.Component {
                       >
                         <Box className={this.props.classes.cardHeader}>
                           <Typography variant="h6">
-                            Distribution Changes View
+                            Distribution Changes
                           </Typography>
                         </Box>
                         <BoxPlotComponent
@@ -256,7 +256,7 @@ class Detail extends React.Component {
                       >
                         <Box className={this.props.classes.cardHeader}>
                           <Typography variant="h6">
-                            Top-k Distribution View
+                            Top-k Distribution
                           </Typography>
                         </Box>
                         <TopKDistributionView removedID={removedID} />
@@ -279,7 +279,7 @@ class Detail extends React.Component {
                             >
                               <Box flexGrow={1}>
                                 <Typography variant="h6">
-                                  Ranking Change Distribution View
+                                  Ranking Change Distribution
                                 </Typography>
                               </Box>
                               <Box>
@@ -295,6 +295,8 @@ class Detail extends React.Component {
                               originalRanking={this.props.nodes}
                               labels={this.props.labels}
                               labelNames={this.props.labelNames}
+                              canvasHeight={90}
+                              canvasWidth={720}
                             />
                           </Paper>
                         </Grid>
@@ -309,7 +311,7 @@ class Detail extends React.Component {
                             >
                               <Box flexGrow={1}>
                                 <Typography variant="h6">
-                                  Influence Graph View
+                                  Influence Graph
                                 </Typography>
                               </Box>
                               <Box>

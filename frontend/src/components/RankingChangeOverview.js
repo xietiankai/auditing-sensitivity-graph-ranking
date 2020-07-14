@@ -1,32 +1,129 @@
-// Copyright (c) 2016 - 2017 Uber Technologies, Inc.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
-import React from "react";
-import { VerticalBarSeries, XAxis, XYPlot, YAxis } from "react-vis";
-import { clusteringColors } from "../styles";
-import ChartLabel from "react-vis/es/plot/chart-label";
+import * as React from "react";
 import * as d3 from "d3";
+import { findDOMNode } from "react-dom";
+import { clusteringColors } from "../styles";
 
 export default class RankingChangeOverview extends React.Component {
-  componentDidMount() {
-      const { labelNames } = this.props;
+  constructor(props) {
+    super(props);
+  }
+
+  renderSvg(baseGroup, props) {
+    const {
+      canvasWidth,
+      canvasHeight,
+      removeRes,
+      originalRanking,
+      labels,
+      labelNames,
+    } = props;
+
+    const processedData = removeRes.map((item) => {
+      return {
+        x: originalRanking[item.node_id].rank,
+        y0: 0,
+        y: item.rank_change,
+        cat: labels[Object.keys(labels)[0]][item.node_id]["value"],
+      };
+    });
+    console.log("WLJFOEJIFWEF");
+    console.log(processedData);
+
+    const margin = {
+      top: 8,
+      right: 0,
+      bottom: 8,
+      left: 50,
+    };
+
+    const width = canvasWidth - margin.left - margin.right;
+    const height = canvasHeight - margin.top - margin.bottom;
+
+    let x = d3
+      .scaleBand()
+      .range([0, width - margin.left])
+      .padding(0.1);
+
+    let y = d3.scaleLinear().range([margin.top, height - margin.bottom]);
+
+    x.domain(processedData.map((d) => d.x));
+
+    y.domain([
+      d3.min(processedData, function(d) {
+        return Number(d.y);
+      }),
+      d3.max(processedData, function(d) {
+        return Number(d.y);
+      }),
+    ]);
+
+    let tickValues = processedData.map((d) => {
+      if (d.x % Math.round(processedData.length / 10) === 0) return d.x;
+      else return;
+    });
+
+    tickValues = tickValues.filter((d) => (d ? true : false));
+
+    let bax = d3.axisBottom(x).tickValues(x.domain().filter(function(d,i){ return !(i%50)}))
+
+    baseGroup
+      .append("g")
+      .attr(
+        "transform",
+        "translate(" +
+          margin.left +
+          "," +
+          (Number(height) - Number(margin.bottom)) +
+          ")"
+      )
+      .call(bax)
+      .append("text")
+      .attr("fill", "#000")
+      .attr("y", 6)
+      .attr("dy", "1em")
+      .attr("dx", "65em")
+      .attr("text-anchor", "end")
+      .text("Rank");
+
+    baseGroup
+      .append("g")
+      .call(d3.axisLeft(y).ticks(5))
+      .attr("transform", "translate(" + margin.left + ",0)")
+      .append("text")
+      .attr("fill", "#000")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "-3em")
+      .attr("text-anchor", "end")
+      .text("Ranking Change");
+
+    baseGroup
+      .selectAll(".bar")
+      .data(processedData)
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("transform", "translate(" + margin.left + ",0)")
+      .attr("fill", (d) => clusteringColors[d.cat])
+      .attr("x", function(d) {
+        return x(d.x);
+      })
+      .attr("y", function(d) {
+        if (d.y < 0) {
+          return y(Number(d.y));
+        } else {
+          return y(0);
+        }
+      })
+      .attr("width", x.bandwidth())
+      .attr("height", function(d) {
+        if (d.y < 0) {
+          return y(0) - y(Number(d.y));
+        } else {
+          return y(Number(d.y)) - y(0);
+        }
+      });
+
     /***
      * Legend
      */
@@ -39,7 +136,7 @@ export default class RankingChangeOverview extends React.Component {
 
     legendModule
       .append("rect")
-      .attr("x", (d, i) => (i * 7 + 7 )+ "em")
+      .attr("x", (d, i) => i * 7 + 7 + "em")
       .attr("y", "1em")
       .attr("width", 8)
       .attr("height", 8)
@@ -47,67 +144,57 @@ export default class RankingChangeOverview extends React.Component {
 
     legendModule
       .append("text")
-      .attr("x", (d, i) => (i * 7 + 8.5) + "em")
+      .attr("x", (d, i) => i * 7 + 8.5 + "em")
       .attr("y", "1.5em")
-      .text(d => {
+      .text((d) => {
         return d;
       });
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return false;
+  }
+
+  /**
+   * Entry point
+   * @returns None
+   */
+  initializeCanvas() {
+    const baseGroup = d3.select("#ranking-change-overview-chart-base");
+    this.renderSvg(baseGroup, this.props);
+    baseGroup.raise();
+  }
+
+  /***
+   * When updating the props, according canvas needs to be updated.
+   * Remove original canvas and draw a new one.
+   * @param props {Object} from React.Component
+   */
+  updateCanvas(props) {
+    const thisDOM = findDOMNode(this);
+    const svgRoot = d3.select(thisDOM);
+    let baseGroup = d3
+      .select(thisDOM)
+      .select("#ranking-change-overview-chart-base");
+    baseGroup.remove();
+    baseGroup = svgRoot
+      .append("g")
+      .attr("id", "ranking-change-overview-chart-base");
+    this.renderSvg(baseGroup, props);
+  }
+
+  componentDidMount() {
+    this.initializeCanvas();
+  }
+
   render() {
-    const { removeRes, originalRanking, labels, labelNames } = this.props;
-    const processedData = removeRes.map(item => {
-      return {
-        x: originalRanking[item.node_id].rank,
-        y0: 0,
-        y: item.rank_change,
-        cat: labels[Object.keys(labels)[0]][item.node_id]["value"]
-      };
-    });
-
-    const yDomain = processedData.reduce(
-      (res, row) => ({
-        max: Math.max(res.max, row.y, row.y0),
-        min: Math.min(res.min, row.y, row.y0)
-      }),
-      { max: -Infinity, min: Infinity }
-    );
-
+    const { canvasHeight, canvasWidth } = this.props;
+    const svgID = "ranking-change-overview-chart";
+    const svgIDBase = "ranking-change-overview-chart-base";
     return (
-      <div style={{ paddingLeft: 10, paddingRight: 10 }}>
-        <XYPlot width={720} height={100} yDomain={[yDomain.min, yDomain.max]}>
-          <VerticalBarSeries
-            className="difference-example"
-            data={processedData}
-            colorType="literal"
-            getColor={d => {
-              return clusteringColors[d.cat];
-              // return d.y < 0 ? greenAndRed[0] : greenAndRed[1];
-            }}
-          />
-          <XAxis />
-          <YAxis />
-          <ChartLabel
-            text="Ranking"
-            className="alt-x-label"
-            includeMargin={true}
-            xPercent={0.92}
-            yPercent={0.5}
-          />
-
-          <ChartLabel
-            text="Ranking Change"
-            className="alt-y-label"
-            includeMargin={true}
-            xPercent={0.07}
-            yPercent={-0.25}
-            // style={{
-            //   transform: 'rotate(-90)',
-            //   textAnchor: 'end'
-            // }}
-          />
-        </XYPlot>
-      </div>
+      <svg id={svgID} style={{ height: canvasHeight, width: canvasWidth }}>
+        <g id={svgIDBase} style={{ height: "100%", width: "100%" }} />
+      </svg>
     );
   }
 }

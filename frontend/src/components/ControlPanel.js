@@ -242,7 +242,7 @@ class ControlPanel extends React.Component {
                         }}
                         open={this.props.snackbarOpen}
                         message={this.props.snackbarMessage}
-                        autoHideDuration={6000}
+                        autoHideDuration={10000}
                         onClose={this.props.snackBarClose}
                         action={
                             <React.Fragment>
