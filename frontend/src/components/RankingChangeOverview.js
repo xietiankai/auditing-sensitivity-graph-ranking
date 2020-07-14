@@ -26,25 +26,26 @@ export default class RankingChangeOverview extends React.Component {
         cat: labels[Object.keys(labels)[0]][item.node_id]["value"],
       };
     });
-    console.log("WLJFOEJIFWEF");
-    console.log(processedData);
+    processedData.sort((a, b) => a.x - b.x);
 
     const margin = {
       top: 8,
       right: 0,
       bottom: 8,
-      left: 50,
+      left: 65,
     };
 
-    const width = canvasWidth - margin.left - margin.right;
-    const height = canvasHeight - margin.top - margin.bottom;
+    const width = canvasWidth * 0.98;
+    const height = canvasHeight * 0.9;
 
     let x = d3
       .scaleBand()
-      .range([0, width - margin.left])
+      .range([margin.left, width - margin.right])
       .padding(0.1);
 
-    let y = d3.scaleLinear().range([margin.top, height - margin.bottom]);
+    let y = d3
+      .scaleLinear()
+      .range([margin.top, Number(height) - Number(margin.bottom)]);
 
     x.domain(processedData.map((d) => d.x));
 
@@ -57,38 +58,28 @@ export default class RankingChangeOverview extends React.Component {
       }),
     ]);
 
-    let tickValues = processedData.map((d) => {
-      if (d.x % Math.round(processedData.length / 10) === 0) return d.x;
-      else return;
-    });
-
-    tickValues = tickValues.filter((d) => (d ? true : false));
-
-    let bax = d3.axisBottom(x).tickValues(x.domain().filter(function(d,i){ return !(i%50)}))
-
     baseGroup
       .append("g")
-      .attr(
-        "transform",
-        "translate(" +
-          margin.left +
-          "," +
-          (Number(height) - Number(margin.bottom)) +
-          ")"
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .call(
+        d3.axisBottom(x).tickValues(
+          x.domain().filter(function(d, i) {
+            return Number(d) % 50 === 0;
+          })
+        )
       )
-      .call(bax)
       .append("text")
       .attr("fill", "#000")
       .attr("y", 6)
       .attr("dy", "1em")
-      .attr("dx", "65em")
+      .attr("dx", "70em")
       .attr("text-anchor", "end")
       .text("Rank");
 
     baseGroup
       .append("g")
+      .attr("transform", `translate(${margin.left},0)`)
       .call(d3.axisLeft(y).ticks(5))
-      .attr("transform", "translate(" + margin.left + ",0)")
       .append("text")
       .attr("fill", "#000")
       .attr("transform", "rotate(-90)")
@@ -103,7 +94,6 @@ export default class RankingChangeOverview extends React.Component {
       .enter()
       .append("rect")
       .attr("class", "bar")
-      .attr("transform", "translate(" + margin.left + ",0)")
       .attr("fill", (d) => clusteringColors[d.cat])
       .attr("x", function(d) {
         return x(d.x);

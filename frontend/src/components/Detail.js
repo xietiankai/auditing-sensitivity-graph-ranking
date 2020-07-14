@@ -25,6 +25,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Slider from "@material-ui/core/Slider";
 import RankingChangeOverview from "./RankingChangeOverview";
+import RankingChangeOverviewOld from "./RankingChangeOverviewOld";
 import Chip from "@material-ui/core/Chip";
 
 const styles = (theme) => ({

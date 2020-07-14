@@ -73,10 +73,13 @@ export default class RankingChangeOverview extends React.Component {
       { max: -Infinity, min: Infinity }
     );
 
+    console.log(yDomain);
+
     return (
       <div style={{ paddingLeft: 10, paddingRight: 10 }}>
         <XYPlot width={720} height={100} yDomain={[yDomain.max, yDomain.min]}>
           <VerticalBarSeries
+          yDomain={[yDomain.max, yDomain.min]}
             className="difference-example"
             data={processedData}
             colorType="literal"
@@ -86,7 +89,7 @@ export default class RankingChangeOverview extends React.Component {
             }}
           />
           <XAxis />
-          <YAxis />
+          <YAxis yDomain={[yDomain.max, yDomain.min]}/>
           <ChartLabel
             text="Ranking"
             className="alt-x-label"
