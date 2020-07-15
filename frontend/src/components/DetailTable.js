@@ -9,9 +9,10 @@ import { withStyles } from "@material-ui/styles";
 import "../components/css/DetailTable.css";
 
 const styles = (theme) => ({
-  root: { 
+  root: {
     width: "100%",
-    overflow: "auto" },
+    overflow: "auto",
+  },
 });
 
 const mapStateToProps = (state) => {
@@ -173,8 +174,8 @@ class DetailTable extends React.Component {
           data={this.props.perturbation}
           options={{
             pageSize: 4,
-            minBodyHeight: 660,
-            maxBodyHeight: 660,
+            minBodyHeight: 408,
+            maxBodyHeight: 408,
             padding: "dense",
 
             // showTitle: false,

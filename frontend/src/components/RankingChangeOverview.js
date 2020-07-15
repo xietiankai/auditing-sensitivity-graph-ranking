@@ -84,7 +84,7 @@ export default class RankingChangeOverview extends React.Component {
       .attr("fill", "#000")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
-      .attr("dy", "-3em")
+      .attr("dy", "-4em")
       .attr("text-anchor", "end")
       .text("Ranking Change");
 

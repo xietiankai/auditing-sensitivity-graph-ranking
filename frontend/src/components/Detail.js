@@ -54,7 +54,7 @@ const styles = (theme) => ({
   influenceGraphViewContainer: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    height: 515,
+    height: 665,
   },
   emptyPanel: {
     paddingTop: theme.spacing(54),
@@ -230,8 +230,34 @@ class Detail extends React.Component {
                   </Paper>
                 </Grid>
                 <Grid item md={7}>
-                  <Grid container>
-                    <Grid item md={6}>
+                  <Paper className={this.props.classes.rightView} elevation={0}>
+                    <Box
+                      className={this.props.classes.cardHeader}
+                      display={"flex"}
+                    >
+                      <Box flexGrow={1}>
+                        <Typography variant="h6">
+                          Ranking Change Distribution
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <svg id={"rcdv-legend"} height={"20"}></svg>
+                      </Box>
+                    </Box>
+                    <RankingChangeOverview
+                      removeRes={
+                        this.props.detailList[removedID]["removedResults"][
+                          "remove_res"
+                        ]
+                      }
+                      originalRanking={this.props.nodes}
+                      labels={this.props.labels}
+                      labelNames={this.props.labelNames}
+                      canvasHeight={193}
+                      canvasWidth={720}
+                    />
+                  </Paper>
+                  {/* <Grid item md={6}>
                       <Paper
                         className={this.props.classes.leftView}
                         elevation={0}
@@ -249,326 +275,221 @@ class Detail extends React.Component {
                           }
                         />
                       </Paper>
-                    </Grid>
-                    <Grid item md={6}>
-                      <Paper
-                        className={this.props.classes.rightView}
-                        elevation={0}
-                      >
-                        <Box className={this.props.classes.cardHeader}>
-                          <Typography variant="h6">
-                            Top-k Distribution
-                          </Typography>
-                        </Box>
-                        <TopKDistributionView removedID={removedID} />
-                      </Paper>
-                    </Grid>
-                  </Grid>
+                    </Grid> */}
                 </Grid>
                 <Grid item md={12}>
                   <Grid container>
                     <Grid item md={7}>
+                      <Paper
+                        className={this.props.classes.leftView}
+                        elevation={0}
+                      >
+                        <Box
+                          className={this.props.classes.cardHeader}
+                          display={"flex"}
+                        >
+                          <Box flexGrow={1}>
+                            <Typography variant="h6">
+                              Influence Graph
+                            </Typography>
+                          </Box>
+                          <Box>
+                            <svg id={"graph-legend"} height={"20"}></svg>
+                          </Box>
+                        </Box>
+                        <Box
+                          id={"influence-graph-view"}
+                          className={
+                            this.props.classes.influenceGraphViewContainer
+                          }
+                          position="relative"
+                        >
+                          <Box position="absolute" zIndex="modal">
+                            <InfluenceGraphView
+                              perturbation={
+                                this.props.detailList[removedID][
+                                  "removedResults"
+                                ]
+                              }
+                              canvasHeight={665}
+                              canvasWidth={690}
+                              labels={this.props.labels}
+                              labelNames={this.props.labelNames}
+                              removedID={removedID}
+                              addProtectedNodes={this.props.addProtectedNode}
+                            />
+                          </Box>
+                          <Box
+                            position="absolute"
+                            zIndex="tooltip"
+                            top="90%"
+                            right="2%"
+                          >
+                            <Paper
+                              variant="outlined"
+                              className={this.props.classes.toolBox}
+                            >
+                              <Box>
+                                <FormControlLabel
+                                  className={
+                                    this.props.classes.formControlLabel
+                                  }
+                                  control={
+                                    <Checkbox
+                                      checked={
+                                        this.props.detailList[removedID][
+                                          "showPositive"
+                                        ]
+                                      }
+                                      onChange={() => {
+                                        this.props.toggleGraphDisplayPNOption(
+                                          removedID,
+                                          "positive"
+                                        );
+                                      }}
+                                      value="show positive"
+                                      color="secondary"
+                                    />
+                                  }
+                                  label="positive influence"
+                                />
+                              </Box>
+                              <Box>
+                                <FormControlLabel
+                                  className={
+                                    this.props.classes.formControlLabel
+                                  }
+                                  control={
+                                    <Checkbox
+                                      checked={
+                                        this.props.detailList[removedID][
+                                          "showNegative"
+                                        ]
+                                      }
+                                      onChange={() => {
+                                        this.props.toggleGraphDisplayPNOption(
+                                          removedID,
+                                          "negative"
+                                        );
+                                      }}
+                                      value="show negative"
+                                      color="secondary"
+                                    />
+                                  }
+                                  label="negative influence"
+                                />
+                              </Box>
+                              <Box style={{ paddingTop: 8 }}>
+                                <Typography
+                                  variant={"body1"}
+                                  color={"textSecondary"}
+                                >
+                                  Influence Distance
+                                </Typography>
+                              </Box>
+                              <Box style={{ paddingTop: 5, paddingLeft: 9 }}>
+                                <Slider
+                                  className={this.props.classes.slider}
+                                  min={0}
+                                  max={5}
+                                  step={1}
+                                  value={[
+                                    this.props.detailList[removedID][
+                                      "levelLowerBound"
+                                    ],
+                                    this.props.detailList[removedID][
+                                      "levelUpperBound"
+                                    ],
+                                  ]}
+                                  onChange={(event, value) => {
+                                    console.log(value);
+                                    this.props.updateLevelBound(
+                                      value,
+                                      removedID
+                                    );
+                                  }}
+                                  valueLabelDisplay="auto"
+                                  aria-labelledby="range-slider"
+                                  getAriaValueText={(value) => {
+                                    return `level ${value}`;
+                                  }}
+                                />
+                              </Box>
+                            </Paper>
+                          </Box>
+                        </Box>
+                      </Paper>
+                    </Grid>
+                    <Grid item md={5}>
                       <Grid container>
-                        <Grid item md={12}>
+                        <Grid md={12}>
                           <Paper
-                            className={this.props.classes.leftView}
+                            className={this.props.classes.rightView}
                             elevation={0}
                           >
                             <Box
                               className={this.props.classes.cardHeader}
-                              display={"flex"}
+                              display="flex"
                             >
                               <Box flexGrow={1}>
                                 <Typography variant="h6">
-                                  Ranking Change Distribution
+                                  Top-k Distribution
                                 </Typography>
                               </Box>
-                              <Box>
-                                <svg id={"rcdv-legend"} height={"20"}></svg>
+                              <Box className={classes.root}>
+                                <Typography id="input-slider" gutterBottom>
+                                  Volume
+                                </Typography>
+                                <Grid container spacing={2} alignItems="center">
+                                  <Grid item>
+                                    <VolumeUp />
+                                  </Grid>
+                                  <Grid item xs>
+                                    <Slider
+                                      value={
+                                        typeof value === "number" ? value : 0
+                                      }
+                                      onChange={handleSliderChange}
+                                      aria-labelledby="input-slider"
+                                    />
+                                  </Grid>
+                                  <Grid item>
+                                    <Input
+                                      className={classes.input}
+                                      value={value}
+                                      margin="dense"
+                                      onChange={handleInputChange}
+                                      onBlur={handleBlur}
+                                      inputProps={{
+                                        step: 10,
+                                        min: 0,
+                                        max: 100,
+                                        type: "number",
+                                        "aria-labelledby": "input-slider",
+                                      }}
+                                    />
+                                  </Grid>
+                                </Grid>
                               </Box>
                             </Box>
-                            <RankingChangeOverview
-                              removeRes={
+                            <TopKDistributionView removedID={removedID} />
+                          </Paper>
+                        </Grid>
+                        <Grid md={12}>
+                          <Paper
+                            className={this.props.classes.rightView}
+                            elevation={0}
+                          >
+                            <DetailTable
+                              perturbation={
                                 this.props.detailList[removedID][
                                   "removedResults"
                                 ]["remove_res"]
                               }
-                              originalRanking={this.props.nodes}
-                              labels={this.props.labels}
-                              labelNames={this.props.labelNames}
-                              canvasHeight={90}
-                              canvasWidth={720}
                             />
                           </Paper>
                         </Grid>
-                        <Grid item md={12}>
-                          <Paper
-                            className={this.props.classes.leftView}
-                            elevation={0}
-                          >
-                            <Box
-                              className={this.props.classes.cardHeader}
-                              display={"flex"}
-                            >
-                              <Box flexGrow={1}>
-                                <Typography variant="h6">
-                                  Influence Graph
-                                </Typography>
-                              </Box>
-                              <Box>
-                                <svg id={"graph-legend"} height={"20"}></svg>
-                              </Box>
-
-                              {/*<Box id={"setting-button"}>*/}
-                              {/*  <IconButton*/}
-                              {/*    aria-controls="simple-menu"*/}
-                              {/*    aria-haspopup="true"*/}
-                              {/*    onClick={(event) => {*/}
-                              {/*      this.props.toggleGraphMenuOpen(*/}
-                              {/*        event,*/}
-                              {/*        removedID*/}
-                              {/*      );*/}
-                              {/*    }}*/}
-                              {/*  >*/}
-                              {/*    <SettingsIcon fontSize="small" />*/}
-                              {/*  </IconButton>*/}
-                              {/*  <Menu*/}
-                              {/*    id="simple-menu"*/}
-                              {/*    anchorEl={*/}
-                              {/*      this.props.detailList[removedID][*/}
-                              {/*        "graphMenuOpen"*/}
-                              {/*      ]*/}
-                              {/*    }*/}
-                              {/*    keepMounted*/}
-                              {/*    open={Boolean(*/}
-                              {/*      this.props.detailList[removedID][*/}
-                              {/*        "graphMenuOpen"*/}
-                              {/*      ]*/}
-                              {/*    )}*/}
-                              {/*    onClose={(event) => {*/}
-                              {/*      this.props.toggleGraphMenuClose(*/}
-                              {/*        event,*/}
-                              {/*        removedID*/}
-                              {/*      );*/}
-                              {/*    }}*/}
-                              {/*  >*/}
-                              {/*    <MenuItem>*/}
-                              {/*      <FormControlLabel*/}
-                              {/*        control={*/}
-                              {/*          <Checkbox*/}
-                              {/*            checked={*/}
-                              {/*              this.props.detailList[removedID][*/}
-                              {/*                "showPositive"*/}
-                              {/*              ]*/}
-                              {/*            }*/}
-                              {/*            onChange={() => {*/}
-                              {/*              this.props.toggleGraphDisplayPNOption(*/}
-                              {/*                removedID,*/}
-                              {/*                "positive"*/}
-                              {/*              );*/}
-                              {/*            }}*/}
-                              {/*            value="show positive"*/}
-                              {/*            color="primary"*/}
-                              {/*          />*/}
-                              {/*        }*/}
-                              {/*        label="show positive"*/}
-                              {/*      />*/}
-                              {/*    </MenuItem>*/}
-                              {/*    <MenuItem>*/}
-                              {/*      <FormControlLabel*/}
-                              {/*        control={*/}
-                              {/*          <Checkbox*/}
-                              {/*            checked={*/}
-                              {/*              this.props.detailList[removedID][*/}
-                              {/*                "showNegative"*/}
-                              {/*              ]*/}
-                              {/*            }*/}
-                              {/*            onChange={() => {*/}
-                              {/*              this.props.toggleGraphDisplayPNOption(*/}
-                              {/*                removedID,*/}
-                              {/*                "negative"*/}
-                              {/*              );*/}
-                              {/*            }}*/}
-                              {/*            value="show negative"*/}
-                              {/*            color="primary"*/}
-                              {/*          />*/}
-                              {/*        }*/}
-                              {/*        label="show negative"*/}
-                              {/*      />*/}
-                              {/*    </MenuItem>*/}
-                              {/*    <MenuItem>*/}
-                              {/*      <Slider*/}
-                              {/*        min={1}*/}
-                              {/*        max={10}*/}
-                              {/*        step={1}*/}
-                              {/*        color={"secondary"}*/}
-                              {/*        value={[*/}
-                              {/*          this.props.detailList[removedID][*/}
-                              {/*            "levelLowerBound"*/}
-                              {/*          ],*/}
-                              {/*          this.props.detailList[removedID][*/}
-                              {/*            "levelUpperBound"*/}
-                              {/*          ],*/}
-                              {/*        ]}*/}
-                              {/*        onChange={(event, value) => {*/}
-                              {/*          console.log(value);*/}
-                              {/*          this.props.updateLevelBound(*/}
-                              {/*            value,*/}
-                              {/*            removedID*/}
-                              {/*          );*/}
-                              {/*        }}*/}
-                              {/*        valueLabelDisplay="auto"*/}
-                              {/*        aria-labelledby="range-slider"*/}
-                              {/*        getAriaValueText={(value) => {*/}
-                              {/*          return `level ${value}`;*/}
-                              {/*        }}*/}
-                              {/*      />*/}
-                              {/*    </MenuItem>*/}
-                              {/*  </Menu>*/}
-                              {/*</Box>*/}
-                            </Box>
-                            <Box
-                              id={"influence-graph-view"}
-                              className={
-                                this.props.classes.influenceGraphViewContainer
-                              }
-                              position="relative"
-                            >
-                              <Box position="absolute" zIndex="modal">
-                                <InfluenceGraphView
-                                  perturbation={
-                                    this.props.detailList[removedID][
-                                      "removedResults"
-                                    ]
-                                  }
-                                  canvasHeight={510}
-                                  canvasWidth={690}
-                                  labels={this.props.labels}
-                                  labelNames={this.props.labelNames}
-                                  removedID={removedID}
-                                  addProtectedNodes={
-                                    this.props.addProtectedNode
-                                  }
-                                />
-                              </Box>
-                              <Box
-                                position="absolute"
-                                zIndex="tooltip"
-                                top="90%"
-                                right="2%"
-                              >
-                                <Paper
-                                  variant="outlined"
-                                  className={this.props.classes.toolBox}
-                                >
-                                  <Box>
-                                    <FormControlLabel
-                                      className={
-                                        this.props.classes.formControlLabel
-                                      }
-                                      control={
-                                        <Checkbox
-                                          checked={
-                                            this.props.detailList[removedID][
-                                              "showPositive"
-                                            ]
-                                          }
-                                          onChange={() => {
-                                            this.props.toggleGraphDisplayPNOption(
-                                              removedID,
-                                              "positive"
-                                            );
-                                          }}
-                                          value="show positive"
-                                          color="secondary"
-                                        />
-                                      }
-                                      label="positive influence"
-                                    />
-                                  </Box>
-                                  <Box>
-                                    <FormControlLabel
-                                      className={
-                                        this.props.classes.formControlLabel
-                                      }
-                                      control={
-                                        <Checkbox
-                                          checked={
-                                            this.props.detailList[removedID][
-                                              "showNegative"
-                                            ]
-                                          }
-                                          onChange={() => {
-                                            this.props.toggleGraphDisplayPNOption(
-                                              removedID,
-                                              "negative"
-                                            );
-                                          }}
-                                          value="show negative"
-                                          color="secondary"
-                                        />
-                                      }
-                                      label="negative influence"
-                                    />
-                                  </Box>
-                                  <Box style={{ paddingTop: 8 }}>
-                                    <Typography
-                                      variant={"body1"}
-                                      color={"textSecondary"}
-                                    >
-                                      Influence Distance
-                                    </Typography>
-                                  </Box>
-                                  <Box
-                                    style={{ paddingTop: 5, paddingLeft: 9 }}
-                                  >
-                                    <Slider
-                                      className={this.props.classes.slider}
-                                      min={0}
-                                      max={5}
-                                      step={1}
-                                      value={[
-                                        this.props.detailList[removedID][
-                                          "levelLowerBound"
-                                        ],
-                                        this.props.detailList[removedID][
-                                          "levelUpperBound"
-                                        ],
-                                      ]}
-                                      onChange={(event, value) => {
-                                        console.log(value);
-                                        this.props.updateLevelBound(
-                                          value,
-                                          removedID
-                                        );
-                                      }}
-                                      valueLabelDisplay="auto"
-                                      aria-labelledby="range-slider"
-                                      getAriaValueText={(value) => {
-                                        return `level ${value}`;
-                                      }}
-                                    />
-                                  </Box>
-                                </Paper>
-                              </Box>
-                            </Box>
-                          </Paper>
-                        </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item md={5}>
-                      <Paper
-                        className={this.props.classes.rightView}
-                        elevation={0}
-                      >
-                        <DetailTable
-                          perturbation={
-                            this.props.detailList[removedID]["removedResults"][
-                              "remove_res"
-                            ]
-                          }
-                        />
-                      </Paper>
                     </Grid>
                   </Grid>
                 </Grid>
