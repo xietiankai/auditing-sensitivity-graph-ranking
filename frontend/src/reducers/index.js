@@ -39,6 +39,7 @@ const initialState = {
     labels: {},
     labelNames: [],
     updateK: 0,
+    currentK: 12,
     isLoading: true,
     loadingText: "Loading..."
 };

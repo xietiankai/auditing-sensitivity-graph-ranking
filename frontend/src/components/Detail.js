@@ -6,12 +6,14 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import Input from "@material-ui/core/Input";
 import {
   addProtectedNode,
   toggleGraphDisplayPNOption,
   toggleGraphMenu,
   updateActivatedTabIndex,
   updateLevelBound,
+  updateK,
 } from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
 import BoxPlotComponent from "./BoxPlotComponent";
@@ -69,12 +71,19 @@ const styles = (theme) => ({
     width: 580,
     paddingLeft: theme.spacing(2),
   },
-  // appBar: {
-  //   zIndex: 100,
-  // },
-  slider: {
+  topKSliderContainer: {
+    width: 200,
+    paddingRight: theme.spacing(1),
+  },
+  graphViewSlider: {
     width: 135,
   },
+  topKViewSlider: {
+    width: 100,
+  },
+  TopKTypo:{
+    marginTop: 5
+  }
 });
 
 const mapStateToProps = (state) => {
@@ -84,6 +93,7 @@ const mapStateToProps = (state) => {
     labels: state.labels,
     nodes: state.nodes,
     labelNames: state.labelNames,
+    currentK: state.currentK,
   };
 };
 
@@ -101,6 +111,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(updateLevelBound(removedID, value)),
     addProtectedNode: (nodeIDsArray) =>
       dispatch(addProtectedNode(nodeIDsArray)),
+    updateK: (value) => dispatch(updateK(Number(value))),
   };
 };
 
@@ -131,6 +142,7 @@ function TabPanel(props) {
 
 class Detail extends React.Component {
   render() {
+    console.log(Object.keys(this.props.nodes).length);
     let tabComponents = <Tab disabled label="Null" {...a11yProps(0)} />;
     let tabPanelComponents = (
       <TabPanel value={this.props.activatedTab} index={0}>
@@ -279,7 +291,7 @@ class Detail extends React.Component {
                 </Grid>
                 <Grid item md={12}>
                   <Grid container>
-                    <Grid item md={7}>
+                    <Grid item md={8}>
                       <Paper
                         className={this.props.classes.leftView}
                         elevation={0}
@@ -389,7 +401,7 @@ class Detail extends React.Component {
                               </Box>
                               <Box style={{ paddingTop: 5, paddingLeft: 9 }}>
                                 <Slider
-                                  className={this.props.classes.slider}
+                                  className={this.props.classes.graphViewSlider}
                                   min={0}
                                   max={5}
                                   step={1}
@@ -420,7 +432,7 @@ class Detail extends React.Component {
                         </Box>
                       </Paper>
                     </Grid>
-                    <Grid item md={5}>
+                    <Grid item md={4}>
                       <Grid container>
                         <Grid md={12}>
                           <Paper
@@ -436,40 +448,58 @@ class Detail extends React.Component {
                                   Top-k Distribution
                                 </Typography>
                               </Box>
-                              <Box className={classes.root}>
-                                <Typography id="input-slider" gutterBottom>
-                                  Volume
-                                </Typography>
-                                <Grid container spacing={2} alignItems="center">
-                                  <Grid item>
-                                    <VolumeUp />
-                                  </Grid>
-                                  <Grid item xs>
-                                    <Slider
-                                      value={
-                                        typeof value === "number" ? value : 0
-                                      }
-                                      onChange={handleSliderChange}
-                                      aria-labelledby="input-slider"
-                                    />
-                                  </Grid>
-                                  <Grid item>
-                                    <Input
-                                      className={classes.input}
-                                      value={value}
-                                      margin="dense"
-                                      onChange={handleInputChange}
-                                      onBlur={handleBlur}
-                                      inputProps={{
-                                        step: 10,
-                                        min: 0,
-                                        max: 100,
-                                        type: "number",
-                                        "aria-labelledby": "input-slider",
-                                      }}
-                                    />
-                                  </Grid>
-                                </Grid>
+                              <Box
+                                className={
+                                  this.props.classes.topKSliderContainer
+                                }
+                                display={"flex"}
+                                justifyContent="space-around"
+                              >
+                                <Box className={this.props.classes.TopKTypo}>
+                                  <Typography id="input-slider">K</Typography>
+                                </Box>
+                                <Box
+                                  className={this.props.classes.topKViewSlider}
+                                >
+                                  <Slider
+                                    min={0}
+                                    max={Object.keys(this.props.nodes).length}
+                                    step={1}
+                                    value={
+                                      typeof this.props.currentK === "number"
+                                        ? this.props.currentK
+                                        : 0
+                                    }
+                                    onChange={(event, value) => {
+                                      this.props.updateK(value);
+                                    }}
+                                    aria-labelledby="input-slider"
+                                  />
+                                </Box>
+                                <Box>
+                                  <Input
+                                    className={this.props.classes.input}
+                                    value={
+                                      typeof this.props.currentK === "number"
+                                        ? this.props.currentK
+                                        : 0
+                                    }
+                                    margin="dense"
+                                    onChange={(event) => {
+                                      this.props.updateK(event.target.value);
+                                    }}
+                                    onBlur={() => {
+                                      console.log("handle blur");
+                                    }}
+                                    inputProps={{
+                                      step: 10,
+                                      min: 0,
+                                      max: Object.keys(this.props.nodes).length,
+                                      type: "number",
+                                      "aria-labelledby": "input-slider",
+                                    }}
+                                  />
+                                </Box>
                               </Box>
                             </Box>
                             <TopKDistributionView removedID={removedID} />

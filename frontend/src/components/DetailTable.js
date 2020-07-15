@@ -37,20 +37,20 @@ class DetailTable extends React.Component {
         title: "Node Name",
         field: "node_id",
         cellStyle: {
-          maxWidth: 200,
+          maxWidth: 165,
         },
         headerStyle: {
-          maxWidth: 200,
+          maxWidth: 165,
         },
       },
       {
-        title: "O.Ranking",
+        title: "O.Rank",
         field: "rank",
         cellStyle: {
-          maxWidth: 80,
+          maxWidth: 60,
         },
         headerStyle: {
-          maxWidth: 80,
+          maxWidth: 60,
         },
         render: (rowData) => this.props.nodes[rowData["node_id"]]["rank"],
         customSort: (a, b) =>
@@ -58,23 +58,23 @@ class DetailTable extends React.Component {
           this.props.nodes[b["node_id"]]["rank"],
       },
       {
-        title: "P.Ranking",
+        title: "C.Rank",
         field: "rank",
         cellStyle: {
-          maxWidth: 80,
+          maxWidth: 60,
         },
         headerStyle: {
-          maxWidth: 80,
+          maxWidth: 60,
         },
       },
       {
         title: "Diff",
         field: "rank_change",
         cellStyle: {
-          maxWidth: 80,
+          maxWidth: 60,
         },
         headerStyle: {
-          maxWidth: 80,
+          maxWidth: 60,
         },
         render: (rowData) => {
           if (rowData.rank_change > 0) {
