@@ -324,7 +324,7 @@ class Detail extends React.Component {
                                 ]
                               }
                               canvasHeight={665}
-                              canvasWidth={690}
+                              canvasWidth={810}
                               labels={this.props.labels}
                               labelNames={this.props.labelNames}
                               removedID={removedID}

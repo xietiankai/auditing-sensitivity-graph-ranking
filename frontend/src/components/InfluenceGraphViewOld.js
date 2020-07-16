@@ -174,23 +174,19 @@ export default class InfluenceGraphView extends React.Component {
           })
           .distance((d) => {
             if (d.target.level === "inf") {
-              return 550;
+              return 500;
             }
             //return d.target.level * 10;
             // return Math.exp(d.target.level) *5
-            return 150;
+            return 100;
           })
       )
-      .force("many", d3.forceManyBody().strength(-3))
-      .force(
-        "r",
-        d3.forceRadial(function(d) {
-          if (d.level === "inf") return 500;
-          else return d.level * 100;
-        })
-      )
-      .force("charge", d3.forceCollide().radius(6))
-      .force("center", d3.forceCenter(canvasWidth / 2, canvasHeight / 2));
+      // .force("charge", d3.forceManyBody().strength(-2))
+      .force("center", d3.forceCenter(canvasWidth / 2, canvasHeight / 2))
+      .force("collision", (d) => {
+        console.log(d);
+        return d3.forceCollide(20);
+      });
 
     const svg = baseGroup;
 
@@ -352,7 +348,7 @@ export default class InfluenceGraphView extends React.Component {
       })
       .attr("r", (d) => {
         if (d.level === 0) {
-          return 15;
+          return 20;
         } else {
           return nodeScale(Math.abs(d.rank_change));
         }
@@ -381,12 +377,12 @@ export default class InfluenceGraphView extends React.Component {
       .on("contextmenu", this.contextMenu(circleMenu));
 
     simulation.on("tick", () => {
-    //   link
-    //     .attr("x1", (d) => d.source.x)
-    //     .attr("y1", (d) => d.source.y)
-
-    //     .attr("x2", (d) => d.target.x)
-    //     .attr("y2", (d) => d.target.y);
+      // link
+      //   .attr("x1", d => d.source.x)
+      //   .attr("y1", d => d.source.y)
+      //
+      //   .attr("x2", d => d.target.x)
+      //   .attr("y2", d => d.target.y);
 
       link.attr("d", positionLink);
 
@@ -400,7 +396,7 @@ export default class InfluenceGraphView extends React.Component {
     // links are drawn as curved paths between nodes,
     // through the intermediate nodes
     function positionLink(d) {
-      let offset = -15;
+      let offset = 30;
 
       let midpoint_x = (d.source.x + d.target.x) / 2;
       let midpoint_y = (d.source.y + d.target.y) / 2;
@@ -545,6 +541,40 @@ export default class InfluenceGraphView extends React.Component {
 
     const baseGroup = d3.select("#impact-graph-chart-base-" + removedID);
     this.renderSvg(baseGroup, this.props);
+    /*****
+     * Drawing Grids
+     */
+    // const svg = d3.select("#impact-graph-chart-" + removedID);
+    // const x = d3
+    //   .scaleLinear()
+    //   .domain([-1, 1])
+    //   .range([-1, canvasWidth]);
+    // const y = d3
+    //   .scaleLinear()
+    //   .domain([-1, 1])
+    //   .range([canvasHeight, 0]);
+    //
+    // const xAxisGrid = d3
+    //   .axisBottom(x)
+    //   .tickSize(-canvasHeight)
+    //   .tickFormat("")
+    //   .ticks(100);
+    // const yAxisGrid = d3
+    //   .axisLeft(y)
+    //   .tickSize(-canvasWidth)
+    //   .tickFormat("")
+    //   .ticks(100);
+    // // Create grids.
+    // svg
+    //   .append("g")
+    //   .attr("class", "x axis-grid")
+    //   .attr("transform", "translate(-3," + canvasHeight + ")")
+    //   .call(xAxisGrid);
+    // svg
+    //   .append("g")
+    //   .attr("class", "y axis-grid")
+    //   .attr("transform", "translate(-5,0)")
+    //   .call(yAxisGrid);
     baseGroup.raise();
   }
 
