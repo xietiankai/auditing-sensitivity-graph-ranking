@@ -81,9 +81,9 @@ const styles = (theme) => ({
   topKViewSlider: {
     width: 100,
   },
-  TopKTypo:{
-    marginTop: 5
-  }
+  TopKTypo: {
+    marginTop: 5,
+  },
 });
 
 const mapStateToProps = (state) => {
@@ -261,6 +261,15 @@ class Detail extends React.Component {
                         this.props.detailList[removedID]["removedResults"][
                           "remove_res"
                         ]
+                      }
+                      perturbation={
+                        this.props.detailList[removedID]["removedResults"]["influence_graph_nodes"]
+                      }
+                      levelLowerBound={
+                        this.props.detailList[removedID].levelLowerBound
+                      }
+                      levelUpperBound={
+                        this.props.detailList[removedID].levelUpperBound
                       }
                       originalRanking={this.props.nodes}
                       labels={this.props.labels}

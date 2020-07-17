@@ -16,10 +16,27 @@ export default class RankingChangeOverview extends React.Component {
       originalRanking,
       labels,
       labelNames,
+      levelLowerBound,
+      levelUpperBound,
+      perturbation,
     } = props;
 
-    const processedData = removeRes.map((item) => {
+    console.log(perturbation);
+
+    const nodeSet = new Set();
+    perturbation.forEach((element) => {
+      if (
+        element.level >= levelLowerBound &&
+        element.level <= levelUpperBound
+      ) {
+        nodeSet.add(element.node_id);
+      }
+    });
+
+    let processedData = removeRes.map((item) => {
+      console.log(item);
       return {
+        id: item.node_id,
         x: originalRanking[item.node_id].rank,
         y0: 0,
         y: item.rank_change,
@@ -27,6 +44,9 @@ export default class RankingChangeOverview extends React.Component {
       };
     });
     processedData.sort((a, b) => a.x - b.x);
+    console.log(processedData.length);
+    // processedData = processedData.filter((d) => nodeSet.has(d.id));
+    // console.log(processedData.length);
 
     const margin = {
       top: 8,
@@ -95,6 +115,7 @@ export default class RankingChangeOverview extends React.Component {
       .append("rect")
       .attr("class", "bar")
       .attr("fill", (d) => clusteringColors[d.cat])
+      .attr("display", (d) => (nodeSet.has(d.id) ? "block" : "none"))
       .attr("x", function(d) {
         return x(d.x);
       })
@@ -118,6 +139,7 @@ export default class RankingChangeOverview extends React.Component {
      * Legend
      */
     let legend = d3.select("#rcdv-legend");
+    legend.selectAll("g").remove();
     let legendModule = legend
       .selectAll(".legend-group")
       .data(labelNames)
@@ -143,6 +165,10 @@ export default class RankingChangeOverview extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
     return false;
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.updateCanvas(nextProps);
   }
 
   /**

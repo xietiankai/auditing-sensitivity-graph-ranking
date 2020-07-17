@@ -381,12 +381,12 @@ export default class InfluenceGraphView extends React.Component {
       .on("contextmenu", this.contextMenu(circleMenu));
 
     simulation.on("tick", () => {
-    //   link
-    //     .attr("x1", (d) => d.source.x)
-    //     .attr("y1", (d) => d.source.y)
+      //   link
+      //     .attr("x1", (d) => d.source.x)
+      //     .attr("y1", (d) => d.source.y)
 
-    //     .attr("x2", (d) => d.target.x)
-    //     .attr("y2", (d) => d.target.y);
+      //     .attr("x2", (d) => d.target.x)
+      //     .attr("y2", (d) => d.target.y);
 
       link.attr("d", positionLink);
 
@@ -400,7 +400,9 @@ export default class InfluenceGraphView extends React.Component {
     // links are drawn as curved paths between nodes,
     // through the intermediate nodes
     function positionLink(d) {
-      let offset = -15;
+      let offset = 15;
+      offset = d.level === "inf" ? offset + 15 : offset;
+      offset = d.influence > 0 ? -offset : offset;
 
       let midpoint_x = (d.source.x + d.target.x) / 2;
       let midpoint_y = (d.source.y + d.target.y) / 2;
