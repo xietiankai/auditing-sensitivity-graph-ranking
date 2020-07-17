@@ -20,33 +20,37 @@ export default class RankingChangeOverview extends React.Component {
       levelUpperBound,
       perturbation,
     } = props;
-
+    console.log("perturbation");
     console.log(perturbation);
 
-    const nodeSet = new Set();
+    let nodeSet = {};
     perturbation.forEach((element) => {
-      if (
-        element.level >= levelLowerBound &&
-        element.level <= levelUpperBound
-      ) {
-        nodeSet.add(element.node_id);
-      }
+      nodeSet[element.node_id] = element.level;
+      // if (
+      //   element.level >= levelLowerBound &&
+      //   element.level <= levelUpperBound
+      // ) {
+      //   nodeSet.add(element.node_id);
+      // }
     });
-
+    console.log("nodeSet");
+    console.log(nodeSet);
     let processedData = removeRes.map((item) => {
-      console.log(item);
+      // console.log(item);
       return {
         id: item.node_id,
         x: originalRanking[item.node_id].rank,
         y0: 0,
         y: item.rank_change,
+        level: nodeSet[item.node_id],
         cat: labels[Object.keys(labels)[0]][item.node_id]["value"],
       };
     });
     processedData.sort((a, b) => a.x - b.x);
-    console.log(processedData.length);
-    // processedData = processedData.filter((d) => nodeSet.has(d.id));
     // console.log(processedData.length);
+    // processedData = processedData.filter((d) => nodeSet.has(d.id));
+    console.log("processedData");
+    console.log(processedData);
 
     const margin = {
       top: 8,
@@ -113,9 +117,17 @@ export default class RankingChangeOverview extends React.Component {
       .data(processedData)
       .enter()
       .append("rect")
-      .attr("class", "bar")
+      .attr("class", (d) => {
+        let classString = "";
+        if (d.y > 0) {
+          classString += "negative bar level-" + d.level;
+        } else {
+          classString += "positive bar level-" + d.level;
+        }
+        return classString;
+      })
       .attr("fill", (d) => clusteringColors[d.cat])
-      .attr("display", (d) => (nodeSet.has(d.id) ? "block" : "none"))
+      // .attr("display", (d) => (nodeSet.has(d.id) ? "block" : "none"))
       .attr("x", function(d) {
         return x(d.x);
       })
@@ -167,9 +179,11 @@ export default class RankingChangeOverview extends React.Component {
     return false;
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.updateCanvas(nextProps);
-  }
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //   console.log("UPDATING RANKING CHANGE OVEVIEW!!!");
+  //   console.log(nextProps);
+  //   this.updateCanvas(nextProps);
+  // }
 
   /**
    * Entry point
