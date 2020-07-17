@@ -106,7 +106,7 @@ export function toggleGraphMenu(removedID, target) {
   return { type: TOGGLE_GRAPH_MENU_BUTTON, payload: newDetailList };
 }
 
-function updateGraphViewCanvas(removedID, direction, values) {
+export function updateGraphViewCanvas(removedID, direction, values) {
   const state = store.getState();
   const svgIDBase = "#impact-graph-chart-base-" + removedID;
   d3.select(svgIDBase)
@@ -117,10 +117,31 @@ function updateGraphViewCanvas(removedID, direction, values) {
     .selectAll(".positive, .negative")
     .attr("display", "block");
 
-  if (
-    (state.detailList[removedID]["showPositive"] && direction === "positive") ||
-    (!state.detailList[removedID]["showPositive"] && direction === "null")
-  ) {
+  //   if (
+  //     (state.detailList[removedID]["showPositive"] && direction === "positive") ||
+  //     (!state.detailList[removedID]["showPositive"] && direction === "null")
+  //   ) {
+  //     d3.select(svgIDBase)
+  //       .selectAll(".positive")
+  //       .attr("display", "none");
+
+  //     d3.select("#ranking-change-overview-chart-base")
+  //       .selectAll(".positive")
+  //       .attr("display", "none");
+  //   }
+  //   if (
+  //     (state.detailList[removedID]["showNegative"] && direction === "negative") ||
+  //     (!state.detailList[removedID]["showNegative"] && direction === "null")
+  //   ) {
+  //     d3.select(svgIDBase)
+  //       .selectAll(".negative")
+  //       .attr("display", "none");
+
+  //     d3.select("#ranking-change-overview-chart-base")
+  //       .selectAll(".negative")
+  //       .attr("display", "none");
+  //   }
+  if (!state.detailList[removedID]["showPositive"]) {
     d3.select(svgIDBase)
       .selectAll(".positive")
       .attr("display", "none");
@@ -129,10 +150,7 @@ function updateGraphViewCanvas(removedID, direction, values) {
       .selectAll(".positive")
       .attr("display", "none");
   }
-  if (
-    (state.detailList[removedID]["showNegative"] && direction === "negative") ||
-    (!state.detailList[removedID]["showNegative"] && direction === "null")
-  ) {
+  if (!state.detailList[removedID]["showNegative"]) {
     d3.select(svgIDBase)
       .selectAll(".negative")
       .attr("display", "none");
@@ -159,10 +177,10 @@ export function toggleGraphDisplayPNOption(removedID, direction) {
   const state = store.getState();
   let detail = {};
 
-  updateGraphViewCanvas(removedID, direction, [
-    state.detailList[removedID]["levelLowerBound"],
-    state.detailList[removedID]["levelUpperBound"],
-  ]);
+//   updateGraphViewCanvas(removedID, direction, [
+//     state.detailList[removedID]["levelLowerBound"],
+//     state.detailList[removedID]["levelUpperBound"],
+//   ]);
 
   if (direction === "positive") {
     detail[removedID] = Object.assign({}, state.detailList[removedID], {

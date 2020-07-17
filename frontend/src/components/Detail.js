@@ -12,6 +12,7 @@ import {
   toggleGraphDisplayPNOption,
   toggleGraphMenu,
   updateActivatedTabIndex,
+  updateGraphViewCanvas,
   updateLevelBound,
   updateK,
 } from "../actions";
@@ -367,6 +368,10 @@ class Detail extends React.Component {
                                           removedID,
                                           "positive"
                                         );
+                                        updateGraphViewCanvas(removedID, "positive", [
+                                          this.props.detailList[removedID]["levelLowerBound"],
+                                          this.props.detailList[removedID]["levelUpperBound"],
+                                        ]);
                                       }}
                                       value="show positive"
                                       color="secondary"
@@ -392,6 +397,10 @@ class Detail extends React.Component {
                                           removedID,
                                           "negative"
                                         );
+                                        updateGraphViewCanvas(removedID, "negative", [
+                                          this.props.detailList[removedID]["levelLowerBound"],
+                                          this.props.detailList[removedID]["levelUpperBound"],
+                                        ]);
                                       }}
                                       value="show negative"
                                       color="secondary"
