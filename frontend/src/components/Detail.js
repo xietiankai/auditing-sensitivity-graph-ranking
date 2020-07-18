@@ -264,7 +264,9 @@ class Detail extends React.Component {
                         ]
                       }
                       perturbation={
-                        this.props.detailList[removedID]["removedResults"]["influence_graph_nodes"]
+                        this.props.detailList[removedID]["removedResults"][
+                          "influence_graph_nodes"
+                        ]
                       }
                       levelLowerBound={
                         this.props.detailList[removedID].levelLowerBound
@@ -344,8 +346,8 @@ class Detail extends React.Component {
                           <Box
                             position="absolute"
                             zIndex="tooltip"
-                            top="90%"
-                            right="2%"
+                            top="92%"
+                            right="15%"
                           >
                             <Paper
                               variant="outlined"
@@ -368,10 +370,18 @@ class Detail extends React.Component {
                                           removedID,
                                           "positive"
                                         );
-                                        updateGraphViewCanvas(removedID, "positive", [
-                                          this.props.detailList[removedID]["levelLowerBound"],
-                                          this.props.detailList[removedID]["levelUpperBound"],
-                                        ]);
+                                        updateGraphViewCanvas(
+                                          removedID,
+                                          "positive",
+                                          [
+                                            this.props.detailList[removedID][
+                                              "levelLowerBound"
+                                            ],
+                                            this.props.detailList[removedID][
+                                              "levelUpperBound"
+                                            ],
+                                          ]
+                                        );
                                       }}
                                       value="show positive"
                                       color="secondary"
@@ -397,10 +407,18 @@ class Detail extends React.Component {
                                           removedID,
                                           "negative"
                                         );
-                                        updateGraphViewCanvas(removedID, "negative", [
-                                          this.props.detailList[removedID]["levelLowerBound"],
-                                          this.props.detailList[removedID]["levelUpperBound"],
-                                        ]);
+                                        updateGraphViewCanvas(
+                                          removedID,
+                                          "negative",
+                                          [
+                                            this.props.detailList[removedID][
+                                              "levelLowerBound"
+                                            ],
+                                            this.props.detailList[removedID][
+                                              "levelUpperBound"
+                                            ],
+                                          ]
+                                        );
                                       }}
                                       value="show negative"
                                       color="secondary"
@@ -409,7 +427,7 @@ class Detail extends React.Component {
                                   label="negative influence"
                                 />
                               </Box>
-                              <Box style={{ paddingTop: 8 }}>
+                              <Box style={{ paddingTop: 10 }}>
                                 <Typography
                                   variant={"body1"}
                                   color={"textSecondary"}
@@ -421,7 +439,7 @@ class Detail extends React.Component {
                                 <Slider
                                   className={this.props.classes.graphViewSlider}
                                   min={0}
-                                  max={5}
+                                  max={10}
                                   step={1}
                                   value={[
                                     this.props.detailList[removedID][

@@ -39,7 +39,7 @@ const initialState = {
     labels: {},
     labelNames: [],
     updateK: 0,
-    currentK: 12,
+    currentK: 10,
     isLoading: true,
     loadingText: "Loading..."
 };
@@ -122,7 +122,7 @@ function rootReducer(state = initialState, action) {
             topKQueryList: [10],
             graphMenuOpen: null,
             levelLowerBound: 0,
-            levelUpperBound: 5,
+            levelUpperBound: 10,
             showPositive: true,
             showNegative: true
         };

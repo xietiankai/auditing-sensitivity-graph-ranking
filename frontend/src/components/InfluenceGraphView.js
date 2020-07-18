@@ -174,7 +174,7 @@ export default class InfluenceGraphView extends React.Component {
           })
           .distance((d) => {
             if (d.target.level === "inf") {
-              return 550;
+              return 600;
             }
             //return d.target.level * 10;
             // return Math.exp(d.target.level) *5
@@ -325,20 +325,34 @@ export default class InfluenceGraphView extends React.Component {
       })
       .attr("id", (d) => "node-" + d.node_id)
       .attr("fill", (d) => {
-        if (labels[Object.keys(labels)[0]][d.node_id]) {
-          return clusteringColors[
-            labels[Object.keys(labels)[0]][d.node_id]["value"]
-          ];
+        if (d.level === "inf") {
+          return "white";
         } else {
-          // console.log(d.node_id.split("_")[0]);
-          return clusteringColors[
-            labels[Object.keys(labels)[0]][d.node_id.split("##")[0]]["value"]
-          ];
+          if (labels[Object.keys(labels)[0]][d.node_id]) {
+            return clusteringColors[
+              labels[Object.keys(labels)[0]][d.node_id]["value"]
+            ];
+          } else {
+            // console.log(d.node_id.split("_")[0]);
+            return clusteringColors[
+              labels[Object.keys(labels)[0]][d.node_id.split("##")[0]]["value"]
+            ];
+          }
         }
       })
       .attr("stroke", (d) => {
         if (d.level === 0) {
           return "black";
+        } else if (d.level === "inf") {
+          if (labels[Object.keys(labels)[0]][d.node_id]) {
+            return clusteringColors[
+              labels[Object.keys(labels)[0]][d.node_id]["value"]
+            ];
+          } else {
+            return clusteringColors[
+              labels[Object.keys(labels)[0]][d.node_id.split("##")[0]]["value"]
+            ];
+          }
         } else {
           return circleStrokeColor;
         }
@@ -346,6 +360,8 @@ export default class InfluenceGraphView extends React.Component {
       .attr("stroke-width", (d) => {
         if (d.level === 0) {
           return 2;
+        } else if (d.level === "inf") {
+          return 3;
         } else {
           return 1;
         }
@@ -380,6 +396,13 @@ export default class InfluenceGraphView extends React.Component {
       })
       .on("contextmenu", this.contextMenu(circleMenu));
 
+    node
+      .append("text")
+      .text((d) => (d.level === 0 ? d.node_id : ""))
+      .attr("dy", "5em")
+      .attr("dx", "8em")
+      .attr("font-size", "1.2em");
+
     simulation.on("tick", () => {
       //   link
       //     .attr("x1", (d) => d.source.x)
@@ -400,9 +423,9 @@ export default class InfluenceGraphView extends React.Component {
     // links are drawn as curved paths between nodes,
     // through the intermediate nodes
     function positionLink(d) {
-      let offset = 15;
-      offset = d.level === "inf" ? offset + 15 : offset;
-      offset = d.influence > 0 ? -offset : offset;
+      let offset = 30;
+      offset = d.target.level === "inf" ? offset + 180 : -offset;
+      //   offset = d.influence > 0 ? -offset : offset;
 
       let midpoint_x = (d.source.x + d.target.x) / 2;
       let midpoint_y = (d.source.y + d.target.y) / 2;

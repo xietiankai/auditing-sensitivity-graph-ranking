@@ -119,10 +119,11 @@ export default class RankingChangeOverview extends React.Component {
       .append("rect")
       .attr("class", (d) => {
         let classString = "";
+        let level = d.level === "inf" ? 10: d.level;
         if (d.y > 0) {
-          classString += "negative bar level-" + d.level;
+          classString += "negative bar level-" + level;
         } else {
-          classString += "positive bar level-" + d.level;
+          classString += "positive bar level-" + level;
         }
         return classString;
       })

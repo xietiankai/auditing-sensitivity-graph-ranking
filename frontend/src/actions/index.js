@@ -117,30 +117,6 @@ export function updateGraphViewCanvas(removedID, direction, values) {
     .selectAll(".positive, .negative")
     .attr("display", "block");
 
-  //   if (
-  //     (state.detailList[removedID]["showPositive"] && direction === "positive") ||
-  //     (!state.detailList[removedID]["showPositive"] && direction === "null")
-  //   ) {
-  //     d3.select(svgIDBase)
-  //       .selectAll(".positive")
-  //       .attr("display", "none");
-
-  //     d3.select("#ranking-change-overview-chart-base")
-  //       .selectAll(".positive")
-  //       .attr("display", "none");
-  //   }
-  //   if (
-  //     (state.detailList[removedID]["showNegative"] && direction === "negative") ||
-  //     (!state.detailList[removedID]["showNegative"] && direction === "null")
-  //   ) {
-  //     d3.select(svgIDBase)
-  //       .selectAll(".negative")
-  //       .attr("display", "none");
-
-  //     d3.select("#ranking-change-overview-chart-base")
-  //       .selectAll(".negative")
-  //       .attr("display", "none");
-  //   }
   if (!state.detailList[removedID]["showPositive"]) {
     d3.select(svgIDBase)
       .selectAll(".positive")
@@ -160,7 +136,7 @@ export function updateGraphViewCanvas(removedID, direction, values) {
       .attr("display", "none");
   }
 
-  for (let i = 1; i < 11; i++) {
+  for (let i = 0; i < 11; i++) {
     if (i < values[0] || i > values[1]) {
       d3.select(svgIDBase)
         .selectAll(".level-" + i)
@@ -177,10 +153,10 @@ export function toggleGraphDisplayPNOption(removedID, direction) {
   const state = store.getState();
   let detail = {};
 
-//   updateGraphViewCanvas(removedID, direction, [
-//     state.detailList[removedID]["levelLowerBound"],
-//     state.detailList[removedID]["levelUpperBound"],
-//   ]);
+  //   updateGraphViewCanvas(removedID, direction, [
+  //     state.detailList[removedID]["levelLowerBound"],
+  //     state.detailList[removedID]["levelUpperBound"],
+  //   ]);
 
   if (direction === "positive") {
     detail[removedID] = Object.assign({}, state.detailList[removedID], {
