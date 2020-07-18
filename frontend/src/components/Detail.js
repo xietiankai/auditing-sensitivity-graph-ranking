@@ -85,6 +85,16 @@ const styles = (theme) => ({
   TopKTypo: {
     marginTop: 5,
   },
+  influenceHeader: {
+    display: "flex",
+    width: 290,
+    justifyContent: "space-evenly",
+    paddingRight: theme.spacing(1),
+    paddingTop: 4
+  },
+  influenceViewLabelContainer: {
+    paddingTop: theme.spacing(3),
+  },
 });
 
 const mapStateToProps = (state) => {
@@ -189,8 +199,51 @@ class Detail extends React.Component {
               <Grid container>
                 <Grid item md={5}>
                   <Paper className={this.props.classes.leftView} elevation={0}>
-                    <Box className={this.props.classes.cardHeader}>
-                      <Typography variant="h6">Influence Overview</Typography>
+                    <Box
+                      className={this.props.classes.cardHeader}
+                      display="flex"
+                    >
+                      <Box flexGrow={1}>
+                        <Typography variant="h6">Influence Overview</Typography>
+                      </Box>
+                      <Box className={this.props.classes.influenceHeader}>
+                        <Box>
+                          <Chip
+                            variant="outlined"
+                            size="small"
+                            key={
+                              this.props.detailList[removedID][
+                                "removedResults"
+                              ]["rank"]
+                            }
+                            label={
+                              "No. " +
+                              this.props.detailList[removedID][
+                                "removedResults"
+                              ]["rank"]
+                            }
+                          />
+                        </Box>
+                        <Box>
+                          <Chip
+                            size="small"
+                            variant="outlined"
+                            key={
+                              this.props.detailList[removedID][
+                                "removedResults"
+                              ]["label"]["label"]
+                            }
+                            label={
+                              this.props.detailList[removedID][
+                                "removedResults"
+                              ]["label"]["label"]
+                            }
+                          />
+                        </Box>
+                        <Box style={{ marginTop: 4 }}>
+                          <Typography variant={"body1"}>{removedID}</Typography>
+                        </Box>
+                      </Box>
                     </Box>
                     <Box className={this.props.classes.containerPadding}>
                       <Grid container>
@@ -202,41 +255,13 @@ class Detail extends React.Component {
                           />
                         </Grid>
                         <Grid item md={5}>
-                          <Typography variant={"body1"}>{removedID}</Typography>
-                          <Box display={"flex"}>
-                            <Box>
-                              <Chip
-                                size="small"
-                                key={
-                                  this.props.detailList[removedID][
-                                    "removedResults"
-                                  ]["rank"]
-                                }
-                                label={
-                                  "No. " +
-                                  this.props.detailList[removedID][
-                                    "removedResults"
-                                  ]["rank"]
-                                }
-                              />
-                            </Box>
-                            <Box>
-                              <Chip
-                                size="small"
-                                key={
-                                  this.props.detailList[removedID][
-                                    "removedResults"
-                                  ]["label"]["label"]
-                                }
-                                label={
-                                  this.props.detailList[removedID][
-                                    "removedResults"
-                                  ]["label"]["label"]
-                                }
-                              />
-                            </Box>
+                          <Box
+                            className={
+                              this.props.classes.influenceViewLabelContainer
+                            }
+                          >
+                            {influenceViewLabels}
                           </Box>
-                          {influenceViewLabels}
                         </Grid>
                       </Grid>
                     </Box>

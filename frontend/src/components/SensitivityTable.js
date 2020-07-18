@@ -10,6 +10,7 @@ import { lighten, Tooltip } from "@material-ui/core";
 import { vulnerabilityBarColor } from "../styles";
 import ControlPointOutlinedIcon from "@material-ui/icons/ControlPointOutlined";
 import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Box from "@material-ui/core/Box";
 import "./css/SensitivityTable.css";
 
@@ -243,7 +244,7 @@ class SensitivityTable extends React.Component {
             paging: false,
             // searchFieldAlignment: "left",
             searchFieldStyle: {
-              minWidth: 400,
+              minWidth: 370,
               maxHeight: 30,
               marginRight: 20,
             },
@@ -259,60 +260,21 @@ class SensitivityTable extends React.Component {
           }}
           actions={[
             {
-              icon: ControlPointOutlinedIcon,
+              icon: VerifiedUserOutlinedIcon,
               tooltip: "Add to protected nodes",
               onClick: (event, rowData) => {
-                // console.info("Add a node!!");
-                // console.info(rowData);
                 this.props.addProtectedNode(rowData["remove_id"]);
               },
             },
             {
-              icon: VerifiedUserOutlinedIcon,
+              icon: CloseRoundedIcon,
               tooltip: "Diagnose the perturbation",
               onClick: (event, rowData) => {
                 this.props.appendDetailList(rowData["remove_id"]);
-                //handleChangeIndex(1);
-                //this.handleSelectTarget(rowData["name"]);
               },
             },
           ]}
         />
-
-        {/*<Menu*/}
-        {/*  keepMounted*/}
-        {/*  open={this.state.mouseY !== null}*/}
-        {/*  onClose={() => {}}*/}
-        {/*  anchorReference="anchorPosition"*/}
-        {/*  anchorPosition={*/}
-        {/*    this.state.mouseY !== null && this.state.mouseX !== null*/}
-        {/*      ? { top: this.state.mouseY, left: this.state.mouseX }*/}
-        {/*      : undefined*/}
-        {/*  }*/}
-        {/*>*/}
-        {/*  <MenuItem*/}
-        {/*    onClick={() => {*/}
-        {/*      this.props.addProtectedNode(this.state.rowData["remove_id"]);*/}
-        {/*      this.setState({*/}
-        {/*        mouseX: null,*/}
-        {/*        mouseY: null*/}
-        {/*      });*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    Add constraints*/}
-        {/*  </MenuItem>*/}
-        {/*  <MenuItem*/}
-        {/*    onClick={() => {*/}
-        {/*      this.props.appendDetailList(this.state.rowData);*/}
-        {/*      this.setState({*/}
-        {/*        mouseX: null,*/}
-        {/*        mouseY: null*/}
-        {/*      });*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    Explore the Perturbation Detail*/}
-        {/*  </MenuItem>*/}
-        {/*</Menu>*/}
       </Box>
     );
   }

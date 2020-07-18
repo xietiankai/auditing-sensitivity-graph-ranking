@@ -60,7 +60,7 @@ const styles = theme => ({
         // border: "1px solid #e0e0e0"
     },
     updateConstraintsButton: {
-        marginTop: theme.spacing(1),
+        marginTop: theme.spacing(2.5),
         width: "100%"
     },
     rulesContent: {
