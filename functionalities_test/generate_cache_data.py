@@ -11,9 +11,11 @@ import json
 
 
 def generate_cache_data(data_name, algorithm_name):
+    print(f'Preprocessing the data {data_name} - {algorithm_name}...')
+    print("graph data loading... [0/6]")
     graph_object, label_dict_set, labels = load_data_from_text(
         data_name=data_name)
-    print("Graph loaded")
+    print("done.")
     print("The node size " + str(len(graph_object.nodes)))
     print("The edge size " + str(len(graph_object.edges)))
     meta_data = MetaData(graph_object=graph_object,
@@ -25,6 +27,7 @@ def generate_cache_data(data_name, algorithm_name):
     # overview data file format
     ###################################################################
     overview_data = []
+    print("data caching... [6/6]")
     for perturbation in meta_data.perturbations:
         overview_data_item = {
             "remove_id": perturbation["remove_id"],
@@ -50,7 +53,7 @@ def generate_cache_data(data_name, algorithm_name):
                    "vulnerabilityList": meta_data.vulnerabilityList,
                    "perturbationSummary": meta_data.perturbationSummary}, jf, cls=MetaDataEncoder)
 
-    print("overview data cached")
+    print("data cached.")
 
     # with open(
     #         "../cached_data/" + data_name + "_" + algorithm_name + "_filthre_30.json",
@@ -60,4 +63,4 @@ def generate_cache_data(data_name, algorithm_name):
 
 
 if __name__ == "__main__":
-    generate_cache_data(data_name="facebook", algorithm_name="pagerank")
+    generate_cache_data(data_name="reddit", algorithm_name="pagerank")

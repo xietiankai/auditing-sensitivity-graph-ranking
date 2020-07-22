@@ -153,7 +153,7 @@ function TabPanel(props) {
 
 class Detail extends React.Component {
   render() {
-    console.log(Object.keys(this.props.nodes).length);
+    // console.log(Object.keys(this.props.nodes).length);
     let tabComponents = <Tab disabled label="Null" {...a11yProps(0)} />;
     let tabPanelComponents = (
       <TabPanel value={this.props.activatedTab} index={0}>
@@ -164,7 +164,7 @@ class Detail extends React.Component {
         </Box>
       </TabPanel>
     );
-    console.log(this.props.detailList);
+    // console.log(this.props.detailList);
     if (Object.keys(this.props.detailList).length !== 0) {
       tabComponents = Object.keys(this.props.detailList).map((item, i) => (
         <Tab label={item} {...a11yProps(i)} />
@@ -279,7 +279,7 @@ class Detail extends React.Component {
                         </Typography>
                       </Box>
                       <Box>
-                        <svg id={"rcdv-legend"} height={"20"}></svg>
+                        <svg id={"rcdv-legend"} height={"20"} width={"380"}></svg>
                       </Box>
                     </Box>
                     <RankingChangeOverview
@@ -343,7 +343,7 @@ class Detail extends React.Component {
                             </Typography>
                           </Box>
                           <Box>
-                            <svg id={"graph-legend"} height={"20"}></svg>
+                            <svg id={"graph-legend"} height={"20"} width={"380"}></svg>
                           </Box>
                         </Box>
                         <Box
@@ -475,7 +475,7 @@ class Detail extends React.Component {
                                     ],
                                   ]}
                                   onChange={(event, value) => {
-                                    console.log(value);
+                                    // console.log(value);
                                     this.props.updateLevelBound(
                                       value,
                                       removedID
@@ -495,7 +495,7 @@ class Detail extends React.Component {
                     </Grid>
                     <Grid item md={4}>
                       <Grid container>
-                        <Grid md={12}>
+                        <Grid item md={12}>
                           <Paper
                             className={this.props.classes.rightView}
                             elevation={0}
@@ -566,7 +566,7 @@ class Detail extends React.Component {
                             <TopKDistributionView removedID={removedID} />
                           </Paper>
                         </Grid>
-                        <Grid md={12}>
+                        <Grid item md={12}>
                           <Paper
                             className={this.props.classes.rightView}
                             elevation={0}

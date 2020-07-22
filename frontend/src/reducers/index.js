@@ -20,8 +20,8 @@ import {
 } from "../constants/actionTypes";
 
 const initialState = {
-    dataName: "polblogs",
-    algorithmName: "hits",
+    dataName: "facebook",
+    algorithmName: "pagerank",
     perturbations: [],
     filteredPerturbations: [],
     nodes: {},
@@ -127,7 +127,7 @@ function rootReducer(state = initialState, action) {
             showNegative: true
         };
         let newDetailList = Object.assign({}, state.detailList, detail);
-        console.log(newDetailList);
+        // console.log(newDetailList);
         return Object.assign({}, state, {
             detailList: newDetailList
         });

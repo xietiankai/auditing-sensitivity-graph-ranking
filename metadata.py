@@ -37,24 +37,24 @@ class MetaData:
             algorithm_name (string): ranking algorithm names "pagerank" | "hits"
             labels (array): a list of label names
         """
-        print("meta data init...")
-        print("ranking data formation...")
+        # print("meta data init...")
+        print("ranking data formation... [1/6]")
         self.nodes, self.edges = ranking_data_formation(graph=graph_object,
                                                         algorithm=algorithm_name)
         print("done.")
-        print("perturbation preview...")
+        print("perturbation preview... [2/6]")
         perturbations = perturbation_preview(graph=graph_object.copy(),
                                              original_node_info=self.nodes,
                                              label_dict_set=label_dict_set,
                                              algorithm=algorithm_name)
         print("done.")
-        print("perturbation enumerartion statistics")
+        print("perturbation enumerartion statistics... [3/6]")
         self.perturbations = perturbation_enumeration_statistics(perturbations)
         print("done.")
-        print("inverse mapping")
+        print("inverse mapping... [4/6]")
         self.vulnerabilityList = inverse_mapping(perturbations)
         print("done.")
-        print("summarize perturbation effect")
+        print("summarize perturbation effect... [5/6]")
         self.perturbationSummary = summarize_perturbation_effect(perturbations)
         print("done.")
         self.labels = label_dict_set

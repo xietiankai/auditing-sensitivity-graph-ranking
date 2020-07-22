@@ -145,7 +145,7 @@ export function updateGraphViewCanvas(removedID, direction, values) {
         .selectAll(".level-" + i)
         .attr("display", "none");
     }
-    console.log("finished!");
+    // console.log("finished!");
   }
 }
 

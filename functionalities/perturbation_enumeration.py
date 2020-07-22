@@ -24,22 +24,22 @@ def get_statistical_data(graph_data, res_list, node_id):
     positive_list.sort(key=sort_by_rank_change, reverse=True)
     negative_list.sort(key=sort_by_rank_change, reverse=True)
     res = [
-        {"axis": "Degree", "value": graph_data.degree(node_id)},
         {"axis": "Influenced",
          "value": len(negative_list) + len(positive_list)},
+        {"axis": "Increased #", "value": len(positive_list)},
         {"axis": "Max R. Incr.",
          "value": 0 if len(positive_list) == 0 else -positive_list[0][
-             "rank_change"]},
-        {"axis": "Max R. Decr.",
-         "value": 0 if len(negative_list) == 0 else negative_list[0][
              "rank_change"]},
         {"axis": "Median Incr.",
          "value": 0 if len(positive_list) == 0 else
          -positive_list[math.floor(len(positive_list) / 2)]["rank_change"]},
+        {"axis": "Degree", "value": graph_data.degree(node_id)},
         {"axis": "Median Decr.",
          "value": 0 if len(negative_list) == 0 else
          negative_list[math.floor(len(negative_list) / 2)]["rank_change"]},
-        {"axis": "Increased #", "value": len(positive_list)},
+        {"axis": "Max R. Decr.",
+         "value": 0 if len(negative_list) == 0 else negative_list[0][
+             "rank_change"]},
         {"axis": "Decreased #", "value": len(negative_list)},
 
     ]

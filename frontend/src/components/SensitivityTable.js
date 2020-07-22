@@ -197,7 +197,15 @@ class SensitivityTable extends React.Component {
                       Object.keys(
                         this.props.filteredPerturbations[0]["label_influence"]
                       )[i - 1]
-                    ]
+                    ] === undefined
+                      ? "Null"
+                      : rowData["label_influence"][
+                          Object.keys(
+                            this.props.filteredPerturbations[0][
+                              "label_influence"
+                            ]
+                          )[i - 1]
+                        ]
                   }
                 >
                   <BorderLinearProgress

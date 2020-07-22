@@ -174,7 +174,7 @@ export default class InfluenceGraphView extends React.Component {
           })
           .distance((d) => {
             if (d.target.level === "inf") {
-              return 600;
+              return 800;
             }
             //return d.target.level * 10;
             // return Math.exp(d.target.level) *5
@@ -185,7 +185,7 @@ export default class InfluenceGraphView extends React.Component {
       .force(
         "r",
         d3.forceRadial(function(d) {
-          if (d.level === "inf") return 500;
+          if (d.level === "inf") return 800;
           else return d.level * 100;
         })
       )
