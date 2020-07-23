@@ -2,7 +2,7 @@ This repository is currently under construction
 
 ## Auditing the Sensitivity of Graph-based Ranking with Visual Analytics
 
-![Teaser] (https://github.com/xietiankai/auditing-sensitivity-graph-ranking/blob/master/teaser.png)
+![Teaser] (images/teaser.png)
 
 A visual analytics framework for explaining and exploring the sensitivity of any graph-based ranking algorithms by performing perturbation-based what-if analysis.
 
