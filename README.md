@@ -73,7 +73,7 @@ Finally, start up the frontend server under frontend folder:
 ```
 $ npm start
 ```
-Visit localhost:3000 in your browser. For the best result, please use Chrome.
+Visit localhost:3000 in your browser. For the best result, please use Chrome full-screen mode with 1920 x1080 resolution screen.
 
 ### License
 
