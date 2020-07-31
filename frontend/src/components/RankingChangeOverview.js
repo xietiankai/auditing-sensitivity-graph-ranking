@@ -20,12 +20,6 @@ export default class RankingChangeOverview extends React.Component {
     let nodeSet = {};
     perturbation.forEach(element => {
       nodeSet[element.node_id] = element.level;
-      // if (
-      //   element.level >= levelLowerBound &&
-      //   element.level <= levelUpperBound
-      // ) {
-      //   nodeSet.add(element.node_id);
-      // }
     });
     console.log("nodeSet");
     console.log(nodeSet);
