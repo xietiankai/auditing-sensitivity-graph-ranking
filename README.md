@@ -10,12 +10,12 @@ There are mainly two ways of installing and running the framework:
 - Manual Installation
 
 #### Installing with docker
-The easiest way to install and run is using docker and docker-compose. Before running, make sure your docker and docker compose is installed and the docker service is on. Please refer to Docker documentation for details.
+The easiest way to install and run is using [docker](https://docs.docker.com/engine/install/ubuntu/) and [docker-compose](https://docs.docker.com/compose/install/). Before running, make sure your docker and docker compose is installed and the docker service is on. Please refer to Docker documentation for details.
 
 Once they are installed, simply running the following command under the root of the project:
 
 ```
-$ docker-compose up
+$ sudo docker-compose up
 ```
 
 For the first-time setup, this should take around 5 minutes.

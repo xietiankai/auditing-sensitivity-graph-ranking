@@ -1,37 +1,35 @@
-import {blueGrey, grey, orange} from "@material-ui/core/colors";
+import { blueGrey, grey, orange } from "@material-ui/core/colors";
 
 // export const themeColor = {
 //   primaryColor: "#344955",
 //   secondaryColor: "#ffa600"
 // };
 
-
 export const loadDashboardStyles = {
-    root: {
-        display: "flex"
-    },
-    content: {
-        flexGrow: 1,
-        height: "100vh",
-        overflow: "auto"
-    }
+  root: {
+    display: "flex"
+  },
+  content: {
+    flexGrow: 1,
+    height: "100vh",
+    overflow: "auto"
+  }
 };
 
 // export const greenAndRed = ["#66c2a5", "#f46d43"];
 
 // export const greenAndRed = ["#8dd3c7", "#fb8072"];
 
-
 export const contextMenuColor = grey[700];
 
 export const influenceFromGreenToRed = [
-    "#66c2a5",
-    "#abdda4",
-    "#e6f598",
-    "#ffffff",
-    "#fee08b",
-    "#fdae61",
-    "#f46d43"
+  "#66c2a5",
+  "#abdda4",
+  "#e6f598",
+  "#ffffff",
+  "#fee08b",
+  "#fdae61",
+  "#f46d43"
 ];
 
 export const infoColor = "#ffa000";
@@ -57,7 +55,6 @@ export const leftPanelBackgroundColor = "#FFFFFF";
 
 // export const clusteringColors = ["#19AFD0", "#FFB900", "#ffb0b0", "#ffc864"];
 
-
 export const circleStrokeColor = "#7f7f7f";
 
 export const cardHeaderColor = orange[100];
@@ -65,7 +62,6 @@ export const cardHeaderColor = orange[100];
 export const nodeColor = blueGrey[500];
 
 export const graphEdgeColor = "#B5b5b5";
-
 
 // Modify version 1
 // export const themeColor = {
@@ -86,8 +82,8 @@ export const graphEdgeColor = "#B5b5b5";
 // Modify version 2
 
 export const themeColor = {
-    primaryColor: "#424242",
-    secondaryColor: "#7e7e7e"
+  primaryColor: "#424242",
+  secondaryColor: "#7e7e7e"
 };
 export const backGroundColor = "#E5E5E5";
 

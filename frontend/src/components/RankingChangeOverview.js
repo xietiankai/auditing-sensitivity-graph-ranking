@@ -4,10 +4,6 @@ import { findDOMNode } from "react-dom";
 import { clusteringColors } from "../styles";
 
 export default class RankingChangeOverview extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderSvg(baseGroup, props) {
     const {
       canvasWidth,
@@ -16,15 +12,13 @@ export default class RankingChangeOverview extends React.Component {
       originalRanking,
       labels,
       labelNames,
-      levelLowerBound,
-      levelUpperBound,
-      perturbation,
+      perturbation
     } = props;
     console.log("perturbation");
     console.log(perturbation);
 
     let nodeSet = {};
-    perturbation.forEach((element) => {
+    perturbation.forEach(element => {
       nodeSet[element.node_id] = element.level;
       // if (
       //   element.level >= levelLowerBound &&
@@ -35,7 +29,7 @@ export default class RankingChangeOverview extends React.Component {
     });
     console.log("nodeSet");
     console.log(nodeSet);
-    let processedData = removeRes.map((item) => {
+    let processedData = removeRes.map(item => {
       // console.log(item);
       return {
         id: item.node_id,
@@ -43,7 +37,7 @@ export default class RankingChangeOverview extends React.Component {
         y0: 0,
         y: item.rank_change,
         level: nodeSet[item.node_id],
-        cat: labels[Object.keys(labels)[0]][item.node_id]["value"],
+        cat: labels[Object.keys(labels)[0]][item.node_id]["value"]
       };
     });
     processedData.sort((a, b) => a.x - b.x);
@@ -56,7 +50,7 @@ export default class RankingChangeOverview extends React.Component {
       top: 8,
       right: 0,
       bottom: 8,
-      left: 65,
+      left: 65
     };
 
     const width = canvasWidth * 0.98;
@@ -71,7 +65,7 @@ export default class RankingChangeOverview extends React.Component {
       .scaleLinear()
       .range([margin.top, Number(height) - Number(margin.bottom)]);
 
-    x.domain(processedData.map((d) => d.x));
+    x.domain(processedData.map(d => d.x));
 
     y.domain([
       d3.min(processedData, function(d) {
@@ -79,7 +73,7 @@ export default class RankingChangeOverview extends React.Component {
       }),
       d3.max(processedData, function(d) {
         return Number(d.y);
-      }),
+      })
     ]);
 
     baseGroup
@@ -117,9 +111,9 @@ export default class RankingChangeOverview extends React.Component {
       .data(processedData)
       .enter()
       .append("rect")
-      .attr("class", (d) => {
+      .attr("class", d => {
         let classString = "";
-        let level = d.level === "inf" ? 10: d.level;
+        let level = d.level === "inf" ? 10 : d.level;
         if (d.y > 0) {
           classString += "negative bar level-" + level;
         } else {
@@ -127,7 +121,7 @@ export default class RankingChangeOverview extends React.Component {
         }
         return classString;
       })
-      .attr("fill", (d) => clusteringColors[d.cat])
+      .attr("fill", d => clusteringColors[d.cat])
       // .attr("display", (d) => (nodeSet.has(d.id) ? "block" : "none"))
       .attr("x", function(d) {
         return x(d.x);
@@ -171,7 +165,7 @@ export default class RankingChangeOverview extends React.Component {
       .append("text")
       .attr("x", (d, i) => i * 7 + 8.5 + "em")
       .attr("y", "1.5em")
-      .text((d) => {
+      .text(d => {
         return d;
       });
   }

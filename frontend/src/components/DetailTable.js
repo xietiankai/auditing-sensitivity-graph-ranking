@@ -8,24 +8,24 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import "../components/css/DetailTable.css";
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     width: "100%",
-    overflow: "auto",
-  },
+    overflow: "auto"
+  }
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     dataName: state.dataName,
     labels: state.labels,
-    nodes: state.nodes,
+    nodes: state.nodes
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateDataName: (event) => dispatch(updateDataName(event.target.value)),
+    updateDataName: event => dispatch(updateDataName(event.target.value))
   };
 };
 
@@ -37,46 +37,46 @@ class DetailTable extends React.Component {
         title: "Node Name",
         field: "node_id",
         cellStyle: {
-          maxWidth: 165,
+          maxWidth: 165
         },
         headerStyle: {
-          maxWidth: 165,
-        },
+          maxWidth: 165
+        }
       },
       {
         title: "O.Rank",
         field: "rank",
         cellStyle: {
-          maxWidth: 60,
+          maxWidth: 60
         },
         headerStyle: {
-          maxWidth: 60,
+          maxWidth: 60
         },
-        render: (rowData) => this.props.nodes[rowData["node_id"]]["rank"],
+        render: rowData => this.props.nodes[rowData["node_id"]]["rank"],
         customSort: (a, b) =>
           this.props.nodes[a["node_id"]]["rank"] -
-          this.props.nodes[b["node_id"]]["rank"],
+          this.props.nodes[b["node_id"]]["rank"]
       },
       {
         title: "C.Rank",
         field: "rank",
         cellStyle: {
-          maxWidth: 60,
+          maxWidth: 60
         },
         headerStyle: {
-          maxWidth: 60,
-        },
+          maxWidth: 60
+        }
       },
       {
         title: "Diff",
         field: "rank_change",
         cellStyle: {
-          maxWidth: 60,
+          maxWidth: 60
         },
         headerStyle: {
-          maxWidth: 60,
+          maxWidth: 60
         },
-        render: (rowData) => {
+        render: rowData => {
           if (rowData.rank_change > 0) {
             return (
               <div style={{ color: textRed }}>{"+" + rowData.rank_change}</div>
@@ -89,18 +89,18 @@ class DetailTable extends React.Component {
             return 0;
           }
         },
-        customSort: (a, b) => a.rank_change - b.rank_change,
+        customSort: (a, b) => a.rank_change - b.rank_change
       },
       {
         title: "Label",
         field: "remove_id",
         cellStyle: {
-          maxWidth: 100,
+          maxWidth: 100
         },
         headerStyle: {
-          maxWidth: 100,
+          maxWidth: 100
         },
-        render: (rowData) => {
+        render: rowData => {
           return (
             <Chip
               variant="outlined"
@@ -111,56 +111,9 @@ class DetailTable extends React.Component {
         },
         customSort: (a, b) =>
           this.props.labels[labelName][a["node_id"]]["value"] -
-          this.props.labels[labelName][b["node_id"]]["value"],
-      },
+          this.props.labels[labelName][b["node_id"]]["value"]
+      }
     ];
-
-    // let columnsOfLabels = Object.keys(labels).map(item => ({
-    //   title: item,
-    //   field: item,
-    //   cellStyle: {
-    //     maxWidth: 140
-    //   },
-    //   headerStyle: {
-    //     maxWidth: 140
-    //   },
-    //   render: rowData => {
-    //     return (
-    //       <Chip
-    //         size="small"
-    //         variant="outlined"
-    //         label={rowData[item]}
-    //         style={{
-    //           backgroundColor: clusteringColors[rowData[item + "_value"]],
-    //           color: "white"
-    //         }}
-    //       />
-    //     );
-    //   }
-    // }));
-    // watchTableColumns = watchTableColumns.concat(columnsOfLabels);
-
-    // const watchTableData = Object.keys(this.props.nodes).map(key => {
-    //   const originalPR = this.props.nodes[key]["rank_value"] * 100;
-    //   let processedDataItem = {
-    //     nodeName: key,
-    //     originalPR: originalPR,
-    //     perturbedPR:
-    //       key in perturbation["modified"]["nodes"]
-    //         ? perturbation["modified"]["nodes"][key]["rank_value"] * 100
-    //         : "removed",
-    //     originalRank: this.props.nodes[key]["rank"],
-    //     perturbedRank:
-    //       key in perturbation["modified"]["nodes"]
-    //         ? perturbation["modified"]["nodes"][key]["rank"]
-    //         : "removed"
-    //   };
-    //   for (let keyLabel in labels) {
-    //     processedDataItem[keyLabel] = labels[keyLabel][key]["label"];
-    //     processedDataItem[keyLabel + "_value"] = labels[keyLabel][key]["value"];
-    //   }
-    //   return processedDataItem;
-    // });
 
     return (
       <Box id={"summary-view"}>
@@ -168,7 +121,7 @@ class DetailTable extends React.Component {
           className={this.props.classes.root}
           columns={watchTableColumns}
           style={{
-            backgroundColor: leftPanelBackgroundColor,
+            backgroundColor: leftPanelBackgroundColor
           }}
           title={"Detail"}
           data={this.props.perturbation}
@@ -184,22 +137,22 @@ class DetailTable extends React.Component {
             searchFieldStyle: {
               minWidth: 300,
               maxHeight: 30,
-              marginRight: 20,
+              marginRight: 20
             },
             headerStyle: {
               paddingTop: 0,
-              paddingBottom: 10,
+              paddingBottom: 10
             },
             actionsColumnIndex: 3,
             actionsCellStyle: {
-              minWidth: 100,
-            },
+              minWidth: 100
+            }
             // headerStyle: {
             //   backgroundColor: leftPanelBackgroundColor
             // }
           }}
           components={{
-            Container: (props) => <Paper {...props} elevation={0} />,
+            Container: props => <Paper {...props} elevation={0} />
           }}
         />
       </Box>

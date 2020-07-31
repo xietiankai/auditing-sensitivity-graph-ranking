@@ -27,11 +27,11 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import { radarChartMainColor } from "../styles";
 
-const styles = (themes) => ({});
+const styles = themes => ({});
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    perturbationSummary: state.perturbationSummary,
+    perturbationSummary: state.perturbationSummary
   };
 };
 
@@ -41,10 +41,10 @@ class ReactVisRadar extends Component {
     console.log(this.props);
     let domain = perturbationSummary.map((item, i) => ({
       name: removedNode["statistical"][i].axis,
-      domain: [0, item["value"]],
+      domain: [0, item["value"]]
     }));
     let data = {};
-    removedNode["statistical"].forEach((item) => {
+    removedNode["statistical"].forEach(item => {
       data[item["axis"]] = item["value"];
     });
     return (
@@ -58,32 +58,32 @@ class ReactVisRadar extends Component {
               fillOpacity: 0.5,
               strokeWidth: 0.5,
               fill: radarChartMainColor,
-              stroke: radarChartMainColor,
+              stroke: radarChartMainColor
             },
             axes: {
               text: {
                 fontSize: 10,
-                fill: "#B5B5B5",
+                fill: "#B5B5B5"
               },
               line: {
                 fillOpacity: 0.8,
                 strokeWidth: 0.5,
-                strokeOpacity: 0.8,
-              },
+                strokeOpacity: 0.8
+              }
             },
             labels: {
               textAnchor: "middle",
               fontSize: 10,
-              fill: "#6F6F7A",
-            },
+              fill: "#6F6F7A"
+            }
           }}
           margin={{
             left: 50,
             top: 30,
             bottom: 30,
-            right: 50,
+            right: 50
           }}
-          tickFormat={(t) => ""}
+          tickFormat={t => ""}
           width={240}
           height={200}
           // startingAngle={0}
@@ -92,7 +92,6 @@ class ReactVisRadar extends Component {
             tickValues={[...new Array(7)].map((v, i) => i / 8 - 1)}
             style={{ fill: "none", stroke: "#E0E0E0", fontSize: 10 }}
           />
-          
         </RadarChart>
       </div>
     );

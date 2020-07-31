@@ -15,7 +15,7 @@ import {
   updateConstraints,
   updateDataName,
   updateProtectionExtent,
-  updateProtectionType,
+  updateProtectionType
 } from "../actions";
 import ChipsArray from "./ChipsArray";
 import Paper from "@material-ui/core/Paper";
@@ -23,53 +23,53 @@ import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import SensitivityTable from "./SensitivityTable";
 
-const styles = (theme) => ({
+const styles = theme => ({
   formControl: {
     minWidth: 120,
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   cardHeader: {
     // backgroundColor: cardHeaderColor
     marginLeft: theme.spacing(2),
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   select: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(1)
   },
   // button: {
   //   margin: theme.spacing(1)
   // },
   constrainContainer: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   chipsArrayContainer: {
     height: 60,
-    overflow: "auto",
+    overflow: "auto"
   },
   dataConfigContainer: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   rulesContainer: {
     height: 180,
     overflow: "auto",
     border: "1px solid #e0e0e0",
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   rulesCard: {
     // border: "1px solid #e0e0e0"
   },
   updateConstraintsButton: {
     marginTop: theme.spacing(2.5),
-    width: "100%",
+    width: "100%"
   },
   rulesContent: {
     paddingTop: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-  },
+    paddingLeft: theme.spacing(2)
+  }
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     dataName: state.dataName,
     algorithmName: state.algorithmName,
@@ -77,18 +77,18 @@ const mapStateToProps = (state) => {
     protectionExtent: state.protectionExtent,
     snackbarOpen: state.snackbarOpen,
     snackbarMessage: state.snackbarMessage,
-    rules: state.rules,
+    rules: state.rules
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateDataName: (event) => dispatch(updateDataName(event.target.value)),
-    updateAlgorithmName: (event) =>
+    updateDataName: event => dispatch(updateDataName(event.target.value)),
+    updateAlgorithmName: event =>
       dispatch(updateAlgorithmName(event.target.value)),
-    updateProtectionType: (event) =>
+    updateProtectionType: event =>
       dispatch(updateProtectionType(event.target.value)),
-    updateProtectionExtent: (event) =>
+    updateProtectionExtent: event =>
       dispatch(updateProtectionExtent(event.target.value)),
     updateConstraints: () => {
       dispatch(updateConstraints());
@@ -98,7 +98,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     toggleLoading: () => {
       dispatch(toggleLoading());
-    },
+    }
   };
 };
 
@@ -119,7 +119,7 @@ class ControlPanel extends React.Component {
       </Typography>
     );
     if (this.props.rules.length !== 0) {
-      rulesComponents = this.props.rules.map((item) => {
+      rulesComponents = this.props.rules.map(item => {
         return (
           <Typography
             variant={"body1"}
@@ -144,7 +144,7 @@ class ControlPanel extends React.Component {
                 inputProps={{
                   name: "dataName",
                   id: "data-name",
-                  className: classes.select,
+                  className: classes.select
                 }}
               >
                 <option value={"polblogs"}>Polblogs</option>
@@ -160,7 +160,7 @@ class ControlPanel extends React.Component {
                 inputProps={{
                   name: "rankingAlgorithm",
                   id: "ranking-algorithm",
-                  className: classes.select,
+                  className: classes.select
                 }}
               >
                 <option value={"pagerank"}>PageRank</option>
@@ -208,7 +208,7 @@ class ControlPanel extends React.Component {
                   inputProps={{
                     name: "protectType",
                     id: "protect-type",
-                    className: classes.select,
+                    className: classes.select
                   }}
                 >
                   <option value={"increased"}>increased</option>
@@ -224,7 +224,7 @@ class ControlPanel extends React.Component {
                   inputProps={{
                     name: "protectExtent",
                     id: "protect-extent",
-                    className: classes.select,
+                    className: classes.select
                   }}
                 >
                   <option value={0.0}>0</option>
@@ -251,7 +251,7 @@ class ControlPanel extends React.Component {
           <Snackbar
             anchorOrigin={{
               vertical: "bottom",
-              horizontal: "right",
+              horizontal: "right"
             }}
             open={this.props.snackbarOpen}
             message={this.props.snackbarMessage}

@@ -8,50 +8,49 @@ import { addProtectedNode, appendDetailList } from "../actions";
 import Chip from "@material-ui/core/Chip";
 import { lighten, Tooltip } from "@material-ui/core";
 import { vulnerabilityBarColor } from "../styles";
-import ControlPointOutlinedIcon from "@material-ui/icons/ControlPointOutlined";
 import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import Box from "@material-ui/core/Box";
 import "./css/SensitivityTable.css";
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     width: "100%",
-    overflow: "auto",
+    overflow: "auto"
   },
   labelDot: {
     width: 5,
     height: 5,
     borderRadius: "50%",
     backgroundColor: "black",
-    display: "inline-block",
-  },
+    display: "inline-block"
+  }
 });
 
 const BorderLinearProgress = withStyles({
   root: {
     borderRadius: 2,
     height: 9,
-    backgroundColor: lighten(vulnerabilityBarColor, 0.5),
+    backgroundColor: lighten(vulnerabilityBarColor, 0.5)
   },
   bar: {
     borderRadius: 2,
-    backgroundColor: vulnerabilityBarColor,
-  },
+    backgroundColor: vulnerabilityBarColor
+  }
 })(LinearProgress);
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     filteredPerturbations: state.filteredPerturbations,
     labels: state.labels,
-    labelNames: state.labelNames,
+    labelNames: state.labelNames
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    addProtectedNode: (nodeID) => dispatch(addProtectedNode([nodeID])),
-    appendDetailList: (node) => dispatch(appendDetailList(node)),
+    addProtectedNode: nodeID => dispatch(addProtectedNode([nodeID])),
+    appendDetailList: node => dispatch(appendDetailList(node))
   };
 };
 
@@ -60,7 +59,7 @@ class SensitivityTable extends React.Component {
     super(props);
     this.state = {
       mouseX: null,
-      mouseY: null,
+      mouseY: null
     };
   }
 
@@ -73,32 +72,32 @@ class SensitivityTable extends React.Component {
         title: "Rank",
         field: "rank",
         cellStyle: {
-          maxWidth: 50,
+          maxWidth: 50
         },
         headerStyle: {
-          maxWidth: 50,
-        },
+          maxWidth: 50
+        }
       },
       {
         title: "Node Name",
         field: "remove_id",
         cellStyle: {
-          maxWidth: 200,
+          maxWidth: 200
         },
         headerStyle: {
-          maxWidth: 200,
-        },
+          maxWidth: 200
+        }
       },
       {
         title: "Label",
         field: "remove_id",
         cellStyle: {
-          maxWidth: 100,
+          maxWidth: 100
         },
         headerStyle: {
-          maxWidth: 100,
+          maxWidth: 100
         },
-        render: (rowData) => {
+        render: rowData => {
           return (
             <React.Fragment>
               <Chip
@@ -114,20 +113,20 @@ class SensitivityTable extends React.Component {
             </React.Fragment>
           );
         },
-        customSort: (a, b) => a["label"]["value"] - b["label"]["value"],
+        customSort: (a, b) => a["label"]["value"] - b["label"]["value"]
       },
       {
         title: "SI",
         field: "vul_percentile",
         cellStyle: {
           maxWidth: 100,
-          minWidth: 100,
+          minWidth: 100
         },
         headerStyle: {
           maxWidth: 100,
-          minWidth: 100,
+          minWidth: 100
         },
-        render: (rowData) => (
+        render: rowData => (
           <Tooltip title={rowData.node_influence}>
             <BorderLinearProgress
               color={"secondary"}
@@ -135,8 +134,8 @@ class SensitivityTable extends React.Component {
               value={rowData.vul_percentile * 100}
             />
           </Tooltip>
-        ),
-      },
+        )
+      }
       // {
       //   title: "Vulnerability_P",
       //   field: "vul_p_percentile",
@@ -182,14 +181,14 @@ class SensitivityTable extends React.Component {
             title: key.slice(0, key.length - 11),
             field: "vul_percentile",
             cellStyle: {
-              maxWidth: 100,
+              maxWidth: 100
             },
             headerStyle: {
-              maxWidth: 100,
+              maxWidth: 100
             },
             customSort: (a, b) =>
               a["label_influence"][key] * 100 - b["label_influence"][key] * 100,
-            render: (rowData) => (
+            render: rowData => (
               <React.Fragment>
                 <Tooltip
                   title={
@@ -214,7 +213,7 @@ class SensitivityTable extends React.Component {
                   />
                 </Tooltip>
               </React.Fragment>
-            ),
+            )
           });
         }
       });
@@ -241,7 +240,7 @@ class SensitivityTable extends React.Component {
           //   openContextMenu(event, rowData);
           // }}
           components={{
-            Container: (props) => <Paper {...props} elevation={0} />,
+            Container: props => <Paper {...props} elevation={0} />
           }}
           title={"Sensitivity Index"}
           options={{
@@ -254,17 +253,17 @@ class SensitivityTable extends React.Component {
             searchFieldStyle: {
               minWidth: 370,
               maxHeight: 30,
-              marginRight: 20,
+              marginRight: 20
             },
             headerStyle: {
               paddingLeft: 15,
               paddingTop: 0,
-              paddingBottom: 10,
+              paddingBottom: 10
             },
             actionsColumnIndex: 0,
             actionsCellStyle: {
               // paddingLeft: 20
-            },
+            }
           }}
           actions={[
             {
@@ -272,15 +271,15 @@ class SensitivityTable extends React.Component {
               tooltip: "Add to protected nodes",
               onClick: (event, rowData) => {
                 this.props.addProtectedNode(rowData["remove_id"]);
-              },
+              }
             },
             {
               icon: CloseRoundedIcon,
               tooltip: "Diagnose the perturbation",
               onClick: (event, rowData) => {
                 this.props.appendDetailList(rowData["remove_id"]);
-              },
-            },
+              }
+            }
           ]}
         />
       </Box>

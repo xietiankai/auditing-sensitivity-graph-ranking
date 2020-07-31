@@ -2,41 +2,37 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/styles";
 import { addTopKQuery, updateK } from "../actions";
-import { Box, Button, Typography } from "@material-ui/core";
-import FormControl from "@material-ui/core/FormControl";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import { Box, Typography } from "@material-ui/core";
 import { clusteringColors } from "../styles";
 import RadialChart from "react-vis/es/radial-chart";
-import Grid from "@material-ui/core/Grid";
 import Hint from "react-vis/es/plot/hint";
 
-const styles = (theme) => ({
+const styles = theme => ({
   distributionContainer: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    height: 193,
+    height: 193
   },
   formControl: {
-    marginRight: theme.spacing(1),
-  },
+    marginRight: theme.spacing(1)
+  }
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     currentK: state.currentK,
     activatedTab: state.activatedTab,
     detailList: state.detailList,
     labels: state.labels,
     nodes: state.nodes,
-    labelNames: state.labelNames,
+    labelNames: state.labelNames
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateK: (event) => dispatch(updateK(event.target.value)),
-    addTopKQuery: (removedID) => dispatch(addTopKQuery(removedID)),
+    updateK: event => dispatch(updateK(event.target.value)),
+    addTopKQuery: removedID => dispatch(addTopKQuery(removedID))
   };
 };
 
@@ -47,7 +43,7 @@ function processingPieData(data, k, labels) {
   data
     .sort((a, b) => a.rank - b.rank)
     .slice(0, k)
-    .forEach((item) => {
+    .forEach(item => {
       const labelCat = labelMap[item["node_id"]]["value"];
       labelToStringMap[labelCat] = labelMap[item["node_id"]]["label"];
       if (labelCat in perturbationStat) {
@@ -59,12 +55,12 @@ function processingPieData(data, k, labels) {
       }
     });
 
-  return Object.keys(perturbationStat).map((key) => {
+  return Object.keys(perturbationStat).map(key => {
     return {
       angle: perturbationStat[key],
       label: labelToStringMap[key],
       subLabel: (perturbationStat[key] / k).toFixed(2),
-      color: clusteringColors[key],
+      color: clusteringColors[key]
     };
   });
 }
@@ -92,8 +88,8 @@ export function TopKPieComponent(props) {
             radius={radialChartRadius}
             padAngle={0.04}
             colorType="literal"
-            onValueMouseOver={(v) => setToolTip1(v)}
-            onSeriesMouseOut={(v) => setToolTip1(false)}
+            onValueMouseOver={v => setToolTip1(v)}
+            onSeriesMouseOut={v => setToolTip1(false)}
             // margin={radialChartMargin}
             showLabels={true}
             labelsStyle={{ fontSize: 10, color: "#7e7e7e" }}
@@ -114,8 +110,8 @@ export function TopKPieComponent(props) {
             radius={radialChartRadius}
             padAngle={0.04}
             colorType="literal"
-            onValueMouseOver={(v) => setToolTip2(v)}
-            onSeriesMouseOut={(v) => setToolTip2(false)}
+            onValueMouseOver={v => setToolTip2(v)}
+            onSeriesMouseOut={v => setToolTip2(false)}
             // margin={radialChartMargin}
             showLabels={true}
             labelsStyle={{ fontSize: 10, color: "#7e7e7e" }}

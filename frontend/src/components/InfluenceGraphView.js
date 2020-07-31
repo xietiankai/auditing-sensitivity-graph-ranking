@@ -7,14 +7,14 @@ import { toolTipGenerator } from "../utils";
 
 const circleMenu = [
   {
-    title: "Add to protected nodes",
-  },
+    title: "Add to protected nodes"
+  }
 ];
 
 const lassoMenu = [
   {
-    title: "Add to protected nodes",
-  },
+    title: "Add to protected nodes"
+  }
 ];
 
 export default class InfluenceGraphView extends React.Component {
@@ -28,7 +28,7 @@ export default class InfluenceGraphView extends React.Component {
    * @param simulation {Object} d3 simulation
    * @returns {Function} d3 function
    */
-  drag = (simulation) => {
+  drag = simulation => {
     function dragStarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
@@ -53,7 +53,7 @@ export default class InfluenceGraphView extends React.Component {
       .on("end", dragEnded);
   };
 
-  addProtectedNodesHelper2 = (newNodesToAdd) => {
+  addProtectedNodesHelper2 = newNodesToAdd => {
     this.props.addProtectedNodes(newNodesToAdd);
   };
 
@@ -77,14 +77,14 @@ export default class InfluenceGraphView extends React.Component {
       d3.select(".d3-context-menu").style("display", "none");
     });
 
-    const addProtectedNodesHelper1 = (newNodesToAdd) => {
+    const addProtectedNodesHelper1 = newNodesToAdd => {
       this.addProtectedNodesHelper2(newNodesToAdd);
     };
 
-    const handleMenuClick = (d) => {
+    const handleMenuClick = d => {
       d3.select(".d3-context-menu").style("display", "none");
       // console.log(d._groups);
-      const newNodesToAdd = d._groups[0].map((item) => {
+      const newNodesToAdd = d._groups[0].map(item => {
         return item.id.slice(5);
       });
       addProtectedNodesHelper1(newNodesToAdd);
@@ -147,7 +147,7 @@ export default class InfluenceGraphView extends React.Component {
       canvasHeight,
       labels,
       labelNames,
-      removedID,
+      removedID
     } = props;
     if (
       !perturbation ||
@@ -155,7 +155,6 @@ export default class InfluenceGraphView extends React.Component {
       perturbation["influence_graph_edges"] === []
     )
       return;
-    const circleRadius = 7;
     const tooltip = toolTipGenerator("#influence-graph-view");
     let nodesData = perturbation["influence_graph_nodes"];
     let edgesData = perturbation["influence_graph_edges"];
@@ -169,10 +168,10 @@ export default class InfluenceGraphView extends React.Component {
         "link",
         d3
           .forceLink(edgesData)
-          .id((d) => {
+          .id(d => {
             return d.node_id;
           })
-          .distance((d) => {
+          .distance(d => {
             if (d.target.level === "inf") {
               return 600;
             }
@@ -235,7 +234,7 @@ export default class InfluenceGraphView extends React.Component {
 
     const edgeScale = d3
       .scaleLinear()
-      .domain(d3.extent(edgesData, (d) => Math.abs(d.influence)))
+      .domain(d3.extent(edgesData, d => Math.abs(d.influence)))
       .range([2, 8]);
 
     const link = svg
@@ -246,7 +245,7 @@ export default class InfluenceGraphView extends React.Component {
       .data(edgesData)
       .enter()
       .append("path")
-      .attr("class", (d) => {
+      .attr("class", d => {
         let classString = "";
         if (d.target.rank_change > 0) {
           if (d.target.level === "inf") {
@@ -263,23 +262,23 @@ export default class InfluenceGraphView extends React.Component {
         }
         return classString;
       })
-      .attr("stroke-width", (d) => {
+      .attr("stroke-width", d => {
         return edgeScale(Math.abs(d.influence));
       })
       .attr("fill", "none")
-      .attr("stroke", (d) => {
+      .attr("stroke", d => {
         if (d.influence > 0) {
           return greenAndRed[1];
         } else {
           return greenAndRed[0];
         }
       })
-      .style("stroke-dasharray", (d) => {
+      .style("stroke-dasharray", d => {
         if (d.target.level === "inf") {
           return "3, 3";
         }
       })
-      .attr("marker-end", (d) => {
+      .attr("marker-end", d => {
         if (d.influence > 0) {
           return "url(#arrowhead-neg)";
         } else {
@@ -297,12 +296,12 @@ export default class InfluenceGraphView extends React.Component {
 
     const nodeScale = d3
       .scaleLinear()
-      .domain(d3.extent(nodesData, (d) => Math.abs(d.rank_change)))
+      .domain(d3.extent(nodesData, d => Math.abs(d.rank_change)))
       .range([5, 15]);
 
     const circles = node
       .append("circle")
-      .attr("class", (d) => {
+      .attr("class", d => {
         let classString = "";
         if (d.level !== 0 || d.level === "inf") {
           if (d.rank_change > 0) {
@@ -323,8 +322,8 @@ export default class InfluenceGraphView extends React.Component {
         }
         return classString;
       })
-      .attr("id", (d) => "node-" + d.node_id)
-      .attr("fill", (d) => {
+      .attr("id", d => "node-" + d.node_id)
+      .attr("fill", d => {
         if (d.level === "inf") {
           return "white";
         } else {
@@ -340,7 +339,7 @@ export default class InfluenceGraphView extends React.Component {
           }
         }
       })
-      .attr("stroke", (d) => {
+      .attr("stroke", d => {
         if (d.level === 0) {
           return "black";
         } else if (d.level === "inf") {
@@ -357,7 +356,7 @@ export default class InfluenceGraphView extends React.Component {
           return circleStrokeColor;
         }
       })
-      .attr("stroke-width", (d) => {
+      .attr("stroke-width", d => {
         if (d.level === 0) {
           return 2;
         } else if (d.level === "inf") {
@@ -366,7 +365,7 @@ export default class InfluenceGraphView extends React.Component {
           return 1;
         }
       })
-      .attr("r", (d) => {
+      .attr("r", d => {
         if (d.level === 0) {
           return 15;
         } else {
@@ -374,7 +373,7 @@ export default class InfluenceGraphView extends React.Component {
         }
       })
       .call(this.drag(simulation))
-      .on("click", (d) => {
+      .on("click", d => {
         d.fx = null;
         d.fy = null;
       })
@@ -398,7 +397,7 @@ export default class InfluenceGraphView extends React.Component {
 
     node
       .append("text")
-      .text((d) => (d.level === 0 ? d.node_id : ""))
+      .text(d => (d.level === 0 ? d.node_id : ""))
       .attr("dy", "5em")
       .attr("dx", "8em")
       .attr("font-size", "1.2em");
@@ -413,7 +412,7 @@ export default class InfluenceGraphView extends React.Component {
 
       link.attr("d", positionLink);
 
-      circles.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+      circles.attr("cx", d => d.x).attr("cy", d => d.y);
     });
 
     function zoomed() {
@@ -461,7 +460,7 @@ export default class InfluenceGraphView extends React.Component {
         .zoom()
         .extent([
           [0, 0],
-          [canvasWidth, canvasHeight],
+          [canvasWidth, canvasHeight]
         ])
         .scaleExtent([0, 8])
         .on("zoom", zoomed)
@@ -480,7 +479,7 @@ export default class InfluenceGraphView extends React.Component {
     /***
      * Lasso
      */
-    const handleLassoSelect = (item) => {
+    const handleLassoSelect = item => {
       this.contextMenu(lassoMenu).call(item);
     };
 
@@ -552,7 +551,7 @@ export default class InfluenceGraphView extends React.Component {
       .append("text")
       .attr("x", (d, i) => i * 7 + 8.5 + "em")
       .attr("y", "1.5em")
-      .text((d) => {
+      .text(d => {
         return d;
       });
   }

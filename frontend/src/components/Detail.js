@@ -14,10 +14,9 @@ import {
   updateActivatedTabIndex,
   updateGraphViewCanvas,
   updateLevelBound,
-  updateK,
+  updateK
 } from "../actions";
 import ReactVisRadar from "./ReactVisRadar";
-import BoxPlotComponent from "./BoxPlotComponent";
 import TopKDistributionView from "./TopKDistributionView";
 import InfluenceGraphView from "./InfluenceGraphView";
 import Grid from "@material-ui/core/Grid";
@@ -28,62 +27,61 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Slider from "@material-ui/core/Slider";
 import RankingChangeOverview from "./RankingChangeOverview";
-import RankingChangeOverviewOld from "./RankingChangeOverviewOld";
 import Chip from "@material-ui/core/Chip";
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     // flexGrow: 1,
-    width: "100%",
+    width: "100%"
     // backgroundColor: theme.palette.background.paper
   },
   cardHeader: {
     paddingLeft: theme.spacing(2),
     paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   tabContent: {},
   leftView: {
     marginRight: theme.spacing(1),
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1)
   },
   rightView: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1)
   },
   containerPadding: {
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   influenceGraphViewContainer: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    height: 665,
+    height: 665
   },
   emptyPanel: {
     paddingTop: theme.spacing(54),
-    paddingLeft: theme.spacing(60),
+    paddingLeft: theme.spacing(60)
   },
   formControlLabel: {
     display: "block",
-    color: "#7c7c7c",
+    color: "#7c7c7c"
   },
   toolBox: {
     display: "flex",
     width: 580,
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(2)
   },
   topKSliderContainer: {
     width: 200,
-    paddingRight: theme.spacing(1),
+    paddingRight: theme.spacing(1)
   },
   graphViewSlider: {
-    width: 135,
+    width: 135
   },
   topKViewSlider: {
-    width: 100,
+    width: 100
   },
   TopKTypo: {
-    marginTop: 5,
+    marginTop: 5
   },
   influenceHeader: {
     display: "flex",
@@ -93,22 +91,22 @@ const styles = (theme) => ({
     paddingTop: 4
   },
   influenceViewLabelContainer: {
-    paddingTop: theme.spacing(3),
-  },
+    paddingTop: theme.spacing(3)
+  }
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     activatedTab: state.activatedTab,
     detailList: state.detailList,
     labels: state.labels,
     nodes: state.nodes,
     labelNames: state.labelNames,
-    currentK: state.currentK,
+    currentK: state.currentK
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateActivatedTabIndex: (event, value) =>
       dispatch(updateActivatedTabIndex(value)),
@@ -120,16 +118,15 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(toggleGraphDisplayPNOption(removedID, direction)),
     updateLevelBound: (value, removedID) =>
       dispatch(updateLevelBound(removedID, value)),
-    addProtectedNode: (nodeIDsArray) =>
-      dispatch(addProtectedNode(nodeIDsArray)),
-    updateK: (value) => dispatch(updateK(Number(value))),
+    addProtectedNode: nodeIDsArray => dispatch(addProtectedNode(nodeIDsArray)),
+    updateK: value => dispatch(updateK(Number(value)))
   };
 };
 
 function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
-    "aria-controls": `scrollable-auto-tabpanel-${index}`,
+    "aria-controls": `scrollable-auto-tabpanel-${index}`
   };
 }
 
@@ -174,7 +171,7 @@ class Detail extends React.Component {
         (removedID, i) => {
           const influenceViewLabels = this.props.detailList[removedID][
             "removedResults"
-          ]["statistical"].map((item) => {
+          ]["statistical"].map(item => {
             return (
               <Box display={"flex"} style={{ width: "70%" }}>
                 <Box flexGrow={1}>
@@ -279,7 +276,11 @@ class Detail extends React.Component {
                         </Typography>
                       </Box>
                       <Box>
-                        <svg id={"rcdv-legend"} height={"20"} width={"300"}></svg>
+                        <svg
+                          id={"rcdv-legend"}
+                          height={"20"}
+                          width={"300"}
+                        ></svg>
                       </Box>
                     </Box>
                     <RankingChangeOverview
@@ -343,7 +344,11 @@ class Detail extends React.Component {
                             </Typography>
                           </Box>
                           <Box>
-                            <svg id={"graph-legend"} height={"20"} width={"300"}></svg>
+                            <svg
+                              id={"graph-legend"}
+                              height={"20"}
+                              width={"300"}
+                            ></svg>
                           </Box>
                         </Box>
                         <Box
@@ -404,7 +409,7 @@ class Detail extends React.Component {
                                             ],
                                             this.props.detailList[removedID][
                                               "levelUpperBound"
-                                            ],
+                                            ]
                                           ]
                                         );
                                       }}
@@ -441,7 +446,7 @@ class Detail extends React.Component {
                                             ],
                                             this.props.detailList[removedID][
                                               "levelUpperBound"
-                                            ],
+                                            ]
                                           ]
                                         );
                                       }}
@@ -472,7 +477,7 @@ class Detail extends React.Component {
                                     ],
                                     this.props.detailList[removedID][
                                       "levelUpperBound"
-                                    ],
+                                    ]
                                   ]}
                                   onChange={(event, value) => {
                                     // console.log(value);
@@ -483,7 +488,7 @@ class Detail extends React.Component {
                                   }}
                                   valueLabelDisplay="auto"
                                   aria-labelledby="range-slider"
-                                  getAriaValueText={(value) => {
+                                  getAriaValueText={value => {
                                     return `level ${value}`;
                                   }}
                                 />
@@ -546,7 +551,7 @@ class Detail extends React.Component {
                                         : 0
                                     }
                                     margin="dense"
-                                    onChange={(event) => {
+                                    onChange={event => {
                                       this.props.updateK(event.target.value);
                                     }}
                                     onBlur={() => {
@@ -557,7 +562,7 @@ class Detail extends React.Component {
                                       min: 0,
                                       max: Object.keys(this.props.nodes).length,
                                       type: "number",
-                                      "aria-labelledby": "input-slider",
+                                      "aria-labelledby": "input-slider"
                                     }}
                                   />
                                 </Box>
