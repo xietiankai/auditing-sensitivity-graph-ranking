@@ -279,7 +279,7 @@ class Detail extends React.Component {
                         </Typography>
                       </Box>
                       <Box>
-                        <svg id={"rcdv-legend"} height={"20"} width={"380"}></svg>
+                        <svg id={"rcdv-legend"} height={"20"} width={"300"}></svg>
                       </Box>
                     </Box>
                     <RankingChangeOverview
@@ -343,7 +343,7 @@ class Detail extends React.Component {
                             </Typography>
                           </Box>
                           <Box>
-                            <svg id={"graph-legend"} height={"20"} width={"380"}></svg>
+                            <svg id={"graph-legend"} height={"20"} width={"300"}></svg>
                           </Box>
                         </Box>
                         <Box

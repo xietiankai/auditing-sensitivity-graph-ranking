@@ -174,7 +174,7 @@ export default class InfluenceGraphView extends React.Component {
           })
           .distance((d) => {
             if (d.target.level === "inf") {
-              return 800;
+              return 600;
             }
             //return d.target.level * 10;
             // return Math.exp(d.target.level) *5
@@ -185,11 +185,11 @@ export default class InfluenceGraphView extends React.Component {
       .force(
         "r",
         d3.forceRadial(function(d) {
-          if (d.level === "inf") return 800;
+          if (d.level === "inf") return 600;
           else return d.level * 100;
         })
       )
-      .force("charge", d3.forceCollide().radius(6))
+      // .force("charge", d3.forceCollide().radius(6))
       .force("center", d3.forceCenter(canvasWidth / 2, canvasHeight / 2));
 
     const svg = baseGroup;

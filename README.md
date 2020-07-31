@@ -1,5 +1,3 @@
-This repository is currently under construction
-
 ## Auditing the Sensitivity of Graph-based Ranking with Visual Analytics
 
 ![Teaser](images/teaser.png)
@@ -80,7 +78,3 @@ Visit localhost:3000 in your browser. For the best result, please use Chrome.
 ### License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
-### Acknowledgments
-
-* etc
