@@ -3,6 +3,8 @@
 ![Teaser](images/teaser.png)
 
 A visual analytics framework for explaining and exploring the sensitivity of any graph-based ranking algorithms by performing perturbation-based what-if analysis.
+### Paper Link
+https://arxiv.org/abs/2009.07227
 
 ### Installing 
 There are mainly two ways of installing and running the framework:
